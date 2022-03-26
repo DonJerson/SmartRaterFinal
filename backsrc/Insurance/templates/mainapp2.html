@@ -1,0 +1,208 @@
+{% extends "bulma.html" %}
+{% load staticfiles %}
+
+{% block head %}
+<section class="hero is-info is-medium" style="background-image: url('{% static 'images/bgfinal.jpg' %}');background-size: cover;">
+    <!-- Hero head: will stick at the top -->
+    <div class="hero-head">
+{% include 'navbar2.html' %}
+        <!-- Hero content: will be in the middle -->
+        <div class="hero-body">
+            <div class="container has-text-centered">
+              <h1 class="title is-1" style="font-weight: 700;">
+                Bienes Raices a tu alcance
+              </h1>
+              <div class="container">
+              <input class="input is-rounded glow" type="text" placeholder="Escriba el nombre del sector, ciudad, pais o codigo postal">
+              </div>
+          </div>
+          </div>
+      
+        <!-- Hero footer: will stick at the bottom -->
+</div>
+</section>
+{% endblock %}
+
+{% block torso %}
+        <!-- Hero content: will be in the middle -->
+
+            
+              <!-- Hero footer: will stick at the bottom -->
+
+              
+<section>
+    <div class="container" style="padding-top: 30px">
+         <div class="columns">
+             <div class="column">
+                    <div class="box shadow opensans">
+                            <article class="media">
+                              <div class="media-left">
+                                <figure class="image is-256">
+                                  <img src="{% static 'images/buyhome.jpg' %}" alt="Image">
+                                </figure>
+                              </div>
+                              <div class="media-content">
+                                <div class="content">
+                                    <h1 class="negrita">Adquirir hogar</h1>
+                                  <p>
+                                    Nuestra herramienta te permite acceder al catalogo mas completo de propiedades en Republica Dominicana.
+                                  </p>
+                                  <a class="button is-link is-outlined">Comprar</a>
+                                  <a class="button is-link is-outlined">Alquilar</a>
+                                </div>
+                                <nav class="level is-mobile">
+                                  <div class="level-left">
+                                    <a class="level-item" aria-label="reply">
+                                      <span class="icon is-small">
+                                        <i class="fas fa-reply" aria-hidden="true"></i>
+                                      </span>
+                                    </a>
+                                    <a class="level-item" aria-label="retweet">
+                                      <span class="icon is-small">
+                                        <i class="fas fa-retweet" aria-hidden="true"></i>
+                                      </span>
+                                    </a>
+                                    <a class="level-item" aria-label="like">
+                                      <span class="icon is-small">
+                                        <i class="fas fa-heart" aria-hidden="true"></i>
+                                      </span>
+                                    </a>
+                                  </div>
+                                </nav>
+                              </div>
+                            </article>
+                          </div>
+             </div>
+             <div class="column">
+                    <div class="box shadow opensans">
+                            <article class="media">
+                              <div class="media-left">
+                                <figure class="image is-256">
+                                  <img src="{% static 'images/forsale.jpg' %}" alt="Image">
+                                </figure>
+                              </div>
+                              <div class="media-content">
+                                <div class="content">
+                                    <h1 class="negrita">Vender propiedad</h1>
+                                  <p>
+                                    Utiliza nuestro sistema de captación de clientes de alta tecnología.
+                                  </p>
+                                  <a class="button is-link is-outlined">Vender</a>
+                                </div>
+                                <nav class="level is-mobile">
+                                  <div class="level-left">
+                                    <a class="level-item" aria-label="reply">
+                                      <span class="icon is-small">
+                                        <i class="fas fa-reply" aria-hidden="true"></i>
+                                      </span>
+                                    </a>
+                                    <a class="level-item" aria-label="retweet">
+                                      <span class="icon is-small">
+                                        <i class="fas fa-retweet" aria-hidden="true"></i>
+                                      </span>
+                                    </a>
+                                    <a class="level-item" aria-label="like">
+                                      <span class="icon is-small">
+                                        <i class="fas fa-heart" aria-hidden="true"></i>
+                                      </span>
+                                    </a>
+                                  </div>
+                                </nav>
+                              </div>
+                            </article>
+                          </div>
+             </div>
+         </div>
+         <div class="columns">
+                <div class="column">
+                       <div class="box shadow opensans">
+                               <article class="media">
+                                 <div class="media-left">
+                                   <figure class="image is-256">
+                                     <img src="{% static 'images/costos.jpg' %}" alt="Image">
+                                   </figure>
+                                 </div>
+                                 <div class="media-content">
+                                   <div class="content">
+                                       <h1 class="negrita">Análisis de Costo, Presupuesto y Planeacion</h1>
+                                     <p>
+                                       Alto rendimiento en elaboración de presupuestos.
+                                     </p>
+                                     <a class="button is-link is-outlined" href="/analysis">Comenzar</a>
+                                   </div>
+                                   <nav class="level is-mobile">
+                                     <div class="level-left">
+                                       <a class="level-item" aria-label="reply">
+                                         <span class="icon is-small">
+                                           <i class="fas fa-reply" aria-hidden="true"></i>
+                                         </span>
+                                       </a>
+                                       <a class="level-item" aria-label="retweet">
+                                         <span class="icon is-small">
+                                           <i class="fas fa-retweet" aria-hidden="true"></i>
+                                         </span>
+                                       </a>
+                                       <a class="level-item" aria-label="like">
+                                         <span class="icon is-small">
+                                           <i class="fas fa-heart" aria-hidden="true"></i>
+                                         </span>
+                                       </a>
+                                     </div>
+                                   </nav>
+                                 </div>
+                               </article>
+                             </div>
+                </div>
+                <div class="column">
+                       <div class="box shadow opensans">
+                               <article class="media">
+                                 <div class="media-left">
+                                   <figure class="image is-256">
+                                     <img src="{% static 'images/remodelacion.jpg' %}" alt="Image">
+                                   </figure>
+                                 </div>
+                                 <div class="media-content">
+                                   <div class="content">
+                                       <h1 class="negrita">Invertir en Bienes Raices</h1>
+                                     <p>
+                                       Nuestra herramienta te permite acceder al catalogo mas completo de propiedades en Republica Dominicana.
+                                     </p>
+                                     <a class="button is-link is-outlined">Invertir</a>
+                                     <a class="button is-link is-outlined">Remodelacion</a>
+                                     <a class="button is-link is-outlined">Presupuestar</a>
+                                   </div>
+                                   <nav class="level is-mobile">
+                                     <div class="level-left">
+                                       <a class="level-item" aria-label="reply">
+                                         <span class="icon is-small">
+                                           <i class="fas fa-reply" aria-hidden="true"></i>
+                                         </span>
+                                       </a>
+                                       <a class="level-item" aria-label="retweet">
+                                         <span class="icon is-small">
+                                           <i class="fas fa-retweet" aria-hidden="true"></i>
+                                         </span>
+                                       </a>
+                                       <a class="level-item" aria-label="like">
+                                         <span class="icon is-small">
+                                           <i class="fas fa-heart" aria-hidden="true"></i>
+                                         </span>
+                                       </a>
+                                     </div>
+                                   </nav>
+                                 </div>
+                               </article>
+                             </div>
+                </div>
+            </div>
+</div>
+</section>
+{% endblock %}
+
+{% block skills %}
+
+{% endblock %}
+
+{% block contact %}
+
+{% endblock %}

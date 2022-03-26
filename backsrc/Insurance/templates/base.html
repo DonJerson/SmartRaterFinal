@@ -1,0 +1,25 @@
+{% include 'copyright_shit.html' %}
+
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html lang="en">
+	<head>
+		{% include 'head_css_stuff.html' %}
+		<title>Staff Recruiting | {%block title %}{% endblock %}</title>
+
+	</head>
+
+	<body class="animsition">
+		{% include 'bootstraploginmodal.html' %}
+		{% include 'navbar.html' %}
+
+			{% block torso %}{% endblock %}
+			{% block skills %}{% endblock %}
+			{% block contact %}{% endblock %}
+
+		{% include 'javascript.html' %}
+	</body>
+
+	{% include 'signature.html' %}
+</html>

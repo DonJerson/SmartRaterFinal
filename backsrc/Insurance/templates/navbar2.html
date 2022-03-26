@@ -1,0 +1,107 @@
+{% load staticfiles %}
+
+          <nav class="navbar is-trasparent" role="navigation" aria-label="dropdown navigation">
+            <div class="container">
+              <div class="navbar-brand">
+                <a href="/">
+                  <img src="{% static 'images/logo.png' %}">
+                </a>
+                <span class="navbar-burger burger" data-target="navbarMenuHeroB">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </div>
+              <div id="navbarMenuHeroB" class="navbar-menu">
+                <div class="navbar-end">
+                  <a class="navbar-item">
+                    Inicio
+                  </a>
+                  <a class="navbar-item">
+                    Acerca
+                  </a>
+                    <a class="navbar-item">
+                      Herramientas de Ingenieria
+                    </a>
+                  </div>
+                  {% if user.is_authenticated %}
+                  <span class="navbar-item">
+                      <a href="/logout" class="button is-info is-inverted">
+                        <span class="icon">
+                          <i class="fab fa-github"></i>
+                        </span>
+                        <span>Logout</span>
+                      </a>
+                    </span>
+                    {% else %}
+
+                    <div class="modal" id="modal1">
+
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                          <header class="modal-card-head">
+                            <p class="modal-card-title">Login</p>
+                            <button id="closeup" class="delete" aria-label="close"></button>
+                          </header>
+                          <section class="modal-card-body">
+                            <!-- Content ... -->
+                            <div class="container center">
+                                <form method="POST" action="/loginFunction">
+                                  {% csrf_token %}
+                                    <div class="control has-icons-left has-icons-right">
+                                        {{form.userName}}
+                                        <span class="icon is-medium is-left">
+                                          <i class="fas fa-envelope"></i>
+                                        </span>
+                                        <span class="icon is-medium is-right">
+                                          <i class="fas fa-check"></i>
+                                        </span>
+                                      </div>
+                                      
+                                      <div class="control has-icons-left has-icons-right">
+                                          {{form.password}}
+                                          <span class="icon is-medium is-left">
+                                            <i class="fas fa-envelope"></i>
+                                          </span>
+                                          <span class="icon is-medium is-right">
+                                            <i class="fas fa-check"></i>
+                                          </span>
+                                        </div>
+                            
+                                    <div class="level options">
+                                      <div class="checkbox level-left">
+                                        <input type="checkbox" id="checkbox" class="regular-checkbox">
+                                        <label for="checkbox"></label>
+                                        <span>Remember me</span>
+                                      </div>
+                            
+                                      <a class="btn btn-link level-right" href="#">Forgot Password?</a>
+                                    </div>
+                                    <button class="button is-link">Login</button>
+                                  </form>
+                                  <br>
+                            <button class="button is-link">Sign up</button>
+                          </div>
+                          </section>
+                        </div>
+                      </div>
+
+                      <span class="navbar-item">
+                          <a id="login" class="button is-info is-inverted">
+                            <span class="icon">
+                              <i class="fab fa-github"></i>
+                            </span>
+                            <span>Login</span>
+                          </a>
+                        </span>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          </nav>
+        </div>
+      </nav>
+
+
+        

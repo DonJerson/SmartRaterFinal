@@ -1,0 +1,73 @@
+p{
+    margin:0;
+}
+html{
+    overflow-x: hidden;
+}
+.row{
+    margin-left: 0px;
+}
+a{
+    padding:0px !important;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+body{
+    overflow-x: hidden;
+}
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.halfRow{
+    display:grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+}
+.thirdRow{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    width: 100%;
+}
+.fifthRow{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    width: 100%;
+}
+.seventhRow{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    width: 100%;
+}
+.center{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.flexStart{
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding:0px;
+}
+.flexEnd{
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
+.spaceBetween{
+    display:flex;
+    align-content: center;
+    justify-content: space-between;
+}
+.textAlign{
+    text-align: center;
+}
