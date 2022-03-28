@@ -14,7 +14,7 @@ services:
       - redis:redis
     environment:
       DEBUG: 'true'
-    command: /usr/local/bin/gunicorn docker_django.wsgi:application -w 2 -b
+    # command: /usr/local/bin/gunicorn prietoWeb.wsgi:application -w 2 -b 0.0.0.0:8081
   frontend:
     build: ./frontsrc
     ports:
@@ -27,7 +27,7 @@ services:
 
   nginx:
     restart: always
-    build: ./nginx/
+    build: ./nginx
     ports:
       - "80:80"
       - "8888:8888"
