@@ -25,12 +25,12 @@ from Insurance import urls as Insurance_urls
 from rest_framework_jwt.views import obtain_jwt_token
 
 router = SimpleRouter()
-router.register(r'customer', CustomerViewSet, base_name='customer')
-router.register(r'namedinsured', NamedInsuredViewSet, base_name='namedinsured')
-router.register(r'car', CarViewSet, base_name='car')
-router.register(r'quote', QuoteViewSet, base_name='quote')
-router.register(r'insurer', InsurerViewSet, base_name='insurer')
-router.register(r'existing', ExistingCustomerViewSet, base_name='existing')
+router.register(r'customer', CustomerViewSet, basename='customer')
+router.register(r'namedinsured', NamedInsuredViewSet, basename='namedinsured')
+router.register(r'car', CarViewSet, basename='car')
+router.register(r'quote', QuoteViewSet, basename='quote')
+router.register(r'insurer', InsurerViewSet, basename='insurer')
+router.register(r'existing', ExistingCustomerViewSet, basename='existing')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

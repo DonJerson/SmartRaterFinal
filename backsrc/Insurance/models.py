@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
-from django.utils.encoding import python_2_unicode_compatible
 #from tinymce import models as tinymce_models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser

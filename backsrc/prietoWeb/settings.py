@@ -130,7 +130,7 @@ if r"C:\Users\mende" in BASE_DIR:
     switch=False
     myMinutes=999999999
 
-if True:
+if False:
     # aws settings
     AWS_ACCESS_KEY_ID = 'AKIAXQSSLHRA6KFJFR33'
     AWS_SECRET_ACCESS_KEY = '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'
