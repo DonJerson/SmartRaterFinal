@@ -130,7 +130,7 @@ if r"C:\Users\mende" in BASE_DIR:
     switch=False
     myMinutes=999999999
 
-if False:
+if True:
     # aws settings
     AWS_ACCESS_KEY_ID = 'AKIAXQSSLHRA6KFJFR33'
     AWS_SECRET_ACCESS_KEY = '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'
@@ -144,12 +144,12 @@ if False:
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.mysql',
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
     'NAME': 'smartrater',
-    'USER': 'root',
-    'PASSWORD': 'Pri3to.Server',
-    'HOST': '127.0.0.1',
-    'PORT': '3306'
+    'USER': 'donjerson',
+    'PASSWORD': 'W3lcome77',
+    'HOST': 'localhost',
+    'PORT': '5432'
     }}
 
 else:

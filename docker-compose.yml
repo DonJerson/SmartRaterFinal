@@ -40,6 +40,10 @@ services:
   postgres:
     restart: always
     image: postgres:latest
+    environment:
+      - POSTGRES_USER=donjerson
+      - POSTGRES_PASSWORD=W3lcome77
+      - POSTGRES_DB=smartrater
     ports:
       - "5432:5432"
     volumes:
