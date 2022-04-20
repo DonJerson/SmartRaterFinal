@@ -25,16 +25,16 @@ services:
       - /frontend/node_modules
     working_dir: /frontend
 
-  nginx:
-    restart: always
-    build: ./nginx
-    ports:
-      - "8888:8888"
-    volumes:
-      - web-static:/www/static
-    links:
-      - backend:backend
-      - frontend:frontend
+  # nginx:
+  #   restart: always
+  #   build: ./nginx
+  #   ports:
+  #     - "8888:8888"
+  #   volumes:
+  #     - web-static:/www/static
+  #   links:
+  #     - backend:backend
+  #     - frontend:frontend
 
   postgres:
     restart: always
