@@ -126,41 +126,31 @@ USE_TZ = True
 USE_S3 = os.getenv('USE_S3') == 'TRUE'
 myMinutes=2500
 switch=True
-if r"C:\Users\mende" in BASE_DIR:
-    switch=False
-    myMinutes=999999999
+# # aws settings
 
-if True:
-    # aws settings
-    AWS_ACCESS_KEY_ID = 'AKIAXQSSLHRA6KFJFR33'
-    AWS_SECRET_ACCESS_KEY = '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'
-    AWS_STORAGE_BUCKET_NAME = 'smartinsurancedb'
-    AWS_DEFAULT_ACL = 'public-read'
-    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com'%(AWS_STORAGE_BUCKET_NAME)
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-    # s3 static settings
-    AWS_LOCATION = 'static'
-    STATIC_URL = 'https://%s/%s/'%(AWS_S3_CUSTOM_DOMAIN,AWS_LOCATION)
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    DATABASES = {
-    'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'smartrater',
-    'USER': 'donjerson',
-    'PASSWORD': 'W3lcome77',
-    'HOST': 'localhost',
-    'PORT': '5432'
-    }}
+# AWS_ACCESS_KEY_ID = 'AKIAXQSSLHRA6KFJFR33'
+# AWS_SECRET_ACCESS_KEY = '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'
+# AWS_STORAGE_BUCKET_NAME = 'smartinsurancedb'
+# AWS_DEFAULT_ACL = 'public-read'
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com'%(AWS_STORAGE_BUCKET_NAME)
+# AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+# # s3 static settings
+# AWS_LOCATION = 'static'
+# STATIC_URL = 'https://%s/%s/'%(AWS_S3_CUSTOM_DOMAIN,AWS_LOCATION)
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-else:
-    STATIC_URL = '/static/'
-    STATIC_ROOT = BASE_DIR + '\static'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR + '\static'
 
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }}
+DATABASES = {
+'default': {
+'ENGINE': 'django.db.backends.postgresql_psycopg2',
+'NAME': 'smartrater',
+'USER': 'donjerson',
+'PASSWORD': 'W3lcome77',
+'HOST': 'postgres',
+'PORT': '5432'
+}}
 
 CORS_ORIGIN_WHITE_LIST = '10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','costosback.herokuapp.com','127.0.0.1:8080','localhost:8080',
 
