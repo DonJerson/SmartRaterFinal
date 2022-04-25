@@ -9,5 +9,7 @@ FROM node:14
 WORKDIR /frontend
 COPY ./package.json ./
 RUN npm install
+# Disable warning error messages
+ENV DISABLE_ESLINT_PLUGIN=true
 COPY . ./
 CMD [ "npm","start"]
