@@ -60,5 +60,5 @@ volumes:
   web-static:
   pgdata:
   redisdata:
-  # frontend:
-  # backend:
+  frontend:
+  backend:
