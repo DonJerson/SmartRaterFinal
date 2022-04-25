@@ -7,7 +7,7 @@ services:
     ports:
       - "8081:8081"
     volumes:
-      - ./backend:/backsrc
+      - ./backsrc:/backend
     working_dir: /backend
     links:
       - postgres:postgres
@@ -21,7 +21,7 @@ services:
       - "8080:8080"
     env_file: ./frontsrc/.env
     volumes:
-      - ./frontend:/frontsrc
+      - ./frontsrc:/frontend
       - /frontend/node_modules
     working_dir: /frontend
 
@@ -60,5 +60,5 @@ volumes:
   web-static:
   pgdata:
   redisdata:
-  frontend:
-  backend:
+  # frontend:
+  # backend:

@@ -794,9 +794,9 @@ getUser=()=>{
     const elements = new Elements()
     let portingElements= {paths:elements.listOfAutoQuotePaths,
       labels:elements.listOfAutoQuoteLabels,names:elements.listOfAutoQuoteNames}
-
-      console.log("current Quote",this.state.newQuote)
-      console.log("elements",elements.listOfAutoQuotePaths)
+    console.log('beast PLEASE')
+      // console.log("current Quote",this.state.newQuote)
+      // console.log("elements",elements.listOfAutoQuotePaths)
     return(
       <>
       <Router>
