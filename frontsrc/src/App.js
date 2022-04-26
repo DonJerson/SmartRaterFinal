@@ -91,15 +91,20 @@ const brandss=
 
 
 const getUrl = window.location;
+console.log(getUrl)
+
+let baseUrl = getUrl.hostname.concat(":8081/");
 let neoUrl
-let baseUrl = "https://teteo.smartrater.us:5500/";
+console.log(baseUrl,"mond la depa fini")
+
 let baseWss = "18.216.39.52";
-if(getUrl.host.includes(":5500")){
+if(getUrl.host.includes("127.0.0.1")){
   neoUrl=getUrl.host.substring(0,getUrl.host.length-5)
-  //baseUrl = getUrl.protocol+ "//" + neoUrl +":8000/";
+  baseUrl = getUrl.protocol+ "//" + neoUrl +":8081/";
 }else{
   neoUrl = baseUrl
 }
+
 const capitalize = (s) => {
   if (typeof s !== 'string') return ''
   return s.charAt(0).toUpperCase() + s.slice(1)
@@ -794,7 +799,7 @@ getUser=()=>{
     const elements = new Elements()
     let portingElements= {paths:elements.listOfAutoQuotePaths,
       labels:elements.listOfAutoQuoteLabels,names:elements.listOfAutoQuoteNames}
-    console.log('beast teteo')
+    console.log('beast')
       // console.log("current Quote",this.state.newQuote)
       // console.log("elements",elements.listOfAutoQuotePaths)
     return(
