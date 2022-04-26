@@ -10,6 +10,7 @@ import SavedQuotes from './elements/SavedQuotes';
 import Terms from './elements/Terms';
 import PrivacyPolicy from './elements/PrivacyPolicy';
 import { createBrowserHistory } from 'history';
+import Dashboard from './views/Dashboard';
 // Import the functions you need from the SDKs you need
 
 
@@ -809,6 +810,7 @@ getUser=()=>{
         <MainView path="/" userPack={userPack}/>
         <Teteo path="/teteo" userPack={userPack}/>
         <QuoteView path="/freequote" userPack={userPack}/>
+        <Dashboard path="/dashboard" userPack={userPack}/>
         <PrivacyPolicy path="/privacypolicy" userPack={userPack}/>
         <Terms path="/terms" userPack={userPack}/>
         {elements.listOfAutoQuoteSteps.map((element,index)=>(
