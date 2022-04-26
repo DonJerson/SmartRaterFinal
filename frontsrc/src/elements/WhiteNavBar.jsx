@@ -3,62 +3,62 @@ import BlackTitle from '../secondaryelements/BlackTitle';
 import GeneralField from '../secondaryelements/GeneralField';
 import Modal from './Modal';
 import React from 'react';
-import firebase from 'firebase/compat/app';
-import * as firebaseui from 'firebaseui'
-import 'firebase/compat/auth';
-import 'firebase/firestore'
+// import firebase from 'firebase/compat/app';
+// import * as firebaseui from 'firebaseui'
+// import 'firebase/compat/auth';
+// import 'firebase/firestore'
 
-import 'firebaseui/dist/firebaseui.css'
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// import 'firebaseui/dist/firebaseui.css'
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+// // TODO: Add SDKs for Firebase products that you want to use
+// // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyAXaaKZPm61W0YdtVHu1Yn6w7lsJg8jX_Y",
-  authDomain: "smartrater-46f5b.firebaseapp.com",
-  databaseURL: "https://smartrater-46f5b-default-rtdb.firebaseio.com",
-  projectId: "smartrater-46f5b",
-  storageBucket: "smartrater-46f5b.appspot.com",
-  messagingSenderId: "106479349340",
-  appId: "1:106479349340:web:298ec8ebfa1a33d39d8099",
-  measurementId: "G-62HL0LZD62"
-};
+// // Your web app's Firebase configuration
+// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAXaaKZPm61W0YdtVHu1Yn6w7lsJg8jX_Y",
+//   authDomain: "smartrater-46f5b.firebaseapp.com",
+//   databaseURL: "https://smartrater-46f5b-default-rtdb.firebaseio.com",
+//   projectId: "smartrater-46f5b",
+//   storageBucket: "smartrater-46f5b.appspot.com",
+//   messagingSenderId: "106479349340",
+//   appId: "1:106479349340:web:298ec8ebfa1a33d39d8099",
+//   measurementId: "G-62HL0LZD62"
+// };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
 
 
 function LoginForm(props) {
-  var uiConfig = {
-    signInSuccessUrl: 'https://smartrater-46f5b.web.app/',
-    signInOptions: [
-      // Leave the lines as is for the providers you want to offer your users.
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    ],
-    // tosUrl and privacyPolicyUrl accept either url string or a callback
-    // function.
-    // Terms of service url/callback.
-    tosUrl: 'https://smartrater-46f5b.web.app/',
-    // Privacy policy url/callback.
-    privacyPolicyUrl: function() {
-      window.location.assign('https://smartrater-46f5b.web.app/privacy');
-    }
-  };
-  firebase.initializeApp({...firebaseConfig})
-  var ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase.auth())
-  // The start method will wait until the DOM is loaded.
-  console.log("renderedd",document.getElementsByClassName('loginForm')[0])
-  if(document.getElementById('firebaseui-auth-container')){
-    console.log("modal is active")
-    ui.start('#firebaseui-auth-container', uiConfig);
-  }
+  // var uiConfig = {
+  //   signInSuccessUrl: 'https://smartrater-46f5b.web.app/',
+  //   signInOptions: [
+  //     // Leave the lines as is for the providers you want to offer your users.
+  //     firebase.auth.EmailAuthProvider.PROVIDER_ID,
+  //     firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+  //     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+  //     firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+  //   ],
+  //   // tosUrl and privacyPolicyUrl accept either url string or a callback
+  //   // function.
+  //   // Terms of service url/callback.
+  //   tosUrl: 'https://smartrater-46f5b.web.app/',
+  //   // Privacy policy url/callback.
+  //   privacyPolicyUrl: function() {
+  //     window.location.assign('https://smartrater-46f5b.web.app/privacy');
+  //   }
+  // };
+  // firebase.initializeApp({...firebaseConfig})
+  // var ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase.auth())
+  // // The start method will wait until the DOM is loaded.
+  // console.log("renderedd",document.getElementsByClassName('loginForm')[0])
+  // if(document.getElementById('firebaseui-auth-container')){
+  //   console.log("modal is active")
+  //   ui.start('#firebaseui-auth-container', uiConfig);
+  // }
   const callRegisterModal = () => {
     let neoData={...props.userPack.data};
     neoData.modal.active=true;
