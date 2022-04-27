@@ -16,14 +16,14 @@ function InnsuranceLanding(props){
   
   </svg>
     
-  <div className="row" style={{zIndex:"2",height:"100%",
+  <div className="row center" style={{zIndex:"2",height:"100%",
   paddingTop:"140px",marginLeft:"0px"}}>
   
   <div className="col-12 col-xl-7" style={{zIndex:"2"}}>
   <div className="col-12 center textAlign">
   <p className="title1" style={{width: 659.86, 
     height: 222.25, fontSize: 74, fontWeight: '700', 
-    lineHeight: '100%',color:"white"}}>
+    lineHeight: '100%',color:"white",paddingBottom:props.userPack.dimensions.width<1400?"3rem":"0px"}}>
       Get Insured Whilst Paying
      <span className="green1"> LESS</span>
      </p>
@@ -46,7 +46,7 @@ function InnsuranceLanding(props){
       </div>
   
   </div>
-  <div className="col-12 col-xl-5 center" style={{zIndex:"2", display:props.userPack.dimensions.width<1200?"none":"block"}}>
+  <div className="col-12 col-xl-5 center" style={{zIndex:"2", display:props.userPack.dimensions.width<1400?"none":"block"}}>
           
   <svg width="448" height="439" viewBox="0 0 448 439" fill="none" xmlns="http://www.w3.org/2000/svg">
   <ellipse cx="223.992" cy="219.5" rx="223.992" ry="219.5" fill="#1C2834"/>

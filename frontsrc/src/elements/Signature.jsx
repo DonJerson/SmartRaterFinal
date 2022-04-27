@@ -6,13 +6,16 @@ import BlackTitle from '../secondaryelements/BlackTitle';
     let myPadding
     let signatureBox
     let flexSwitch
+    let maxVal
     const width=props.userPack.dimensions.width
-    if(width<975){signatureBox="46vw"}else{signatureBox="22vw"}
-    if(width<975){myPadding="0vw"}else{myPadding="14vw"}
+    if(width<975){signatureBox="46vw"}else{signatureBox="22vw";maxVal="78vw"}
+    if(width<975){myPadding="0vw"}else{myPadding="14vw";maxVal="86vw"}
     if(width<975){flexSwitch="center"}else{flexSwitch="flexStart"}
       return(
         <>
-        <div className="myRow" style={{paddingLeft:myPadding,paddingRight:myPadding,marginLeft:"0px",paddingTop:"6rem",paddingBottom:"1rem"}}>
+        <div className="myRow" style={{
+            maxWidth:maxVal,
+            paddingLeft:myPadding,paddingRight:myPadding,marginLeft:"0px",paddingTop:"6rem",paddingBottom:"1rem"}}>
             <div className={width<975?"col-12 col-lg-4":"col-12 col-lg-4"} >
                 <div className={"row "+flexSwitch}>
                     <BlackTitle/>

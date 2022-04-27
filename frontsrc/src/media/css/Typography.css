@@ -205,13 +205,47 @@ h1.blackTitle {
 }
 
 .title3 {
-    /* Any at-fault Accidents in the Last 3 years */
-    font-family: KarlaBold;
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 700;
     font-size: 36px;
+    line-height: 42px;
+    /* identical to box height */
+    
     letter-spacing: -0.05em;
+    
     color: #000000;
-    margin-bottom: 20px;
 }
+.title4 {
+    /* Any at-fault Accidents in the Last 3 years */
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 35px;
+    letter-spacing: -0.05em;
+    
+    color: #000000;
+}
+.title5{
+    font-family: 'Karla';
+font-style: normal;
+font-weight: 700;
+font-size: 28px;
+line-height: 33px;
+letter-spacing: -0.05em;
+}
+.title6{
+    font-family: 'Karla';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 26px;
+letter-spacing: -0.05em;
+
+color: #000000;
+}
+
 
 .subtitle3{
     /* Any at-fault Accidents in the Last 3 years */

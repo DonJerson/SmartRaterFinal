@@ -13,7 +13,6 @@ function MainView(props){
     return(
       <>
       <Modal switcher={switcher} active={props.userPack.data.modal.active}>
-
       </Modal>
         <WhiteNavBar userPack={props.userPack}/>
         <InsuranceLanding switcher={switcher} userPack={props.userPack}/>

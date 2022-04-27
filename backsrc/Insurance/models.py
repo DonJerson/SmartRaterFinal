@@ -29,12 +29,20 @@ class AutoDateTimeField(models.DateTimeField):
 
 class Address(models.Model):
 	address1 = models.CharField(max_length=50,blank=True,null=True)
-	address2 = models.CharField(max_length=50,blank=True,null=True)
+	address2 = models.CharField(max_length=50,default='',blank=True,null=True)
 	city = models.CharField(max_length=50,blank=True,null=True)
 	state = models.CharField(max_length=50,blank=True,null=True)
 	zipcode = models.CharField(max_length=50,blank=True,null=True)
 	def __str__(self):
-		return self.street + ', ' + self.city + ', ' + self.state + ', ' + self.zipcode + ', ' + self.country
+		if(self.address1 and self.city and self.state and self.zipcode):
+			if(self.address2):
+				return (
+			self.address1 + ', ' +self.address2+ ', ' 
+			+ self.city + ', ' + self.state + ', ' + self.zipcode)
+			else:
+				return (
+			self.address1 + ', ' + self.city + ', ' + self.state + ', ' + self.zipcode)
+		else: return "Address"
 	pass
 
 class PersonalImage(models.Model):
