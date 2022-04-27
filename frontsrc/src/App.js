@@ -92,14 +92,12 @@ const brandss=
 
 
 const getUrl = window.location;
-console.log(getUrl)
 
 let baseUrl = getUrl.hostname.concat(":8081/");
 let neoUrl
-console.log(baseUrl,"mond la depa fini")
 
 let baseWss = "18.216.39.52";
-if(getUrl.host.includes("127.0.0.1")){
+if(getUrl.host.includes(":8080")){
   neoUrl=getUrl.host.substring(0,getUrl.host.length-5)
   baseUrl = getUrl.protocol+ "//" + neoUrl +":8081/";
 }else{
