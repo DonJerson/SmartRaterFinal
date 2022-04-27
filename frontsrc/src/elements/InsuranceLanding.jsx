@@ -6,12 +6,14 @@ function InnsuranceLanding(props){
   
       <div className="div" style={{height:"100%",width:"100%",overflow:"hidden"}}>
       
-      <svg style={{position:"absolute",zIndex:"1"}} width="100%" preserveAspectRatio="none" height="800" viewBox={"0 0 1285 800"} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg style={{position:"absolute",zIndex:"1"}} width="100%" preserveAspectRatio="none"
+       height="720" viewBox={"0 0 1285 800"} fill="none" xmlns="http://www.w3.org/2000/svg">
         {props.userPack.dimensions.width<600?
        <path d="M211.412 701.696C84.5575 718.418 41.7381 710.235 1 684.338V1H1284V743C1284 743 1184.56 716.854 1083.85 716.854C963.918 716.854 955.45 731.203 838.799 728.86C745.679 726.991 707.63 712.617 610.425 701.696C394.997 677.492 346.322 683.909 214.001 701.354L211.412 701.696Z" fill="#0F1B26" stroke="black"/>
         :
         <path d="M279.629 701.674C152.774 718.396 41.7381 682.826 1 656.929V1H1284V742.977C1284 742.977 1227.17 706.253 1128.09 699.216C1033.94 692.529 903.274 763.137 903.274 763.137C903.274 763.137 849.985 792.889 783.575 763.137C606.35 683.74 413.914 683.973 279.629 701.674Z" fill="#0F1B26" stroke="black"/>
         }
+  
   
   
   </svg>
@@ -79,7 +81,7 @@ function InnsuranceLanding(props){
      textAlign: 'center', color: 'black',}}>
        Powered with Cloud Computing and AI, get dozens of insurance quotes in seconds</p>
     </div>
-    <div className="center" style={{marginTop:"30px",overflow:"hidden"}}>
+    <div className="center" style={{marginTop:props.userPack.dimensions.width<900?"70px":"30px",overflow:"hidden"}}>
     <p className="body1 karlaRegular" style={{minWidth: "80vw", textAlign: 'center',
      color: 'black',}}>
        Enter your zipcode and begin quoting now </p>
@@ -113,8 +115,8 @@ function InnsuranceLanding(props){
 
 <div style={{width:"1rem"}}></div>
 
-  <div className="pinkButton" ><Link to='/freequote'>
-          <p className="karlaBold">Get Quotes</p></Link>
+  <div className="pinkButton center" ><Link to='/freequote'>
+          <p className="pinkButtonTitle">Get Quotes</p></Link>
         </div>
     </div>
     <div className="row center" style={{marginLeft:"0px",marginTop:"30px",overflow:"hidden"}}>

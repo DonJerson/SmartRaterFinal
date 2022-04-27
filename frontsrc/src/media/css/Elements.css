@@ -93,7 +93,17 @@ color: #69C9DE;
     border-radius: 4px;
     cursor: pointer;
 }
+.pinkButtonTitle{
+font-family: 'Karla';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 28px;
+text-align: center;
+letter-spacing: -0.02em;
 
+color: #FFFFFF;
+}
 .myRow {
     width: 100%;
     display: flex;

@@ -82,14 +82,14 @@
 }
 
 .navHeader1 {
-    font-size: 22px;
+    font-size: 20px;
     font-family: PostNoBillsJaffnaBold;
 }
 
 @media (max-width:916px) {
     .title1 {
         font-size: 50px !important;
-        max-width: 59%;
+        max-width: 90vw;
         text-align: center;
     }
     .title2 {
