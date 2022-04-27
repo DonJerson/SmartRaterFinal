@@ -8,14 +8,15 @@ import BlackTitle from '../secondaryelements/BlackTitle';
     let flexSwitch
     let maxVal
     const width=props.userPack.dimensions.width
-    if(width<975){signatureBox="46vw"}else{signatureBox="22vw";maxVal="78vw"}
-    if(width<975){myPadding="0vw"}else{myPadding="14vw";maxVal="86vw"}
-    if(width<975){flexSwitch="center"}else{flexSwitch="flexStart"}
+    if(width<975){signatureBox="40vw"}else{signatureBox="22vw";maxVal="78vw"}
+    if(width<975){myPadding="5vw";maxVal="95vw"}else{myPadding="28vw";maxVal="43vw"}
+    if(width<975){flexSwitch="flexStart"}else{flexSwitch="flexStart"}
       return(
         <>
         <div className="myRow" style={{
-            maxWidth:maxVal,
-            paddingLeft:myPadding,paddingRight:myPadding,marginLeft:"0px",paddingTop:"6rem",paddingBottom:"1rem"}}>
+            maxWidth:maxVal,maxHeight:"265px",
+            paddingLeft:myPadding,paddingRight:myPadding,marginLeft:"0px",
+            paddingTop:"6rem"}}>
             <div className={width<975?"col-12 col-lg-4":"col-12 col-lg-4"} >
                 <div className={"row "+flexSwitch}>
                     <BlackTitle/>
@@ -32,8 +33,16 @@ import BlackTitle from '../secondaryelements/BlackTitle';
     </svg>
 
                         </div>
-                        <div className="karlaRegular" style={{width:"215px"}}>
-                        2000 N Dixe Hwy Suite 6 Lake Worth, FL 33467
+                        <div>
+                        <div className="karlaRegular" >
+                        2000 N Dixe Hwy
+                        </div>
+                        <div className="karlaRegular" >
+                        Suite 6
+                        </div>
+                        <div className="karlaRegular" >
+                        Lake Worth, FL 33467
+                        </div>
                         </div>
 
                     </div>
@@ -46,9 +55,9 @@ import BlackTitle from '../secondaryelements/BlackTitle';
     <path d="M19.6652 26.6459H19.703C20.4158 26.6459 21.0895 26.3688 21.5998 25.8651L25.2611 22.2518C25.3866 22.1281 25.4862 21.9813 25.5541 21.8197C25.622 21.658 25.657 21.4848 25.657 21.3098C25.657 21.1348 25.622 20.9615 25.5541 20.7999C25.4862 20.6383 25.3866 20.4914 25.2611 20.3678L19.8609 15.0384C19.7357 14.9145 19.5869 14.8163 19.4231 14.7492C19.2593 14.6822 19.0837 14.6477 18.9064 14.6477C18.7291 14.6477 18.5536 14.6822 18.3898 14.7492C18.226 14.8163 18.0772 14.9145 17.9519 15.0384L15.8 17.1621C14.8023 16.869 12.9405 16.2028 11.7606 15.0384C10.5807 13.8739 9.90563 12.0366 9.60862 11.0519L11.7606 8.92815C11.8861 8.80453 11.9856 8.6577 12.0536 8.49606C12.1215 8.33442 12.1564 8.16116 12.1564 7.98617C12.1564 7.81119 12.1215 7.63792 12.0536 7.47629C11.9856 7.31465 11.8861 7.16782 11.7606 7.0442L6.36039 1.71475C6.10229 1.47433 5.76082 1.3404 5.4059 1.3404C5.05099 1.3404 4.70951 1.47433 4.45142 1.71475L0.791423 5.32811C0.278403 5.83441 -0.0105081 6.5299 0.000292347 7.24005C0.0313436 9.13733 0.540313 15.7272 5.80282 20.9207C11.0653 26.1143 17.7427 26.6153 19.6652 26.6459V26.6459ZM5.40725 4.54069L8.89849 7.98617L7.15287 9.70892C6.99402 9.86526 6.87732 10.0583 6.81342 10.2706C6.74952 10.4828 6.74044 10.7074 6.78701 10.924C6.81941 11.0773 7.61189 14.7106 9.85298 16.9223C12.0941 19.134 15.7757 19.9161 15.9309 19.9481C16.1504 19.9943 16.3781 19.9855 16.5932 19.9224C16.8083 19.8593 17.0039 19.744 17.1622 19.587L18.9078 17.8643L22.399 21.3098L19.6908 23.9812C18.0059 23.9532 12.2412 23.5069 7.71179 19.0354C3.16752 14.5507 2.7274 8.84155 2.7004 7.21207L5.40725 4.54069ZM24.2999 11.9899H27C27 5.15491 21.7712 0 14.836 0V2.66472C20.3199 2.66472 24.2999 6.58586 24.2999 11.9899V11.9899Z" fill="black"/>
     <path d="M14.8495 7.99434C17.6886 7.99434 18.8996 9.18948 18.8996 11.9915H21.5998C21.5998 7.69455 19.2034 5.32959 14.8495 5.32959V7.99434V7.99434Z" fill="black"/>
     </svg> </div>
-    <div style={{width:"215px"}}>
+    <div>
     <div className="karlaBold">
-    Call 24/7 for a free quote
+    Call for a free quote
                         </div>
                         <div className="karlaRegular">
     (561) 853-1537
@@ -64,12 +73,12 @@ import BlackTitle from '../secondaryelements/BlackTitle';
                         <svg width="25" height="20" viewBox="0 0 25 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M20.7126 2.89992L21.9119 2H20.4125H4.5875H3.08813L4.2874 2.89992L12.1999 8.83742L12.5 9.06262L12.8001 8.83742L20.7126 2.89992ZM2.8 3.6625L2 3.0625V4.0625V16.25C2 16.7141 2.18437 17.1592 2.51256 17.4874C2.84075 17.8156 3.28587 18 3.75 18H21.25C21.7141 18 22.1592 17.8156 22.4874 17.4874C22.8156 17.1592 23 16.7141 23 16.25V4.0625V3.0625L22.2 3.6625L12.95 10.6C12.8202 10.6974 12.6623 10.75 12.5 10.75C12.3377 10.75 12.1798 10.6974 12.05 10.6L2.8 3.6625ZM3.75 0.5H21.25C22.112 0.5 22.9386 0.84241 23.5481 1.4519C24.1576 2.0614 24.5 2.88805 24.5 3.75V16.25C24.5 17.112 24.1576 17.9386 23.5481 18.5481C22.9386 19.1576 22.112 19.5 21.25 19.5H3.75C2.88805 19.5 2.0614 19.1576 1.4519 18.5481C0.84241 17.9386 0.5 17.112 0.5 16.25V3.75C0.5 2.88805 0.84241 2.0614 1.4519 1.4519C2.0614 0.84241 2.88805 0.5 3.75 0.5Z" fill="black" stroke="black"/>
     </svg></div>
-    <div style={{width:"215px"}}>
-    <div className="karlaBold" style={{width:"200px"}}>
+    <div>
+    <div className="karlaBold">
     Have questions?
                         </div>
                     
-                        <div className="karlaRegular" style={{width:"200px"}}>
+                        <div className="karlaRegular">
     info@smartrater.us
                         </div>
                     
@@ -82,52 +91,52 @@ import BlackTitle from '../secondaryelements/BlackTitle';
             <div className="col-12 col-lg-8">
 
             {/* 975-992 = la diferans entre html px and react px width */}
-                <div className={width<975?"row center":"row flexStart"} style={{marginTop:width<975?"70px":"0px"}}>
+                <div className={width<975?"row center":"row flexStart"} style={{marginTop:width<975?"0px":"0px"}}>
                     <div style={{width:signatureBox,minHeight:"170px"}}>
-                        <div className="myRow">
-                        <p className="signatureTitle">Insurance Quotes</p>
+                        <div className="myRow center">
+                        <p className="signatureTitle center">Insurance Quotes</p>
                         </div>
-                        <div className="myRow">
+                        <div className="myRow center">
                             <p className="signatureSecondaryTitle">
                                 Auto
                             </p>
                         </div>
-                        <div className="myRow">
+                        <div className="myRow center">
                             <p className="signatureSecondaryTitle">
                                 Home
                             </p>
                         </div>
-                        <div className="myRow">
+                        <div className="myRow center">
                             <p className="signatureSecondaryTitle">
                                 Life
                             </p>
                         </div>
-                        <div className="myRow">
+                        <div className="myRow center">
                             <p className="signatureSecondaryTitle">
                                 Health
                             </p>
                         </div>
-                        <div className="myRow">
+                        <div className="myRow center">
                             <p className="signatureSecondaryTitle">
                                 Medicare
                             </p>
                         </div>
-                        <div className="myRow">
+                        <div className="myRow center">
                             <p className="signatureSecondaryTitle">
                                 Commercial
                             </p>
                         </div>
                     </div>
                     <div style={{width:signatureBox,minHeight:"170px"}}>
-                         <p className="signatureTitle">About us</p>
-                         <div className="myRow">
+                         <p className="signatureTitle center">About us</p>
+                         <div className="myRow center">
                              <Link to='/privacypolicy'>
                             <p className="signatureSecondaryTitle">
                                 Privacy Policy
                             </p>
                             </Link>
                         </div>
-                        <div className="myRow">
+                        <div className="myRow center">
                         <Link to='/terms'>
                             <p className="signatureSecondaryTitle">
                                 Terms of Use
