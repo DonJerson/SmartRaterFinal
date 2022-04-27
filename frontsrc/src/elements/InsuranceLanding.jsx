@@ -23,7 +23,7 @@ function InnsuranceLanding(props){
   <div className="col-12 center textAlign">
   <p className="title1" style={{width: 659.86, 
     height: 222.25, fontSize: 74, fontWeight: '700', 
-    lineHeight: '100%',color:"white",paddingBottom:props.userPack.dimensions.width<1400?"3rem":"0px"}}>
+    lineHeight: '100%',color:"white",paddingBottom:props.userPack.dimensions.width<930?"0rem":"3rem"}}>
       Get Insured Whilst Paying
      <span className="green1"> LESS</span>
      </p>
@@ -77,7 +77,7 @@ function InnsuranceLanding(props){
     <div className="center" style={{marginTop:"260px",overflow:"hidden"}}>
     <p className="title2 karlaBold" style={{minWidth: "80vw",
      textAlign: 'center', color: 'black',}}>
-       Powered with Cloud Computing and AI, get dozens of quotes in seconds</p>
+       Powered with Cloud Computing and AI, get dozens of insurance quotes in seconds</p>
     </div>
     <div className="center" style={{marginTop:"30px",overflow:"hidden"}}>
     <p className="body1 karlaRegular" style={{minWidth: "80vw", textAlign: 'center',
