@@ -9,7 +9,7 @@ function Dashboard(props){
   const logOut = () => {
     localStorage.removeItem('token');
     props.userPack.refs.mainView.current.click();
-    location.reload()
+    window.location.reload()
   }
   console.log(props.userPack.user)
     return(
