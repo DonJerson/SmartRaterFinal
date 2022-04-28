@@ -86,12 +86,20 @@
     font-family: PostNoBillsJaffnaBold;
 }
 
-@media (max-width:916px) {
+@media (max-width:762px) {
     .title1 {
         font-size: 50px !important;
-        max-width: 90vw;
+        max-width: 88vw;
         text-align: center;
+        max-height: 140px !important;
+        margin-bottom: 5px;
     }
+    .title6{
+        font-size: 24px !important;
+    }
+}
+@media (max-width:916px) {
+
     .title2 {
         font-size: 40px !important;
         max-width: 85% !important;
@@ -102,6 +110,12 @@
     }
     .subtitle3 {
         font-size: 12px !important;
+    }
+    .subtitle4{
+        margin-top: 20px;
+        align-content: center;
+        text-align: center;
+        max-width: 80% !important;
     }
     .blackTitle {
         font-size: 40px !important;
@@ -123,10 +137,12 @@
 
 .title1 {
     /* Get Insured WhilstPaying LESS */
-    width: 659.86px;
+    width: 800px !important;
     font-family: SpectralBold;
     font-size: 74px;
     color: #FFFFFF;
+    max-height: 160px;
+    margin-bottom: 24px;
 }
 
 h1.blackTitle {

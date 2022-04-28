@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from "@reach/router";
 function InnsuranceLanding(props){
+  // let subTitle4 =
+  // {...props.userPack.dimensions.width>600?"flexEnd":"center"
+
     return(
       <>
   
@@ -19,7 +22,7 @@ function InnsuranceLanding(props){
   </svg>
     
   <div className="row center" style={{zIndex:"2",height:"100%",
-  paddingTop:"140px",marginLeft:"0px"}}>
+  paddingTop:"120px",marginLeft:"0px"}}>
   
   <div className="col-12 col-xl-7" style={{zIndex:"2"}}>
   <div className="col-12 center textAlign">
@@ -73,10 +76,25 @@ function InnsuranceLanding(props){
   
   
   </div>
-  </div>
+
   
   </div>
-    <div className="center" style={{marginTop:"260px",overflow:"hidden"}}>
+  {console.log("la dimension",props.userPack.dimensions.width)}
+  <div className={"myRow ".concat(props.userPack.dimensions.width>1399?"flexEnd":"center")} style={{marginTop:"8px"}}>
+  <p className="subtitle4"
+   style={{fontSize:"24px",color:"white",
+  fontFamily: 'Karla',
+  fontStyle: 'normal',
+  fontWeight: 700,
+  fontWize: '26px',
+  lineHeight: '30px',
+  fontWeight:1000,zIndex:1,paddingRight:"20px",paddingTop:"10px"}}>
+    Find affordable  <span style={{color: "#1BC19E"}}>HOME
+    </span>,  <span style={{color: "#1BC19E"}}>AUTO</span>, <span style={{color: "#1BC19E"}}>LIFE
+    </span> and <span style={{color: "#1BC19E"}}>HEALTH</span> coverage</p>
+  </div>
+  </div>
+    <div className="center" style={{marginTop:"10rem",overflow:"hidden"}}>
     <p className="title2 karlaBold" style={{minWidth: "80vw",
      textAlign: 'center', color: 'black',}}>
        Powered with Cloud Computing and AI, get dozens of insurance quotes in seconds</p>

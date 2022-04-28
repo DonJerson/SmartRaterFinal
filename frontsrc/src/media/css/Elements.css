@@ -69,7 +69,7 @@ color: #69C9DE;
 @media (max-width:600px) {
     .innerModalBox {
         width: 95% !important;
-        height: 90% !important;
+        height: 70% !important;
     }
 }
 
@@ -78,6 +78,8 @@ color: #69C9DE;
     position: relative;
     width: 70%;
     height: 80%;
+    padding:25px;
+    box-sizing: border-box;
     background: #FFFFFF;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
     border-radius: 10px;

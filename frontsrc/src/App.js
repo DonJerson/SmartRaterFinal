@@ -22,7 +22,7 @@ axios.defaults.withCredentials = false;
 
 const     newCustomerRaw ={
   "id": 7,
-  "profilePicture": null,
+  "profilePicture": {url:""},
   "supportChats": [],
   "carList": [],
   "additionalDriversList": [],
@@ -101,6 +101,7 @@ if(getUrl.host.includes(":8080")){
   neoUrl=getUrl.host.substring(0,getUrl.host.length-5)
   baseUrl = getUrl.protocol+ "//" + neoUrl +":8081/";
 }else{
+  baseUrl = "http"
   neoUrl = baseUrl
 }
 
