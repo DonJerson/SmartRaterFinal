@@ -13,7 +13,6 @@ import { createBrowserHistory } from 'history';
 import Dashboard from './views/Dashboard';
 // Import the functions you need from the SDKs you need
 
-
 const axios = require('axios');
 
 axios.defaults.xsrfCookieName = 'csrftoken';
