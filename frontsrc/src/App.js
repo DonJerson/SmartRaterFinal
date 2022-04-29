@@ -92,14 +92,14 @@ const brandss=
 
 const getUrl = window.location;
 
-let baseUrl = "https://jersonmendez.com:8081/";
+let baseUrl = getUrl.protocol +"//jersonmendez.com:8081/";
 
-let neoUrl ="https://jersonmendez.com"
+let neoUrl =getUrl.protocol +"//jersonmendez.com"
 
 let baseWss = "18.216.39.52";
 if(getUrl.host.includes(":8080")){
-  neoUrl=getUrl.host.substring(0,getUrl.host.length-4)
-  baseUrl = getUrl.protocol+ "//" + getUrl.hostname +"8081/";
+  neoUrl=getUrl.hostname
+  baseUrl = getUrl.protocol+ "//" + getUrl.hostname +":8081/";
 }
 
 const capitalize = (s) => {
@@ -470,6 +470,7 @@ login = (username,password) =>{
   neoData.modal=neoModal
   this.setState({data:neoData})
   const that = this
+  console.log("qloq ta pasando",baseUrl)
   axios.post(baseUrl+"token-auth/",{username,password})
   
   .then(res=>{
