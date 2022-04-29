@@ -93,7 +93,7 @@ const brandss=
 
 const getUrl = window.location;
 
-baseUrl = "https://jersonmendez.com:8081/";
+let baseUrl = "https://jersonmendez.com:8081/";
 
 let neoUrl ="https://jersonmendez.com"
 
