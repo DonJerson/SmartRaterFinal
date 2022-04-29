@@ -101,7 +101,7 @@ if(getUrl.host.includes(":8080")){
   neoUrl=getUrl.host.substring(0,getUrl.host.length-5)
   baseUrl = getUrl.protocol+ "//" + neoUrl +":8081/";
 }else{
-  baseUrl = "https://"
+  baseUrl = "https://jersonmendez.com:8081/";
   neoUrl = baseUrl
 }
 
