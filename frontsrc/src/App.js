@@ -93,16 +93,14 @@ const brandss=
 
 const getUrl = window.location;
 
-let baseUrl = getUrl.hostname.concat(":8081/");
-let neoUrl
+let baseUrl = "https://jersonmendez.com:8081/";
+
+let neoUrl ="https://jersonmendez.com"
 
 let baseWss = "18.216.39.52";
 if(getUrl.host.includes(":8080")){
-  neoUrl=getUrl.host.substring(0,getUrl.host.length-5)
-  baseUrl = getUrl.protocol+ "//" + neoUrl +":8081/";
-}else{
-  baseUrl = "https://"
-  neoUrl = baseUrl
+  neoUrl=getUrl.host.substring(0,getUrl.host.length-4)
+  baseUrl = getUrl.protocol+ "//" + getUrl.hostname +"8081/";
 }
 
 const capitalize = (s) => {
