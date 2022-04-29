@@ -10,7 +10,6 @@ services:
       - ./backsrc:/backend
     working_dir: /backend
     links:
-      - postgres:postgres
       - redis:redis
     environment:
       DEBUG: 'true'
@@ -36,17 +35,17 @@ services:
   #     - backend:backend
   #     - frontend:frontend
 
-  postgres:
-    restart: always
-    image: postgres:latest
-    environment:
-      - POSTGRES_USER=donjerson
-      - POSTGRES_PASSWORD=W3lcome77
-      - POSTGRES_DB=smartrater
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data/
+  # postgres:
+  #   restart: always
+  #   image: postgres:latest
+  #   environment:
+  #     - POSTGRES_USER=donjerson
+  #     - POSTGRES_PASSWORD=W3lcome77
+  #     - POSTGRES_DB=smartrater
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data/
 
   redis:
     restart: always
@@ -58,7 +57,7 @@ services:
       
 volumes:
   web-static:
-  pgdata:
+  # pgdata:
   redisdata:
   frontend:
   backend:
