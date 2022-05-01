@@ -148,7 +148,7 @@ DATABASES = {
 'NAME': 'smartrater',
 'USER': 'donjerson',
 'PASSWORD': 'baSzi3-fonqax-jygwad',
-'HOST': 'jersonmendez.com',
+'HOST': '157.245.128.213',
 'PORT': '5432'
 }}
 
