@@ -92,9 +92,9 @@ const brandss=
 
 const getUrl = window.location;
 
-let baseUrl = getUrl.protocol +"//jersonmendez.com/";
+let baseUrl = getUrl.protocol +"//backend.jersonmendez.com/";
 
-let neoUrl =getUrl.protocol +"//jersonmendez.com/";
+let neoUrl =getUrl.protocol +"//backend.jersonmendez.com/";
 
 let baseWss = "18.216.39.52";
 if(getUrl.host.includes(":8080")){
