@@ -5,13 +5,30 @@ import WhiteNavBar from '../elements/WhiteNavBar';
 
 import '../media/css/dashElements.css';
 import GreenBox from '../secondaryelements/GreenBox';
+
+// const isVarString =(a)=>{
+//   if(a){
+//     return a
+//   }else{
+//     return ""
+//   }
+
+  
+// }
+
 function Dashboard(props){
   const logOut = () => {
     localStorage.removeItem('token');
     props.userPack.refs.mainView.current.click();
     window.location.reload()
   }
-  console.log(props.userPack.user)
+  let userProfilePic = "url(https://www.pngfind.com/pngs/m/540-5404923_my-wedding-missing-profile-picture-icon-hd-png.png)"
+  try {
+    profilePicture="url("+props.userPack.user.profilePicture.url+")"
+  } catch (error) {
+  }
+  
+  // console.log(props.userPack.user)
     return(
       <>
        {console.log(props.userPack.user)}
@@ -26,7 +43,7 @@ function Dashboard(props){
       <div className="title6 link">Assets</div>
     </div> */}
     <div className="myRow center">
-    <div className="profilePic" style={{backgroundImage:"url("+props.userPack.user.profilePicture.url+")",
+    <div className="profilePic" style={{backgroundImage:userProfilePic,
     WebkitBackgroundSize:"100%"
   }}></div>
     </div>

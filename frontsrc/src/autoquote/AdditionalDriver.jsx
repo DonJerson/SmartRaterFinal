@@ -152,7 +152,8 @@ import { waitFor } from '@testing-library/react';
         {this.state.localPack.step==0?
      <div className="myRow center"  style={{marginTop:"1rem"}}>
 <div value={'/autoquote/'+this.props.userPack.quoteSteps[this.props.data.step+1]}
-className={'blueBox'} style={{minWidth:"22vw"}} onClick={this.props.userPack.methods.setAdditionalVehsNext}>No</div>
+className={'blueBox'} style={{minWidth:"22vw"}} 
+onClick={this.props.userPack.methods.setAdditionalVehsNext}>No</div>
 <div value={'/autoquote/'+this.props.userPack.quoteSteps[this.props.data.step+1]}
  style={{minWidth:"22vw"}} className={'blueBox'} onClick={this.nextStep}>Yes</div>
 </div>

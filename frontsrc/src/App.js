@@ -19,6 +19,8 @@ axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = false;
 
+let testUserToken ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjUyMDg0OTA2LCJlbWFpbCI6IiJ9.55WQmmx8wa3Rr5iTkwGQ0Abld6zRI4YmrgSJxsuiD4U"
+
 const     newCustomerRaw ={
   "id": 7,
   "profilePicture": {url:""},
@@ -378,6 +380,7 @@ class App extends Component {
   systemLogin=(user,token)=>{
     window.localStorage.setItem('token',token);
     window.localStorage.setItem('userId',user.id);
+    console.log("user login ",token)
     //let notifications = [].concat(user.activeLeasing).concat(user.activeRenting)
     //const notificationClient = this.openNotifications(user.id)
     this.setState({user:user,fetchedUser:true,logged:true});
@@ -678,6 +681,7 @@ getUser=()=>{
           //this.vehiclesRef.current.click()
       
         }
+        
         setAdditionalDrivsNext = (e)=>{
           //this.resultsRef.current.click()
           // let newData = {...this.state.data}
@@ -696,16 +700,25 @@ getUser=()=>{
           newQuote.diverAmount=0
           this.setState({data:newData,newQuote})
         }
+        logout=()=>{
+          localStorage.removeItem('token');
+          this.mainView.current.click();
+          window.location.reload()
+        }
         setAdditionalVehsNext=(e)=>{
           e.preventDefault()
           e.stopPropagation()
           let newData = {...this.state.data}
           let newQuote ={...this.state.newQuote}
+          console.log("la nueva cuota",{...this.state.newQuote})
           newData.vehicleAmount=0
           newQuote.vehicleAmount=0
           window.localStorage.setItem(e.target.parentElement.getAttribute('name'),e.target.getAttribute('value'))
+          
           this.setState({data:newData,newQuote})
-          this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step+1]}`,this.state.data.step)
+          console.log("la nueva cuota",{...this.state.newQuote},"el user ",this.state.user)
+         // this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step+1]}`,this.state.data.step)
+         this.resultsRef.current.click()
         }
         setAdditionalVehs=(e)=>{
           let newData = {...this.state.data}
@@ -774,7 +787,7 @@ getUser=()=>{
       newQuoteView:this.newQuoteRef,newAutoQuoteView:this.newAutoQuoteViewRef,
       mainView:this.mainViewRef,driversRef:this.driversRef,vehiclesRef:this.vehiclesRef,resultsRef:this.resultsRef,resumeRef:this.resumeRef,}
     const methods={axios,baseUrl,selector:this.selector,setAdditionalVehs:this.setAdditionalVehs,
-      setAdditionalVehsNext:this.setAdditionalVehsNext,
+      setAdditionalVehsNext:this.setAdditionalVehsNext,logout:this.logout,
       driverSelector:this.driverSelector,vehicleSelector:this.vehicleSelector,
       flyOutEffect:this.flyOutEffect,closeModal:this.closeModal,login:this.login,
       handleRegister:this.handleRegister,systemLogin:this.systemLogin,next:this.next,
@@ -797,7 +810,7 @@ getUser=()=>{
     const elements = new Elements()
     let portingElements= {paths:elements.listOfAutoQuotePaths,
       labels:elements.listOfAutoQuoteLabels,names:elements.listOfAutoQuoteNames}
-    console.log('beast')
+      // console.log('beast')
       // console.log("current Quote",this.state.newQuote)
       // console.log("elements",elements.listOfAutoQuotePaths)
     return(

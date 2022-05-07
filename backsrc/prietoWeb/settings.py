@@ -14,7 +14,7 @@ SECRET_KEY = '^$am8n_mab&2u^lobwr4gd9wwi8f04jg5frtil^0u_*z214%2('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','inversionesmendez.herokuapp.com','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['prieto','backend.jersonmendez.com','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','inversionesmendez.herokuapp.com','127.0.0.1','localhost']
 
 # Application definition   
 CORS_ORIGIN_ALLOW_ALL=True
@@ -125,7 +125,9 @@ USE_TZ = True
 # /////////// AWS
 USE_S3 = os.getenv('USE_S3') == 'TRUE'
 myMinutes=2500
-switch=True
+dev=False
+if(BASE_DIR=="/backend"):
+    dev=True
 # # aws settings
 
 # AWS_ACCESS_KEY_ID = 'AKIAXQSSLHRA6KFJFR33'
@@ -138,21 +140,29 @@ switch=True
 # AWS_LOCATION = 'static'
 # STATIC_URL = 'https://%s/%s/'%(AWS_S3_CUSTOM_DOMAIN,AWS_LOCATION)
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+if(dev):
+    DATABASES = {
+        'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'smartrater',
+        }}
+else:
+    DATABASES = {
+        'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'smartrater',
+        'USER': 'donjerson',
+        'PASSWORD': 'baSzi3-fonqax-jygwad',
+        'HOST': '157.245.128.213',
+        'PORT': '5432'
+        }}
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR + '\static'
 
-DATABASES = {
-'default': {
-'ENGINE': 'django.db.backends.postgresql_psycopg2',
-'NAME': 'smartrater',
-'USER': 'donjerson',
-'PASSWORD': 'baSzi3-fonqax-jygwad',
-'HOST': '157.245.128.213',
-'PORT': '5432'
-}}
 
-CORS_ORIGIN_WHITE_LIST = '172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','127.0.0.1:8080','localhost:8080',
+
+CORS_ORIGIN_WHITE_LIST = 'prieto','backend.jersonmendez.com','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','127.0.0.1:8080','localhost:8080',
 
 JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER' :   'Insurance.utils.custom_jwt_response_handler',
