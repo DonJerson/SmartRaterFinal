@@ -91,6 +91,11 @@ function LoginForm(props) {
 </>
 :
 <>
+{props.userPack.data.modal.innerError?
+<span style={{paddingBottom:"30px",color:"red"}}>{props.userPack.data.modal.innerError}</span>
+:
+<span></span>
+}
     <div className="myRow">
     <GeneralField required={true} type="username"
 className="generalField" onChange={dataHandler} value={props.userPack.data.username} name="username" placeholder="Username"/>
@@ -208,6 +213,9 @@ function WhiteNavBar(props){
     neoData.modal.type="Login";
     props.userPack.methods.stateHandling('data',neoData);
   }
+  const logout = () => {
+    props.userPack.methods.logout();
+  }
   const callRegisterModal = () => {
     let neoData={...props.userPack.data};
     neoData.modal.active=true;
@@ -275,7 +283,7 @@ active={props.userPack.data.modal.active} userPack={props.userPack}>
                         <Link to="/dashboard/userId">
                         <p className="bulletPoint">Mi cuenta</p>
                         </Link>
-                        <a href="#" onClick={()=>{}}>
+                        <a href="#" onClick={logout}>
                         <p className="bulletPoint">Logout</p>
                         </a>
                     </div>

@@ -1,0 +1,1 @@
+curl --header "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjUyMDg0OTA2LCJlbWFpbCI6IiJ9.55WQmmx8wa3Rr5iTkwGQ0Abld6zRI4YmrgSJxsuiD4U" -I http://prieto:8081/api/customer/2/

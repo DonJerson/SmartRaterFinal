@@ -493,11 +493,14 @@ login = (username,password) =>{
   },
   error=>{
     
-    // console.log("hay bobooo")
+    console.log("hay bobo con le login")
     let neoModal = {...this.state.modal}
     neoModal.innerLoading=false
     neoModal.innerError="Usuario y/o contraseña incorrecta"
-    this.setState({modal:neoModal})
+    let neoData = {...this.state.data}
+    neoData.modal.innerLoading=false
+    neoData.modal.innerError="Usuario y/o contraseña incorrecta"
+    this.setState({data:neoData,modal:neoModal})
       return false
 })}
 quoteStateHandler=(e)=>{
@@ -702,7 +705,7 @@ getUser=()=>{
         }
         logout=()=>{
           localStorage.removeItem('token');
-          this.mainView.current.click();
+          this.mainViewRef.current.click();
           window.location.reload()
         }
         setAdditionalVehsNext=(e)=>{
