@@ -1,0 +1,52 @@
+#!/bin/sh
+
+VAR1="\"${PWD}\""
+VAR2="/Users/jersonmendez"
+
+if [[ "$VAR1" == *"$VAR2"* ]]; then
+    cd ..
+    cd "${PWD}/smartrater"
+else
+    cd "/root/smartrater"
+fi
+
+git remote update
+UPSTREAM=${1:-'@{u}'}
+LOCAL=$(git rev-parse @)
+REMOTE=$(git rev-parse "$UPSTREAM")
+BASE=$(git merge-base @ "$UPSTREAM")
+
+if [ $LOCAL = $REMOTE ]; then
+    echo "Up-to-date smartrater"
+elif [ $LOCAL = $BASE ]; then
+    echo "Need to pull"
+    git pull origin master
+elif [ $REMOTE = $BASE ]; then
+    echo "Need to push"
+else
+    echo "Diverged"
+fi
+
+if [[ "$VAR1" == *"$VAR2"* ]]; then
+    cd ..
+    cd "${PWD}/systemfiles"
+else
+    cd "/root/systemfiles"
+fi
+
+git remote update
+UPSTREAM=${1:-'@{u}'}
+LOCAL=$(git rev-parse @)
+REMOTE=$(git rev-parse "$UPSTREAM")
+BASE=$(git merge-base @ "$UPSTREAM")
+
+if [ $LOCAL = $REMOTE ]; then
+    echo "Up-to-date files"
+elif [ $LOCAL = $BASE ]; then
+    echo "Need to pull"
+    git pull origin master
+elif [ $REMOTE = $BASE ]; then
+    echo "Need to push"
+else
+    echo "Diverged"
+fi

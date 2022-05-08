@@ -1,0 +1,13 @@
+# Minerd Paths
+
+[Unit]
+Description=Git Refresher
+After=network.target
+
+[Service]
+ExecStart=/home/minerd/systemfiles/updateWorker
+Restart=always
+WorkingDirectory=/home/minerd
+
+[Install]
+WantedBy=multi-user.target
