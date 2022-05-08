@@ -286,7 +286,8 @@ class App extends Component {
       let myBrand=neoQuote.brand
       let myEl = document.getElementById('myBox')
       /////1ST SEGMENT IF BRAND IS SET, FETCH MODELS DATA FROM BRAND
-      if(myBrand){
+      console.log("real faux",myVar,neoQuote.vin)
+      if(myBrand||neoQuote.vin){
         if(myBrand!=null){
           getModels= await axios.post(`https://5m6n0z1yta.execute-api.us-east-2.amazonaws.com/dev/getModels/`,{"brand":myBrand}).then(resp=>{
 
@@ -297,6 +298,8 @@ class App extends Component {
             console.log("faux")
             return
           }
+        }else if(myVar=="select-model"&&neoQuote.vin){
+          navigate(neoData.steps[4])
         }
         }
       /////2ND SEGMENT MAKE STEP ELEMENT FLY IN
@@ -702,6 +705,7 @@ getUser=()=>{
           let newQuote ={...this.state.newQuote}
           newQuote.diverAmount=0
           this.setState({data:newData,newQuote})
+          
         }
         logout=()=>{
           localStorage.removeItem('token');
@@ -719,9 +723,9 @@ getUser=()=>{
           window.localStorage.setItem(e.target.parentElement.getAttribute('name'),e.target.getAttribute('value'))
           
           this.setState({data:newData,newQuote})
-          console.log("la nueva cuota",{...this.state.newQuote},"el user ",this.state.user)
-         // this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step+1]}`,this.state.data.step)
-         this.resultsRef.current.click()
+
+         this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step+1]}`,this.state.data.step)
+         
         }
         setAdditionalVehs=(e)=>{
           let newData = {...this.state.data}
