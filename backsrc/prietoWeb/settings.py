@@ -152,8 +152,8 @@ else:
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'smartrater',
         'USER': 'donjerson',
-        'PASSWORD': 'baSzi3-fonqax-jygwad',
-        'HOST': '157.245.128.213',
+        'PASSWORD': 'Pri3to.Server',
+        'HOST': '44.204.229.185',
         'PORT': '5432'
         }}
 

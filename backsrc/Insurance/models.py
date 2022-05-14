@@ -5,7 +5,7 @@ import uuid
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
-
+from datetime import timedelta, date
 
 PROPERTY_CHOICES = [('house','House'),('apt','Apartment'),('bulding','Building')]
 
@@ -24,6 +24,25 @@ BUSINESS_TYPES = [('PA','Personal Auto'),('CA','Commercial Auto'),('HO','HomeOwn
 class AutoDateTimeField(models.DateTimeField):
     def pre_save(self, model_instance, add):
         return timezone.now()
+
+
+UNIT_CHOICES = [('Km/gal','KM'),('Mi/gal','MI')]
+PAYMENT_CHOICES = [('CARD','Card'),('CASH','Cash'),('BTC','BTC'),('PAYP','PayPal')]
+
+def daterange(start_date, end_date):
+    for n in range(int ((end_date - start_date).days)):
+        yield start_date + timedelta(n)
+    return
+
+class CarsDB(models.Model):
+	brand = models.CharField(max_length=25,blank=True,null=True)
+	model = models.CharField(max_length=60,blank=True,null=True)
+	years = models.CharField(max_length=15,blank=True,null=True)
+	carType = models.CharField(max_length=50,blank=True,null=True)
+	def __str__(self):
+		return self.brand+" "+self.model
+	pass
+
 
 ############ General
 

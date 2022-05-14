@@ -11,6 +11,11 @@ import GeneralField from '../secondaryelements/GeneralField';
       props.userPack.methods.flyOutEffect(`/autoquote/${props.userPack.quoteSteps[props.userPack.data.step+3]}`,props.userPack.data.step+3)
     }else{setError('VIN must be 17 characters long ('+(17-props.userPack.data.vin.length)+' missing)')}
   }
+  const forcedNext=(e)=>{
+    e.preventDefault();
+    e.stopPropagation();
+    props.userPack.methods.flyOutEffect(`/autoquote/${props.userPack.quoteSteps[props.userPack.data.step]}`,props.userPack.data.step)
+}
       return(
           <>
                 <div className="myRow center">
@@ -29,13 +34,13 @@ import GeneralField from '../secondaryelements/GeneralField';
           <input style={{minWidth:"200px"}} className="blueBox center"
            type="submit" value="Continue"/>
           </div>
-      {/* <div className="myRow center" style={{marginTop:"12px"}}>
+      <div className="myRow center" style={{marginTop:"12px"}}>
       <div className="bodyText textAlign">Don't have access to your car ATM?</div>
       </div>
       <div className="myRow center" style={{marginTop:"12px"}}>
-      <input onClick={()=>{}} style={{minWidth:"200px"}} 
+      <input onClick={forcedNext} style={{minWidth:"200px"}} 
        className="blueBox center" type="submit" value="Continue without VIN"/>
-      </div> */}
+      </div>
       </form>
         {props.children}
         </>

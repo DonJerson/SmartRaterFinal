@@ -287,21 +287,24 @@ class App extends Component {
       let myEl = document.getElementById('myBox')
       /////1ST SEGMENT IF BRAND IS SET, FETCH MODELS DATA FROM BRAND
       console.log("real faux",myVar,neoQuote.vin)
-      if(myBrand||neoQuote.vin){
-        if(myBrand!=null){
-          getModels= await axios.post(`https://5m6n0z1yta.execute-api.us-east-2.amazonaws.com/dev/getModels/`,{"brand":myBrand}).then(resp=>{
 
-          return resp.data
-          })
-          if(myVar=="select-model"&&getModels.length===0){
-            navigate(neoData.steps[1])
-            console.log("faux")
-            return
-          }
-        }else if(myVar=="select-model"&&neoQuote.vin){
-          navigate(neoData.steps[4])
-        }
-        }
+      //changemade
+
+      // if(myBrand||neoQuote.vin){
+      //   if(myBrand!=null){
+      //     getModels= await axios.post(`https://5m6n0z1yta.execute-api.us-east-2.amazonaws.com/dev/getModels/`,{"brand":myBrand}).then(resp=>{
+
+      //     return resp.data
+      //     })
+      //     if(myVar=="select-model"&&getModels.length===0){
+      //       navigate(neoData.steps[1])
+      //       console.log("faux")
+      //       return
+      //     }
+      //   }else if(myVar=="select-model"&&neoQuote.vin){
+      //     navigate(neoData.steps[4])
+      //   }
+      //   }
       /////2ND SEGMENT MAKE STEP ELEMENT FLY IN
       if(myEl){
         await new Promise(r => setTimeout(r, 290));
