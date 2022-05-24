@@ -35,19 +35,19 @@ import BlackTitle from '../secondaryelements/BlackTitle';
                         </div>
                         <div>
                         <div className="karlaRegular" >
-                        2000 N Dixe Hwy
+                        631 Lucerne Ave
                         </div>
                         <div className="karlaRegular" >
-                        Suite 6
+                        Suite 65
                         </div>
                         <div className="karlaRegular" >
-                        Lake Worth, FL 33467
+                        Lake Worth, FL 33460
                         </div>
                         </div>
 
                     </div>
                     </a>
-                    <a className={"row "+flexSwitch} href="tel:+15618531537" style={{maxWidth:"310px"}}>  
+                    <a className={"row "+flexSwitch} href="tel:+15615320620" style={{maxWidth:"310px"}}>  
                         <div className={"row "+flexSwitch} style={{maxWidth:"310px",marginTop:"15px"}}>
 
                         <div className="flexStart" style={{width:"3.0rem"}}>
@@ -60,13 +60,13 @@ import BlackTitle from '../secondaryelements/BlackTitle';
     Call for a free quote
                         </div>
                         <div className="karlaRegular">
-    (561) 853-1537
+    (561) 532-0620
                         </div>
                         </div>
                     </div>
                     </a>
                 
-                    <a className={"row "+flexSwitch} href="mailto:info@smartrater.us" style={{maxWidth:"310px"}}>   
+                    <a className={"row "+flexSwitch} href="mailto:contact@smartrater.us" style={{maxWidth:"310px"}}>   
                         <div className={"row "+flexSwitch} style={{maxWidth:"310px",marginTop:"15px"}}>
 
                         <div className="flexStart" style={{width:"3.0rem"}}>
@@ -79,7 +79,7 @@ import BlackTitle from '../secondaryelements/BlackTitle';
                         </div>
                     
                         <div className="karlaRegular">
-    info@smartrater.us
+    contact@smartrater.us
                         </div>
                     
                         </div>

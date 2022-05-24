@@ -81,7 +81,7 @@ function LoadingPage(props){
            '0px 4px 1px rgba(45.21, 157.25, 137.17, 1)', 
            borderRadius: 6, display: 'flex', flexDirection: 'row', 
            alignItems: 'center', justifyContent: 'center',}}>
-             <a href="tel:+15618531537">
+             <a href="tel:+15615320620">
 
         <p className="2021" style={{fontSize: 26, fontWeight: '700', lineHeight: '100%', textAlign: 'center', color: 'white',}}>Call us now!</p>
 </a>

@@ -11,6 +11,7 @@ import Terms from './elements/Terms';
 import PrivacyPolicy from './elements/PrivacyPolicy';
 import { createBrowserHistory } from 'history';
 import Dashboard from './views/Dashboard';
+import Policies from './elements/Policies';
 // Import the functions you need from the SDKs you need
 
 const axios = require('axios');
@@ -837,6 +838,7 @@ getUser=()=>{
       <>
       <Router>
       <SavedQuotes path="/savedquotes" userPack={userPack}/>
+      <Policies path="/policies" userPack={userPack}/>
         <MainView path="/" userPack={userPack}/>
         <Teteo path="/teteo" userPack={userPack}/>
         <QuoteView path="/freequote" userPack={userPack}/>
