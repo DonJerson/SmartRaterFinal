@@ -715,19 +715,29 @@ getUser=()=>{
           this.mainViewRef.current.click();
           window.location.reload()
         }
+        newQuote=(newData,newQuote)=>{
+          
+          this.setState({data:newData,newQuote})
+
+          //this.flyOutEffect(`/autoquote/results${this.state.quoteSteps[this.state.data.step+1]}`,this.state.data.step)
+          console.log("la nueva cuotass",{...this.state.newQuote})
+         //send api request to create new quote, user is logged in at this point or valid address is provided
+ 
+        }
         setAdditionalVehsNext=(e)=>{
           e.preventDefault()
           e.stopPropagation()
           let newData = {...this.state.data}
           let newQuote ={...this.state.newQuote}
-          console.log("la nueva cuota",{...this.state.newQuote})
+          
           newData.vehicleAmount=0
           newQuote.vehicleAmount=0
           window.localStorage.setItem(e.target.parentElement.getAttribute('name'),e.target.getAttribute('value'))
           
-          this.setState({data:newData,newQuote})
 
-         this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step+1]}`,this.state.data.step)
+          this.newQuote(newData,newQuote)
+         this.resultsRef.current.click()
+         //this.flyOutEffect(`/autoquote/results`,this.state.data.step+1)
          
         }
         setAdditionalVehs=(e)=>{

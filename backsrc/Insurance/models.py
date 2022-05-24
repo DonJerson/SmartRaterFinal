@@ -275,36 +275,35 @@ class AgencyAppointment(models.Model):
 
 class Quote(models.Model):
 	agency=models.ForeignKey(Agency,on_delete=models.CASCADE,null=True,blank=True)
+	owner = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
 	businessType= models.CharField(choices=BUSINESS_TYPES,
 	max_length=50,null=True,blank=True)
 	quoteId = models.CharField(max_length=50,default=uuid.uuid4)
-	customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
 	status = models.CharField(max_length=50)
 	quote_date = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	pendingReview = models.BooleanField(default=True)
-
 	@property
 	def lines(self):
 		return self.quoteline_set.all()
 	@property
 	def quoteElements(self):
-		if(businessType=="Personal Auto"):
+		if(self.businessType=="Personal Auto"):
 			return self.personalautoquoteelement_set.all()
-		elif(businessType=="Commercial Auto"):
+		elif(self.businessType=="Commercial Auto"):
 			return self.commercialautoquoteelement_set.all()
-		elif(businessType=="HomeOwner"):
+		elif(self.businessType=="HomeOwner"):
 			return self.homeownerquoteelement_set.all()
-		elif(businessType=="Health"):
+		elif(self.businessType=="Health"):
 			return self.healthquoteelement_set.all()
-		elif(businessType=="Life"):
+		elif(self.businessType=="Life"):
 			return self.lifequoteelement_set.all()
-		elif(businessType=="Business"):
+		elif(self.businessType=="Business"):
 			return self.businessquoteelement_set.all()
 
 	def __str__(self):
 		#return minimum price
-		return self.quoteId
+		return self.quoteId	
 	pass
 class PriorInsurance(models.Model):
 	customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)

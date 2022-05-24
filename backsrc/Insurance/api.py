@@ -37,7 +37,12 @@ class TokenGenerator(PasswordResetTokenGenerator):
             six.text_type(user.is_active)
         )
 
-
+@api_view(['POST'])
+def new_quote(request):
+    owner=request.user
+    data=request.data
+    newQuote = Quote.objects.create(**data,owner=owner)
+    return Response(QuoteSerializer(newQuote, many=False).data)
 
 @api_view(['POST'])
 def get_models(request):

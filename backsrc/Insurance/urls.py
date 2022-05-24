@@ -12,6 +12,7 @@ urlpatterns = [
     path('current_user/', views2.get_current_user),
     path('runQuote/', views2.run_quote),
     path('getModels/', views2.get_models),
+    path('newQuote/', views2.new_quote),
     # path('getModels/', views2.getModels, name='index'),
 ]
 
