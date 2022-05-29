@@ -32,29 +32,29 @@ background: #C4C4C4;
   
   }
 .logOutBox{
-width: 150px;
-height: 50px;
-
+width: 130px;
+height: 30px;
+padding:5px;
 background: #F82727;
 border-radius: 40px;
 }
-
-.greenBoxOutter{
-    margin-top: 20px;
+.greenBoxSizing{
     width: 27vw;
-    height: 15vw;
+}
+.greenBoxOutter{
+    margin-top: 10px;
+    width: 27vw;
+    min-height: 80px;
     background: #FFFFFF;
     border: 1px solid #0FBC9D;
     box-sizing: border-box;
     border-radius: 20px;
 }
-.greenBoxInnerContent{
-
-width: 452px;
-    height: 135px;}
 
 .greenBoxTop{
-padding:15px;
+    padding:4px;
+padding-left:10px;
+padding-right:10px;
 box-sizing: border-box;
 width: 100%;
 height: auto;
@@ -82,7 +82,38 @@ color: #FFFFFF;
     padding-right:12vw;
     padding-top:40px;
 }
+.smallGreenTitle{
+    font-size: 12px;
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: #FFFFFF;
+}
+.smallBox{
+    max-width: 110px !important;
+}
 @media (max-width:762px) {
+    .pinkButtonTitle{
+        font-size: 14px !important;
+    }
+    .logOutBox{
+        width: 80px !important;
+        height: 20px !important;
+    }
+    .greenBoxSizing{
+        width: 40vw !important;
+    }
+    .greenBoxOutter{
+        width: 40vw !important;
+    }
+    .greenBoxTitle{
+        font-size: 15px;
+    }
+    .greenBoxTop{
+        padding-left:10px !important;
+        padding-right:10px !important;
+    }
     #mainDashBox{
         padding-left:2vw !important;
         padding-right:2vw !important;
@@ -93,4 +124,11 @@ color: #FFFFFF;
     flex-direction: column;
     align-items: center;
 
+}
+.greenInnerContent{
+    box-sizing: border-box;
+    min-height: 10px !important;
+    height: 100%;
+    width: 100%;
+    padding:8px;
 }

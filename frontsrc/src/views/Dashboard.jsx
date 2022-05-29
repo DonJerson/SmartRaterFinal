@@ -1,5 +1,9 @@
 
 import React from 'react';
+import CardIcon from '../dashboard/cardIcon';
+import EditIcon from '../dashboard/editIcon';
+import FileIcon from '../dashboard/fileIcon';
+import TrashIcon from '../dashboard/trashIcon';
 import Signature from '../elements/Signature';
 import WhiteNavBar from '../elements/WhiteNavBar';
 
@@ -56,15 +60,29 @@ function Dashboard(props){
         <div id="column">
           <div id="container">
         <p className="title6">
-        Policies
+        Active Policies
     </p>
-    <GreenBox/>
+    <GreenBox title="Auto">
+    <p className="" style={{fontSize: 12, fontWeight: '700', lineHeight: '100%', color: 'black',}}>Policy# G01-039942343</p>
+    <p className="Pip10,000 | $1,000 ded" style={{marginTop:"4px",
+      fontSize: 12, lineHeight: '100%', color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Honda Civic 2014</p>
+<p className="XUM" style={{fontSize: 12, lineHeight: '100%', marginTop:"10px",color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Premium: $1,350</p>
+<p className="XUM" style={{fontSize: 12, lineHeight: '100%',color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Term: 6 months</p>
+
+    </GreenBox>
     </div>
     <div id="container">
-    <p className="title6" style={{marginTop:"34px"}}>
+    <p className="title6" style={{marginTop:"20px"}}>
         Quotes
     </p>
-    <GreenBox/>
+    <GreenBox title="Auto">
+      
+    <p className="" style={{fontSize: 12, fontWeight: '700', lineHeight: '100%', color: 'black',}}>Quote# G01-039942343</p>
+    <p className="Pip10,000 | $1,000 ded" style={{marginTop:"4px",
+      fontSize: 12, lineHeight: '100%', color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Honda Civic 2014</p>
+<p className="XUM" style={{fontSize: 12, lineHeight: '100%', marginTop:"10px",color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Premium: $1,350</p>
+<p className="XUM" style={{fontSize: 12, lineHeight: '100%',color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Term: 6 months</p>
+</GreenBox>
     </div>
     </div>
         
@@ -73,15 +91,29 @@ function Dashboard(props){
               <p className="title6">
                   Cards
               </p>
-        <GreenBox/>
+              <div className="greenBoxSizing">
+
+                <div className="myRow flexStart">
+                  <CardIcon/> <p style={{padding:"12px"
+                }}>X-1885</p><EditIcon/><TrashIcon/>
+                </div>
+              </div>
+        {/* <GreenBox checkMark={false}/> */}
         </div>
 
 
         <div id="container">
-        <p className="title6" style={{marginTop:"34px"}}>
+        <p className="title6" style={{marginTop:"20px"}}>
                   Documents
               </p>
-        <GreenBox/>
+        <GreenBox smallBox={true} title={"Application.pdf"} checkMark={!false}>
+          <div className="myRow center">
+<FileIcon/>
+
+
+</div>
+
+        </GreenBox>
         </div>
         </div>
 
@@ -90,7 +122,7 @@ function Dashboard(props){
 <div className="myRow center" style={{marginTop:"40px"}}>
 
   <div className="logOutBox center">
-    <p className="pinkButtonTitle link" onClick={logOut}>Log Out</p>
+    <p className="pinkButtonTitle link" onClick={logOut}>Logout</p>
   </div>
 </div>
 

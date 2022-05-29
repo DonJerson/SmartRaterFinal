@@ -95,7 +95,8 @@
         margin-bottom: 5px;
     }
     .title6{
-        font-size: 24px !important;
+        font-size: 18px !important;
+        font-weight: 900;
     }
 }
 @media (max-width:916px) {
