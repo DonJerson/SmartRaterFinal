@@ -3,7 +3,7 @@ import WhiteNavBar from '../elements/WhiteNavBar';
 import Embellishment from '../secondaryelements/Embellishment';
 import Carriers from '../secondaryelements/Carriers';
 import Signature from '../elements/Signature';
-import QuoteLine from './QuoteLine';
+import QuoteLine from '../elements/QuoteLine';
 
 //create a function that will render the quote card
 
