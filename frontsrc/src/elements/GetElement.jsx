@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Router, Link,navigate } from "@reach/router";
-import MainView from '../views/MainView';
-import QuoteView from '../views/QuoteView';
-import NewQuote from '../views/NewQuote';
-import Results from '../views/Results';
+import MainView from './MainView';
+import QuoteView from './QuoteView';
+import NewQuote from './NewQuote';
+import Results from './Results';
 import YesOrNo from '../secondaryelements/YesOrNo';
 import Selector from '../secondaryelements/Selector';
 import GeneralField from '../secondaryelements/GeneralField';
-import AdditionalDriverForm from './AdditionalDriverForm';
+import AdditionalDriverForm from '../autoquote/AdditionalDriverForm';
 import Teteo from './Teteo';
 import SavedQuotes from './SavedQuotes';
 import Terms from './Terms';
