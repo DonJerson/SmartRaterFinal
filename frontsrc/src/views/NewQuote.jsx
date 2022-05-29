@@ -1,5 +1,5 @@
-import WhiteNavBar from "./WhiteNavBar";
-import Modal from "./Modal";
+import WhiteNavBar from "../elements/WhiteNavBar";
+import Modal from "../elements/Modal";
 import React,{Component} from 'react';
 import {Link, navigate} from '@reach/router';
 import Signature from "./Signature";

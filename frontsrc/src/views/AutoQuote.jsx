@@ -1,11 +1,11 @@
-import WhiteNavBar from "./WhiteNavBar";
+import WhiteNavBar from "../elements/WhiteNavBar";
 import React from 'react';
-import Signature from "./Signature";
+import Signature from "../elements/Signature";
 import LoadingBar from "../secondaryelements/LoadingBar";
 import PageSwitcher from "../secondaryelements/PageSwitcher";
 import Embellishment from "../secondaryelements/Embellishment";
 import Carriers from "../secondaryelements/Carriers";
-import GetElement from "./GetElement";
+import GetElement from "../elements/GetElement";
 
 function Body(props){
   let myYears=[]

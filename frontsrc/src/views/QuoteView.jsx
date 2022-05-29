@@ -1,8 +1,8 @@
-import WhiteNavBar from "./WhiteNavBar";
-import Modal from "./Modal";
+import WhiteNavBar from "../elements/WhiteNavBar";
+import Modal from "../elements/Modal";
 import React from 'react';
 
-import Signature from "./Signature";
+import Signature from "../elements/Signature";
 
   
 

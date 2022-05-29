@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { Router, Link,navigate } from "@reach/router";
-import MainView from './elements/MainView';
-import QuoteView from './elements/QuoteView';
-import AutoQuote from './elements/AutoQuote';
-import Results from './elements/Results';
 import Elements from './elements/Elements';
-import Teteo from './elements/Teteo';
-import SavedQuotes from './elements/SavedQuotes';
-import Terms from './elements/Terms';
-import PrivacyPolicy from './elements/PrivacyPolicy';
-import { createBrowserHistory } from 'history';
+import MainView from './views/MainView';
+import QuoteView from './views/QuoteView';
+import AutoQuote from './views/AutoQuote';
+import Results from './views/Results';
+import Teteo from './views/Teteo';
+import SavedQuotes from './views/SavedQuotes';
+import Terms from './views/Terms';
+import PrivacyPolicy from './views/PrivacyPolicy';
 import Dashboard from './views/Dashboard';
-import Policies from './elements/Policies';
+import Policies from './views/Policies';
+import { createBrowserHistory } from 'history';
+
 // Import the functions you need from the SDKs you need
 
 const axios = require('axios');

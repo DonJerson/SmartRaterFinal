@@ -1,6 +1,6 @@
 import React from 'react';
-import Signature from './Signature';
-import WhiteNavBar from './WhiteNavBar';
+import Signature from '../elements/Signature';
+import WhiteNavBar from '../elements/WhiteNavBar';
   
   function Terms(props){
       return(

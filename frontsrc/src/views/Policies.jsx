@@ -1,9 +1,9 @@
 import React from 'react';
-import WhiteNavBar from './WhiteNavBar';
+import WhiteNavBar from '../elements/WhiteNavBar';
 import Embellishment from '../secondaryelements/Embellishment';
 import Carriers from '../secondaryelements/Carriers';
-import Signature from './Signature';
-import QuoteLine from './QuoteLine';
+import Signature from '../elements/Signature';
+import QuoteLine from '../elements/QuoteLine';
 
 //create a function that will render the quote card
 
@@ -53,7 +53,7 @@ function Body(props){
          <span className="karlaBold" style={{marginTop:10,fontSize:"28px",letterSpacing:"-0.05em",
 
           backgrouncColor:"black",color:"#000000"}}>
-            Saved Quotes </span>   
+            My Policies </span>   
             </div>
             <div className="myRow flexStart" >
             </div>
@@ -147,7 +147,7 @@ function LoadingPage(props) {
   )
 }
 
-function SavedQuotes(props){
+function Policies(props){
     return(
         <>
             
@@ -166,4 +166,4 @@ function SavedQuotes(props){
       )
     }
   
-  export default SavedQuotes;
+  export default Policies;

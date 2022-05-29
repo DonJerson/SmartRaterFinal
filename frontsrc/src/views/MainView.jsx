@@ -1,8 +1,8 @@
-import WhiteNavBar from "./WhiteNavBar";
-import Modal from "./Modal";
+import WhiteNavBar from "../elements/WhiteNavBar";
+import Modal from "../elements/Modal";
 import React from 'react';
-import InsuranceLanding from "./InsuranceLanding";
-import Signature from "./Signature";
+import InsuranceLanding from "../elements/InsuranceLanding";
+import Signature from "../elements/Signature";
 
 function MainView(props){
   const switcher=(e)=>{
