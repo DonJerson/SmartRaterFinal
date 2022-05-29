@@ -1,6 +1,8 @@
 import re
 import time
-from RentACar.models import *
+from Cars.models import *
+from Files.models import *
+from Maps.models import *
 
 print("success")
 
@@ -84,7 +86,7 @@ def getCars():
 	print(len(myCars))
 	for car in myCars:
 		try:
-			newObj = CarsDB.objects.create(model=car["model"],brand=car["brand"],carType=car["carType"],years=car["years"])
+			newObj = CarEntry.objects.create(model=car["model"],brand=car["brand"],carType=car["carType"],years=car["years"])
 			newObj.save()
 			print("success")
 		except:

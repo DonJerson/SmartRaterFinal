@@ -81,7 +81,7 @@ def custom_auth(request):
         first_name = data['first_name']
         last_name = data['last_name']
     try:
-        newProfilePic= PersonalImage.objects.create(url=pictureUrl,key="SocialFetched")
+        newProfilePic= Picture.objects.create(url=pictureUrl,key="SocialFetched")
         customer = Customer.objects.get(username=email)
         
     except:
@@ -305,6 +305,14 @@ class QuoteViewSet(viewsets.ModelViewSet):
     queryset = Quote.objects.all()
     serializer_class = QuoteSerializer
     pass
+class PolicyViewSet(viewsets.ModelViewSet):
+    queryset = Policy.objects.all()
+    serializer_class = PolicySerializer
+    pass
+class AgencyViewSet(viewsets.ModelViewSet):
+    queryset = Agency.objects.all()
+    serializer_class = AgencySerializer
+    pass
 class InsurerViewSet(viewsets.ModelViewSet):
     queryset = Insurer.objects.all()
     serializer_class = InsurerSerializer
@@ -339,9 +347,9 @@ class ExistingCustomerViewSet(viewsets.ModelViewSet):
             user = Customer.objects.get(username=username)
             if(google or facebook):
                 try:
-                    newProfilePic= PersonalImage.objects.get(url=pictureUrl)
+                    newProfilePic= Picture.objects.get(url=pictureUrl)
                 except:
-                    newProfilePic= PersonalImage.objects.create(url=pictureUrl,key="SocialFetched")
+                    newProfilePic= Picture.objects.create(url=pictureUrl,key="SocialFetched")
                 user.profilePicture=newProfilePic
                 if google:
                     user.confirmedGoogle=True
@@ -357,7 +365,7 @@ class ExistingCustomerViewSet(viewsets.ModelViewSet):
             return Response({'response' : 'error', 'message' : 'existe'})
         if google or facebook:
             try:
-                newProfilePic= PersonalImage.objects.create(url=pictureUrl,key="SocialFetched")
+                newProfilePic= Picture.objects.create(url=pictureUrl,key="SocialFetched")
                 newUser = Customer.objects.create_user(username=email,business=True,confirmedEmail=True,email=username,password=password,profilePicture=newProfilePic,first_name=first_name,last_name=last_name,name=name)
                 user = CustomerSerializer(newUser).data
             except:

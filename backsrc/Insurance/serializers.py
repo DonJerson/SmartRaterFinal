@@ -6,7 +6,10 @@ from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework import viewsets,status
 from rest_framework.response import Response
-from .models import *
+from Cars.models import *
+from Files.models import *
+from Maps.models import *
+from Chats.models import *
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view,permission_classes
@@ -34,10 +37,10 @@ class BrandSerializer(serializers.ModelSerializer):
         fields='__all__'
     pass
 
-class UWFileSeriealizer(serializers.ModelSerializer):
+class FileSeriealizer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True)
     class Meta:
-        model=UWFile
+        model=File
         fields='__all__'
     pass
 
@@ -116,7 +119,7 @@ class NamedInsuredSerializer(serializers.ModelSerializer):
 class ProfilePictureSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True)
     class Meta:
-        model=PersonalImage
+        model=Picture
         fields=(
             "key",
             "url",
@@ -180,9 +183,17 @@ class QuoteLineSerializer(serializers.ModelSerializer):
         model=QuoteLine
         fields='__all__'
 
+class AgencySerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True,allow_null=True)
+    class Meta:
+        model=Agency
+        fields='__all__'
+
 class QuoteSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(allow_null=True)
-    lines = QuoteLineSerializer(required=True,many=True)
+    lines = QuoteLineSerializer(many=True,read_only=True)
+    agency = AgencySerializer(many=False,read_only=True)
+    owner = OwnerSerializer(many=False,read_only=True)
     class Meta:
         model=Quote
         fields='__all__'
@@ -229,12 +240,18 @@ class PolicySerializer(serializers.ModelSerializer):
     agency=AgencyReferenceSerializer(read_only=True,many=False)
     quote=QuoteReferenceSerializer(read_only=True,many=False)
     downPayment=PaymentSerializer(read_only=True,many=False)
-    policyDocuments=UWFileSeriealizer(read_only=True,many=True)
-    policyUWFiles=UWFileSeriealizer(read_only=True,many=True)
+    policyDocuments=FileSeriealizer(read_only=True,many=True)
+    policyUWFiles=FileSeriealizer(read_only=True,many=True)
     policyPayments=PaymentSerializer(read_only=True,many=True)
     class Meta:
         model=Policy
         fields='__all__'
+    def create(self, validated_data):
+        return Policy(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.policyPremium = validated_data.get('policyPremium', instance.policyPremium)
+        return instance
 class AgencyAppointmentSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True,allow_null=True)
     class Meta:
@@ -244,8 +261,8 @@ class AgencySerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True,allow_null=True)
     agencyOwner = OwnerSerializer(read_only=True,many=False)
     agencyAddress = AddressSerializer(read_only=True,many=False)
-    agencyDocuments=UWFileSeriealizer(read_only=True,many=True)
-    agencyUWFiles=UWFileSeriealizer(read_only=True,many=True)
+    agencyDocuments=FileSeriealizer(read_only=True,many=True)
+    agencyUWFiles=FileSeriealizer(read_only=True,many=True)
     agencyQuotes=QuoteSerializer(read_only=True,many=True)
     agencyClients=OwnerSerializer(read_only=True,many=True)
     authorizedAgents=AuthorizedAgentSerializer(read_only=True,many=True)
@@ -272,8 +289,8 @@ class EndorsementSerializer(serializers.ModelSerializer):
     policy=PolicyReferenceSerializer(read_only=True,many=False)
     endorsementPayments=PaymentSerializer(read_only=True,many=True)
     endorsementPayment=PaymentSerializer(read_only=True,many=False)
-    endorsementDocuments=UWFileSeriealizer(read_only=True,many=True)
-    endorsementUWFiles=UWFileSeriealizer(read_only=True,many=True)
+    endorsementDocuments=FileSeriealizer(read_only=True,many=True)
+    endorsementUWFiles=FileSeriealizer(read_only=True,many=True)
 
     class Meta:
         model=Endorsement
@@ -368,7 +385,7 @@ class CustomerSerializer(serializers.ModelSerializer):
     carList = CarSerializer(read_only=True,many=True)
     namedInsureds = NamedInsuredSerializer(read_only=True,many=True)
     quoteList = QuoteSerializer(read_only=True,many=True)
-    UWFiles = UWFileSeriealizer(read_only=True,many=True)
+    files = FileSeriealizer(read_only=True,many=True)
     cards=CardSerializer(read_only=True,many=True)
     paypals=PayPalSerializer(read_only=True,many=True)
     cryptos=CryptoSerializer(read_only=True,many=True)

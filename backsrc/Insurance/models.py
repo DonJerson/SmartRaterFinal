@@ -1,11 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
+from Cars.models import *
+from Files.models import *
+from Maps.models import *
 import uuid
 #from tinymce import models as tinymce_models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
-from datetime import timedelta, date
+from datetime import datetime as dt
+from datetime import timedelta
+import monthdelta as mdt
 
 PROPERTY_CHOICES = [('house','House'),('apt','Apartment'),('bulding','Building')]
 
@@ -34,53 +39,50 @@ def daterange(start_date, end_date):
         yield start_date + timedelta(n)
     return
 
-class CarsDB(models.Model):
-	brand = models.CharField(max_length=25,blank=True,null=True)
-	model = models.CharField(max_length=60,blank=True,null=True)
-	years = models.CharField(max_length=15,blank=True,null=True)
-	carType = models.CharField(max_length=50,blank=True,null=True)
-	def __str__(self):
-		return self.brand+" "+self.model
-	pass
-
 
 ############ General
 
-class Address(models.Model):
-	address1 = models.CharField(max_length=50,blank=True,null=True)
-	address2 = models.CharField(max_length=50,default='',blank=True,null=True)
-	city = models.CharField(max_length=50,blank=True,null=True)
-	state = models.CharField(max_length=50,blank=True,null=True)
-	zipcode = models.CharField(max_length=50,blank=True,null=True)
-	def __str__(self):
-		if(self.address1 and self.city and self.state and self.zipcode):
-			if(self.address2):
-				return (
-			self.address1 + ', ' +self.address2+ ', ' 
-			+ self.city + ', ' + self.state + ', ' + self.zipcode)
-			else:
-				return (
-			self.address1 + ', ' + self.city + ', ' + self.state + ', ' + self.zipcode)
-		else: return "Address"
-	pass
 
-class PersonalImage(models.Model):
-	key=models.CharField(max_length=50,blank=True,null=True)
-	url=models.CharField(max_length=200,blank=True,null=True)
+
+class Agency(models.Model):
+	name=models.CharField(max_length=50,null=True,blank=True)
+	address=models.ForeignKey(Address,on_delete=models.CASCADE,null=True,blank=True)
+	website=models.CharField(max_length=50,null=True,blank=True)
+	logo=models.CharField(max_length=50,null=True,blank=True)
+	phone=models.CharField(max_length=13,null=True,blank=True)
+
+	@property
+	def agencyQuotes(self):
+		return self.agencyquote_set.all()
+
+	@property
+	def agencyClients(self):
+		return self.agencyclient_set.all()
+
+	@property
+	def authorizedAgents(self):
+		return self.authorizedagent_set.all()	
+
+	@property
+	def policies(self):
+		return self.policy_set.all()
+	pass
 	def __str__(self):
-		return self.key
+		return self.name
 	pass
 
 class Customer(AbstractUser):
+	agency = models.ForeignKey(Agency,blank=True,null=True,on_delete=models.CASCADE)
+	address = models.ForeignKey(Address,blank=True,null=True,on_delete=models.CASCADE)
 	first_name = models.CharField(max_length=50,blank=True,null=True)
 	middle_name = models.CharField(max_length=50,blank=True,null=True)
 	last_name = models.CharField(max_length=50,blank=True,null=True)
-	address = models.ForeignKey(Address,blank=True,null=True,on_delete=models.CASCADE)
 	email = models.EmailField(max_length=50,blank=True,null=True)
 	phone = models.CharField(max_length=50,blank=True,null=True)
-	profilePicture = models.ForeignKey(PersonalImage,blank=True,null=True,on_delete=models.CASCADE)
+	profilePicture = models.ForeignKey(Picture,blank=True,null=True,on_delete=models.CASCADE)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
+	
 	@property
 	def supportChats(self):
 		return self.supportchat_set.filter(closed=False)
@@ -94,8 +96,8 @@ class Customer(AbstractUser):
 	def quoteList(self):
 		return self.quote_set.all()
 	@property
-	def UWFiles(self):
-		return self.uwfile_set.all()
+	def files(self):
+		return self.file_set.all()
 	@property
 	def cards(self):
 		return self.card_set.all()
@@ -114,6 +116,21 @@ class Customer(AbstractUser):
 			return self.first_name+" "+self.last_name
 		else:
 			return "No name"
+	pass
+
+class Car(models.Model):
+	customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
+	vin = models.CharField(max_length=50,null=True,blank=True)
+	year = models.IntegerField(null=True,blank=True)
+	make = models.CharField(max_length=50,null=True,blank=True)
+	model = models.CharField(max_length=50,null=True,blank=True)
+	trim = models.CharField(max_length=50,null=True,blank=True)
+	bodyStyle = models.CharField(max_length=50,null=True,blank=True)
+	color = models.CharField(max_length=50,null=True,blank=True)
+	licensePlate = models.CharField(max_length=50,null=True,blank=True)
+
+	def __str__(self):
+		return self.year+ ' ' + self.vin
 	pass
 
 class NamedInsured(models.Model):
@@ -140,75 +157,9 @@ class NamedInsured(models.Model):
 			return "No name"
 	pass
 
-class UWFile(models.Model):
-	fileType = models.CharField(max_length=50,blank=True,null=True)
-	name = models.CharField(max_length=50,blank=True,null=True)
-	url = models.CharField(max_length=500,blank=True,null=True)
-	customer= models.ForeignKey(Customer,on_delete=models.CASCADE)
-	def __str__(self):
-		return self.file.name
-	pass
 
-class Car(models.Model):
-	customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
-	vin = models.CharField(max_length=17,null=True,blank=True)
-	mileage = models.CharField(max_length=50,null=True,blank=True)
-	
-	def __str__(self):
-		return self.vin
-	pass
 
-#create brand class
-class Brand(models.Model):
-	name = models.CharField(max_length=50)
-	short = models.CharField(max_length=5,blank=True,null=True)
-	@property
-	def models(self):
-		return self.model_set.all()
-	pass
-	def __str__(self):
-		return self.name
-	pass
 
-class Model(models.Model):
-	name = models.CharField(max_length=50)
-	brand = models.ForeignKey(Brand,on_delete=models.CASCADE)
-
-	@property
-	def yearSet(self):
-		return self.yearentry_set.all()
-
-	def __str__(self):
-		return self.name
-	pass
-
-class YearEntry(models.Model):
-	year = models.CharField(max_length=4)
-	model = models.ForeignKey(Model,on_delete=models.CASCADE)
-
-	@property
-	def bodyStyles(self):
-		return self.bodystyleentry_set.all()
-
-	@property
-	def pickTrims(self):
-		return self.picktrimentry_set.all()
-
-	def __str__(self):
-		return self.year+" "+self.model.name
-	pass
-class BodyStyleEntry(models.Model):
-	bodyStyle = models.CharField(max_length=50)
-	yearEntry=models.ForeignKey(YearEntry,on_delete=models.CASCADE,null=True,blank=True)
-	@property
-	def pickTrims(self):
-		return self.picktrimentry_set.all()
-	pass
-
-class PickTrimEntry(models.Model):
-	pickTrim = models.CharField(max_length=50)
-	bodyStyle=models.ForeignKey(BodyStyleEntry,on_delete=models.CASCADE,null=True,blank=True)
-	pass
 
 class Insurer(models.Model):
 	name=models.CharField(max_length=50,null=True,blank=True)
@@ -225,33 +176,6 @@ class Insurer(models.Model):
 	logo = models.CharField(max_length=50,null=True,blank=True)
 	def __str__(self):
 		return self.name
-	pass
-class Agency(models.Model):
-	agencyOwner=models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
-	agencyAddress=models.ForeignKey(Address,on_delete=models.CASCADE,null=True,blank=True)
-	agencyWebsite=models.CharField(max_length=50,null=True,blank=True)
-	agencyLogo=models.CharField(max_length=50,null=True,blank=True)
-	agencyDocuments=models.ManyToManyField(UWFile,blank=True,related_name="agencyDocuments")
-	agencyUWFiles=models.ManyToManyField(UWFile,blank=True,related_name="agencyUWFiles")
-
-	@property
-	def agencyQuotes(self):
-		return self.agencyquote_set.all()
-
-	@property
-	def agencyClients(self):
-		return self.agencyclient_set.all()
-
-	@property
-	def authorizedAgents(self):
-		return self.authorizedagent_set.all()	
-
-	@property
-	def policies(self):
-		return self.policy_set.all()
-	pass
-	def __str__(self):
-		return self.agencyOwner.first_name
 	pass
 
 class AuthorizedAgent(models.Model):
@@ -312,7 +236,7 @@ class PriorInsurance(models.Model):
 	policyNumber = models.CharField(max_length=50,null=True,blank=True)
 	effectiveDate = models.DateField(null=True,blank=True)
 	expirationDate = models.DateField(null=True,blank=True)
-	priorDocument= models.OneToOneField(UWFile,on_delete=models.CASCADE,null=True,blank=True)
+	priorDocument= models.OneToOneField(File,on_delete=models.CASCADE,null=True,blank=True)
 
 	def __str__(self):
 		return self.insurer.name
@@ -379,28 +303,31 @@ class Payment(models.Model):
 	billDate=models.DateField()
 	dueDate=models.DateField()
 	paid=models.BooleanField(default=False)
-	paymentDate=models.DateField(null=True,blank=True)
-	paymentMethod=models.OneToOneField(PaymentMethod,on_delete=models.CASCADE,null=True,blank=True)
-	paymentType=models.CharField(max_length=50,null=True,blank=True)
-	paymentStatus=models.CharField(max_length=50,null=True,blank=True)
-	paymentAmount=models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
-	paymentRef=models.CharField(max_length=50,null=True,blank=True)
-	paymentRef2=models.CharField(max_length=50,null=True,blank=True)
+	date=models.DateField(null=True,blank=True)
+	method=models.OneToOneField(PaymentMethod,on_delete=models.CASCADE,null=True,blank=True)
+	type=models.CharField(max_length=50,null=True,blank=True)
+	status=models.CharField(max_length=50,null=True,blank=True)
+	amount=models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
+	ref=models.CharField(max_length=50,null=True,blank=True)
+	ref2=models.CharField(max_length=50,null=True,blank=True)
 
 	def __str__(self):
-		return self.paymentRef
+		return self.ref
 	pass
 
-
+# def get_expiration():
+#     return dt.today() + timedelta(days=365)
+def get_expiration(len):
+    return dt.today() + mdt.monthdelta(len)
 class Policy(models.Model):
 	agency=models.ForeignKey(Agency,on_delete=models.CASCADE,null=True,blank=True)
 	commisionAmount=models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
 	commisionPercentage=models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
 	commisionPaid=models.BooleanField(default=False)
 	quote=models.ForeignKey(Quote,on_delete=models.CASCADE,null=True,blank=True)
-	bindDate = models.DateField()
-	effectiveDate=models.DateField()
-	expirationDate=models.DateField()
+	bindDate = models.DateField(null=True,blank=True,default=dt.today())
+	effectiveDate=models.DateField(null=True,blank=True,default=dt.today())
+	expirationDate=models.DateField(null=True,blank=True)
 	policyLength=models.IntegerField(null=True,blank=True)
 	policyNumber = models.CharField(max_length=50,null=True,blank=True)
 	policyType = models.CharField(max_length=50,null=True,blank=True)
@@ -410,10 +337,14 @@ class Policy(models.Model):
 	policyPremium=models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
 	downPayment = models.OneToOneField(Payment,on_delete=models.CASCADE,null=True,blank=True,
 	related_name='policyDownPayment')
-	policyDocuments=models.ManyToManyField(UWFile,blank=True,related_name='policyDocuments')
-	policyUWFiles=models.ManyToManyField(UWFile,blank=True,related_name='policyUWFiles')
+	policyDocuments=models.ManyToManyField(File,blank=True,related_name='policyDocuments')
+	policyFiles=models.ManyToManyField(File,blank=True,related_name='policyFiles')
 	policyPayments=models.ManyToManyField(Payment,blank=True,related_name='policyPayments')
-	
+
+	def save(self, *args, **kwargs):
+		self.expirationDate = get_expiration(self.policyLength)
+		super(Policy, self).save(*args, **kwargs)
+		
 	def __str__(self):
 		return self.policyNumber
 	pass
@@ -425,8 +356,8 @@ class Endorsement(models.Model):
 	endorsementStatus=models.CharField(max_length=50)
 	endorsementPayment=models.OneToOneField(Payment,on_delete=models.CASCADE,null=True,blank=True,
 	related_name='endorsementDownPayment')
-	endorsementDocuments=models.ManyToManyField(UWFile,blank=True,related_name="endorsementDocuments")
-	endorsementUWFiles=models.ManyToManyField(UWFile,blank=True,related_name='endorsementUWFiles')
+	endorsementDocuments=models.ManyToManyField(File,blank=True,related_name="endorsementDocuments")
+	endorsementFiles=models.ManyToManyField(File,blank=True,related_name='endorsementFiles')
 	endorsementPayments=models.ManyToManyField(Payment,blank=True,related_name='endorsementPayments')
 	
 	def __str__(self):
@@ -611,29 +542,3 @@ class CoveredAuto(models.Model):
 	autoquotelements=models.ForeignKey(PersonalAutoQuoteElements,on_delete=models.CASCADE,null=True,blank=True)
 	pass
 
-class SupportChat(models.Model):
-	closed=models.BooleanField(default=False)
-	comment = models.TextField(null=True,blank=True)
-	customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
-	rating = models.IntegerField(null=True,blank=True)
-	
-	@property
-	def messages(self):
-		return self.supportmessage_set.all()
-
-	def __str__(self):
-		return self.customer.email
-	pass
-
-class SupportMessage(models.Model):
-	date = AutoDateTimeField(default=timezone.now)
-	text = models.TextField()
-	sender = models.ForeignKey(Customer,on_delete=models.CASCADE)
-	supportChat = models.ForeignKey(SupportChat,on_delete=models.CASCADE,null=True,blank=True)
-	delivered = models.BooleanField(default=False)
-	seen = models.BooleanField(default=False)
-	deleted = models.BooleanField(default=False)
-	pass
-	def __str__(self):
-		return self.text
-	pass

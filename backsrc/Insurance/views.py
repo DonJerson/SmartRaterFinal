@@ -16,12 +16,12 @@ def index(request):
 	form = LoginForm()
 	return render(request, 'mainapp2.html',{'form':form})
 
-def about(request):
-	author = Article.objects.get(id=author_id)
-	block = {
-	'author':author
-	}
-	return render(request, 'author.html', block)
+# def about(request):
+# 	author = Article.objects.get(id=author_id)
+# 	block = {
+# 	'author':author
+# 	}
+# 	return render(request, 'author.html', block)
 
 def loginFunction(request):
 	username = request.POST.get('userName')

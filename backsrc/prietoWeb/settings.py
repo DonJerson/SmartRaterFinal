@@ -35,6 +35,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'Insurance',
+    'Cars',
+    'Files',
+    'Maps',
+    'Chats'
 ]
 
 MIDDLEWARE = [

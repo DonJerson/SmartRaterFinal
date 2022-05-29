@@ -19,23 +19,14 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from Insurance import views
 from django.urls import path, include
-from rest_framework.routers import SimpleRouter
-from Insurance.api import *
 from Insurance import urls as Insurance_urls
 from rest_framework_jwt.views import obtain_jwt_token
 
-router = SimpleRouter()
-router.register(r'customer', CustomerViewSet, basename='customer')
-router.register(r'namedinsured', NamedInsuredViewSet, basename='namedinsured')
-router.register(r'car', CarViewSet, basename='car')
-router.register(r'quote', QuoteViewSet, basename='quote')
-router.register(r'insurer', InsurerViewSet, basename='insurer')
-router.register(r'existing', ExistingCustomerViewSet, basename='existing')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(Insurance_urls)),
-    path('api/',include(router.urls))
+    path('api/',include(Insurance_urls.insuranceRouter.urls))
 ]
 
 # urlpatterns = [
