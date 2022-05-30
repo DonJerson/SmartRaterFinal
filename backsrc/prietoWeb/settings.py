@@ -14,7 +14,7 @@ SECRET_KEY = '^$am8n_mab&2u^lobwr4gd9wwi8f04jg5frtil^0u_*z214%2('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['prieto','backend.jersonmendez.com','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','inversionesmendez.herokuapp.com','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['prieto','backends.smartrater.us','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','inversionesmendez.herokuapp.com','127.0.0.1','localhost']
 
 # Application definition   
 CORS_ORIGIN_ALLOW_ALL=True
@@ -166,7 +166,7 @@ STATIC_ROOT = BASE_DIR + '\static'
 
 
 
-CORS_ORIGIN_WHITE_LIST = 'prieto','backend.jersonmendez.com','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','127.0.0.1:8080','localhost:8080',
+CORS_ORIGIN_WHITE_LIST = 'prieto','backends.smartrater.us','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','127.0.0.1:8080','localhost:8080',
 
 JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER' :   'Insurance.utils.custom_jwt_response_handler',
