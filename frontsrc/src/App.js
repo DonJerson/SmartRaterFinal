@@ -96,9 +96,9 @@ const brandss=
 
 const getUrl = window.location;
 
-let baseUrl = getUrl.protocol +"//backend.jersonmendez.com/";
+let baseUrl = getUrl.protocol +"//backends.smartrater.us/";
 
-let neoUrl =getUrl.protocol +"//backend.jersonmendez.com/";
+let neoUrl =getUrl.protocol +"//backends.smartrater.us/";
 
 let baseWss = "18.216.39.52";
 if(getUrl.host.includes(":8080")){
@@ -177,7 +177,7 @@ class App extends Component {
     data.driverLabel="How Many Additional Drivers Will There Be?"
     this.state={dimensions:{width:1200,height:800},customer:cookieUser,newQuote,data,currentStep,
     newCustomer:newCustomerRaw,user:newCustomerRaw,quoteSteps:[],quoteNames:[],quoteStepsRaw:[],
-  data,
+  data,overlay:{active:false,innerLoading:false}
     
     }
     this.mainViewRef=React.createRef()
@@ -821,7 +821,7 @@ getUser=()=>{
       ,'select-accident','select-dui','select-name','select-dob','select-sex','select-additionalDriver'
       ,'select-military','select-address','select-email','select-phone']
     const userPack = {dimensions:this.state.dimensions,modal:this.state.modal,pathAux,
-      filteredModels:this.state.filteredModels,
+      filteredModels:this.state.filteredModels,overlay:this.state.overlay,
       filterSearch:this.state.filterSearch,filterModelSearch:
       this.state.filterModelSearch,newQuote:this.state.newQuote,
     methods,refs,data:this.state.data,user:this.state.user,logged:this.state.logged,

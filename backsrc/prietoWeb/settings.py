@@ -157,12 +157,14 @@ else:
         'NAME': 'smartrater',
         'USER': 'donjerson',
         'PASSWORD': 'Pri3to.Server',
-        'HOST': '44.204.229.185',
+        'HOST': 'backends.smartrater.us',
         'PORT': '5432'
         }}
 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR + '\static'
+# STATIC_URL = '/static/'
+# STATIC_ROOT = BASE_DIR + '\static'
+STATIC_URL = 'http://backends.smartrater.us/static/'
+STATIC_ROOT = '/var/www/html/static'
 
 
 

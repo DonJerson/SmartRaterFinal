@@ -4,6 +4,7 @@ import CardIcon from '../dashboard/cardIcon';
 import EditIcon from '../dashboard/editIcon';
 import FileIcon from '../dashboard/fileIcon';
 import TrashIcon from '../dashboard/trashIcon';
+import OverLay from '../elements/OverLay';
 import Signature from '../elements/Signature';
 import WhiteNavBar from '../elements/WhiteNavBar';
 
@@ -31,11 +32,25 @@ function Dashboard(props){
     profilePicture="url("+props.userPack.user.profilePicture.url+")"
   } catch (error) {
   }
-  
+  const closeOverLay = () => {
+    let neooverlay={...props.userPack.overlay}
+    neooverlay.active=!neooverlay.active
+    props.userPack.methods.stateHandling('overlay',neooverlay)
+  }
+  const openOverlay = () => {
+    let neooverlay={...props.userPack.overlay}
+    neooverlay.active=!neooverlay.active
+    props.userPack.methods.stateHandling('overlay',neooverlay)
+  }
   // console.log(props.userPack.user)
     return(
       <>
        {console.log(props.userPack.user)}
+       <OverLay title='test'
+close={closeOverLay} 
+active={props.userPack.overlay.active} userPack={props.userPack}>
+
+        </OverLay>
       <WhiteNavBar userPack={props.userPack}/>
      <div style={{paddingTop:"72px"}}></div>
       {/* <div className="myRow center" style={{gap:"30px"}}>
@@ -89,13 +104,13 @@ function Dashboard(props){
         <div id="column">
         <div id="container">
               <p className="title6">
-                  Cards
+                  Payment Methods
               </p>
               <div className="greenBoxSizing">
 
                 <div className="myRow flexStart">
                   <CardIcon/> <p style={{padding:"12px"
-                }}>X-1885</p><EditIcon/><TrashIcon/>
+                }}>X-1885</p><EditIcon action={openOverlay}/><TrashIcon/>
                 </div>
               </div>
         {/* <GreenBox checkMark={false}/> */}
@@ -103,18 +118,44 @@ function Dashboard(props){
 
 
         <div id="container">
-        <p className="title6" style={{marginTop:"20px"}}>
-                  Documents
-              </p>
-        <GreenBox smallBox={true} title={"Application.pdf"} checkMark={!false}>
-          <div className="myRow center">
-<FileIcon/>
-
-
-</div>
-
-        </GreenBox>
+          <p className="title6" style={{marginTop:"20px"}}>
+                    Documents
+                </p>
+          <GreenBox smallBox={true} title={"Application.pdf"} checkMark={!false}>
+            <div className="myRow center">
+              <FileIcon/>
+              </div>
+          </GreenBox>
         </div>
+
+
+        <div id="container">
+            <p className="title6" style={{marginTop:"20px"}}>
+              Drivers
+            </p>
+          <GreenBox title={"Jerson A. Mendez"} checkMark={!false}>
+          <p className="" style={{fontSize: 12, fontWeight: '700', lineHeight: '100%', color: 'black',}}>Licencia: M542-433-332-33-0</p>
+          <p className="Pip10,000 | $1,000 ded" style={{marginTop:"4px",
+      fontSize: 12, lineHeight: '100%', color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Date of Birth: 09/29/1995</p>
+        
+          </GreenBox>
+        </div>
+
+
+        <div id="container">
+            <p className="title6" style={{marginTop:"20px"}}>
+              Cars
+            </p>
+          <GreenBox title={"Honda Civic 2014"} checkMark={!false}>
+          <p className="" style={{fontSize: 12, fontWeight: '700', lineHeight: '100%', color: 'black',}}>VIN: J34223f1fd1s33</p>
+          <p className="Pip10,000 | $1,000 ded" style={{marginTop:"4px", fontSize: 12, lineHeight: '100%', color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Comprehensive: No</p>
+          <p className="Pip10,000 | $1,000 ded" style={{marginTop:"4px", fontSize: 12, lineHeight: '100%', color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Collision: No</p>
+    
+          </GreenBox>
+        </div>
+
+
+
         </div>
 
         </div>
