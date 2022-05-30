@@ -19,7 +19,7 @@ import '../media/css/overlay.css';
                   <BlackTitle/>
                 </div>
                 <div className="myRow center" style={{position:"absolute",top:"0px"}}>
-                <div className='title5' style={{marginTop:"0.5rem"}}>{props.title}</div>
+                <div className='title6' style={{marginTop:"0.5rem"}}>{props.title}</div>
               </div>
                   {props.children}
             </div>

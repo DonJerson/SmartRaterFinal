@@ -3,9 +3,11 @@ import React from 'react';
 import CardIcon from '../dashboard/cardIcon';
 import EditIcon from '../dashboard/editIcon';
 import FileIcon from '../dashboard/fileIcon';
+import SaveButton from '../dashboard/SaveButton';
 import TrashIcon from '../dashboard/trashIcon';
 import OverLay from '../elements/OverLay';
 import Signature from '../elements/Signature';
+import TextField from '../elements/TextField';
 import WhiteNavBar from '../elements/WhiteNavBar';
 
 import '../media/css/dashElements.css';
@@ -22,6 +24,11 @@ import GreenBox from '../secondaryelements/GreenBox';
 // }
 
 function Dashboard(props){
+  const [activeButton, setActiveButton] = React.useState(false);
+  const activateSave=()=>{
+    setActiveButton(true)
+  }
+
   const logOut = () => {
     localStorage.removeItem('token');
     props.userPack.refs.mainView.current.click();
@@ -32,10 +39,12 @@ function Dashboard(props){
     profilePicture="url("+props.userPack.user.profilePicture.url+")"
   } catch (error) {
   }
+  
   const closeOverLay = () => {
     let neooverlay={...props.userPack.overlay}
     neooverlay.active=!neooverlay.active
     props.userPack.methods.stateHandling('overlay',neooverlay)
+    setActiveButton(false)
   }
   const openOverlay = () => {
     let neooverlay={...props.userPack.overlay}
@@ -46,9 +55,16 @@ function Dashboard(props){
     return(
       <>
        {console.log(props.userPack.user)}
-       <OverLay title='test'
+       <OverLay title='Card details'
 close={closeOverLay} 
 active={props.userPack.overlay.active} userPack={props.userPack}>
+<div className="row" style={{padding:"50px",marginTop:"20px"}}>
+
+<TextField title="Name" onChange={activateSave} />
+  <div className="row" style={{marginTop:"60px",marginBottom:"60px"}}>
+    <SaveButton save={closeOverLay} active={activeButton}/>
+  </div>
+</div>
 
         </OverLay>
       <WhiteNavBar userPack={props.userPack}/>
