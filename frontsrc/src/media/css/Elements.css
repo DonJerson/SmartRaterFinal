@@ -1,13 +1,18 @@
 .navBar1 {
     display: grid;
     grid-template-columns: 1fr 6fr;
-    grid-template-rows: 72px;
+    grid-template-rows: 52px;
     background-color: white;
     width: 100vw;
     z-index: 90;
     position: absolute;
 }
-
+@media (max-width: 768px) {
+    .navBar1 {
+        grid-template-rows: 52px !important;
+    }
+}
+    
 .shadow1 {
     box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.25);
 }
@@ -56,8 +61,11 @@ color: #69C9DE;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.7);
-    z-index: 99;
+    z-index: 1000;
     position: fixed;
+    top:0px;
+       display: 'inline-flex' ;flex-direction: 'column';
+        align-items: 'center'; justify-content: 'center';
 }
 .loginForm {
     width: 350px;
@@ -193,7 +201,7 @@ color: #FFFFFF;
     background: #6BC294;
     border-radius: 5px 0px 0px 5px;
 }
-
+.hiddenField{width:0;height:0;visibility:hidden;position:absolute;left:0;top:0}
 .blueBox {
     position: relative;
     min-width: 80px;
@@ -245,6 +253,8 @@ color: #FFFFFF;
 }
 
 .generalField {
+    justify-self: center;
+    align-self: center;
     border: 1.5px solid #D6D6D6;
     box-sizing: border-box;
     border-radius: 3px;
@@ -252,6 +262,7 @@ color: #FFFFFF;
     font-family: KarlaRegular;
     font-size: 18px;
     width: 100%;
+    min-width: 130px;
     color: #1f1f1f;
 }
 
@@ -278,3 +289,13 @@ color: #FFFFFF;
     width: 100%;
     grid-template-rows: auto;
 }
+.modalbox {
+    padding: 7px 17px 16px 15px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(0, 0, 0, 1);
+    min-width: 20px;
+    max-height: 80%;
+  }
+

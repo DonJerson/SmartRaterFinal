@@ -6,13 +6,14 @@ import React from 'react';
             let filteredModels=[]
             if(props.name.includes("rand")){
             newData.brands.forEach(element => {
-              if(element.toLowerCase().includes(e.target.value)){
+              if(element.toLowerCase().includes(e.target.value.toLowerCase())){
               filteredModels.push(element)
               }
             })}
             else{
-              newData.models.forEach(element => {
-                if(element.toLowerCase().includes(e.target.value)){
+              console.log("filtering by model",e.target.value,newData.models)
+              props.userPack.models.forEach(element => {
+                if(element.toLowerCase().includes(e.target.value.toLowerCase())){
                 filteredModels.push(element)
                 }
               })}
@@ -22,14 +23,14 @@ import React from 'react';
       return(
         <>
             <div className="outterBar" style={{width:"60vw"}}>
-                <input style={{width:"100%"}} autoFocus={true} onChange={changeMethod} 
-                defaultValue={props.value} className="invisibleInput" placeholder="Filtrar por nombre..." type="text" name="" id="">
+                <input style={{width:"100%"}} autoFocus={true} onChange={changeMethod}
+                value={props.value} className="invisibleInput" 
+                placeholder="Filter" type="text" data-name="brand" id="brand">
                 
                 </input>
-
-
-                
-                
+     
+                <input type="text" id="username"  className='hiddenField' />
+<input type="password" className='hiddenField' />
                  
             </div>
         {props.children}

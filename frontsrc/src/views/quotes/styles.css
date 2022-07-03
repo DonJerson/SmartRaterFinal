@@ -1,0 +1,214 @@
+/* Carsline */
+
+@import url("https://fonts.googleapis.com/css2?family=Karla:wght@700&display=swap");
+
+p {
+  margin: 0;
+}
+
+.flex-col-hstart-vstart {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.flex-row-vcenter-hstart {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-col-hcenter-vstart {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-row-vcenter-hcenter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.carsline {
+  width: 100%;
+}
+
+.frame-109 {
+  width: 100%;
+}
+
+.txt-290 {
+  font-size: 14px;
+  font-family: Karla, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+  color: rgba(0, 0, 0, 1);
+  word-wrap: break-word;
+  margin-right: 8px;
+}
+
+.carcolumn {
+  box-sizing: border-box;
+  display: flex;
+  min-width: 200px;
+  width: 100%;
+}
+
+.carrow {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.carline-selected {
+  padding: 7px;
+  margin-right: 8px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid rgba(15, 188, 157, 1);
+  height: 100%;
+}
+.selectedCar {
+  border: 1px solid rgba(15, 188, 157, 1) !important;
+}
+
+.gis-car {
+  width: 22px;
+  height: 21px;
+}
+
+.inputtext {
+  padding: 0px 1px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0);
+  width: 100%;
+}
+
+
+
+.inputtext {
+  padding: 0px 1px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0);
+  width: fit-content;
+}
+
+
+
+.carline {
+  cursor: pointer;
+  padding: 7px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 1);
+  height: 100%;
+}
+.carline:hover{
+  border: 1px solid rgba(15, 188, 157, 1);
+}
+
+.gis-car {
+  width: 22px;
+  height: 21px;
+}
+
+.inputtext {
+  padding: 0px 1px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0);
+  width: 100%;
+}
+
+
+
+.inputtext {
+  padding: 0px 1px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0);
+  width: fit-content;
+}
+
+
+
+.carrow-1 {
+  width: 100%;
+}
+
+.carline-2 {
+  padding: 7px;
+  margin-right: 8px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 1);
+  height: 100%;
+}
+
+.gis-car {
+  width: 22px;
+  height: 21px;
+}
+
+.inputtext {
+  padding: 0px 1px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0);
+  width: 100%;
+}
+
+
+
+.inputtext {
+  padding: 0px 1px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0);
+  width: fit-content;
+}
+
+
+
+.carline {
+  padding: 7px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 1);
+  height: 100%;
+}
+
+.gis-car {
+  width: 22px;
+  height: 21px;
+}
+
+.inputtext {
+  padding: 0px 1px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0);
+  width: 100%;
+}
+
+.txt-996 {
+  font-size: 12px;
+  font-family: Karla, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  color: rgba(126, 126, 126, 1);
+  word-wrap: break-word;
+}
+
+.inputtext {
+  padding: 0px 1px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0);
+  width: fit-content;
+}
+
+
+
+.frame-104 {
+  width: 20px;
+  height: 20px;
+}

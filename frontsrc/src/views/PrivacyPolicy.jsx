@@ -6,7 +6,8 @@ import WhiteNavBar from '../elements/WhiteNavBar';
       return(
         <>
         <WhiteNavBar userPack={props.userPack}/>
-        <div className="container" style={{paddingTop:100}}>
+        <div className="container" style={{paddingLeft:10,
+          paddingTop:100}}>
         <p className="PrivacyPolicy" style={{width: 296, height: 46, fontSize: 45, fontWeight: '700', lineHeight: '100%', color: 'black',}}>Privacy Policy</p>
        <p className="Lastrevised:o">
 <br/>

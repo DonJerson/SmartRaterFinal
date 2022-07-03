@@ -14,14 +14,14 @@ SECRET_KEY = '^$am8n_mab&2u^lobwr4gd9wwi8f04jg5frtil^0u_*z214%2('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['prieto','backends.smartrater.us','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','inversionesmendez.herokuapp.com','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['prieto','44.205.27.144','backends.smartrater.us','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','inversionesmendez.herokuapp.com','127.0.0.1','localhost']
 
 # Application definition   
 CORS_ORIGIN_ALLOW_ALL=True
 #CSRF_COOKIE_SECURE = False
 #SESSION_COOKIE_SECURE = False
 CORS_ALLOW_CREDENTIALS = True
-
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.admin',
@@ -134,22 +134,15 @@ if(BASE_DIR=="/backend"):
     dev=True
 # # aws settings
 
-# AWS_ACCESS_KEY_ID = 'AKIAXQSSLHRA6KFJFR33'
-# AWS_SECRET_ACCESS_KEY = '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'
-# AWS_STORAGE_BUCKET_NAME = 'smartinsurancedb'
-# AWS_DEFAULT_ACL = 'public-read'
-# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com'%(AWS_STORAGE_BUCKET_NAME)
-# AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-# # s3 static settings
-# AWS_LOCATION = 'static'
-# STATIC_URL = 'https://%s/%s/'%(AWS_S3_CUSTOM_DOMAIN,AWS_LOCATION)
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 if(dev):
     DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'smartrater',
         }}
+    STATIC_URL = '/static/'
+    STATIC_ROOT = BASE_DIR + '\static'
 else:
     DATABASES = {
         'default': {
@@ -157,18 +150,25 @@ else:
         'NAME': 'smartrater',
         'USER': 'donjerson',
         'PASSWORD': 'Pri3to.Server',
-        'HOST': 'backends.smartrater.us',
+        'HOST': '44.205.27.144',
         'PORT': '5432'
         }}
+    AWS_ACCESS_KEY_ID = 'AKIAVFWEVUY5W5ZNHSVD'
+    AWS_SECRET_ACCESS_KEY = '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'
+    AWS_STORAGE_BUCKET_NAME = 'smartopenbucket'
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com'%(AWS_STORAGE_BUCKET_NAME)
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    # s3 static settings
+    AWS_LOCATION = 'static'
+    STATIC_URL = 'https://%s/%s/'%(AWS_S3_CUSTOM_DOMAIN,AWS_LOCATION)
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# STATIC_URL = '/static/'
-# STATIC_ROOT = BASE_DIR + '\static'
-STATIC_URL = 'http://backends.smartrater.us/static/'
-STATIC_ROOT = '/var/www/html/static'
 
 
 
-CORS_ORIGIN_WHITE_LIST = 'prieto','backends.smartrater.us','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','127.0.0.1:8080','localhost:8080',
+
+CORS_ORIGIN_WHITE_LIST = 'prieto','44.205.27.144','backends.smartrater.us','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','127.0.0.1:8080','localhost:8080',
 
 JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER' :   'Insurance.utils.custom_jwt_response_handler',

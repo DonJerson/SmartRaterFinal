@@ -2,28 +2,13 @@
 
 #export STATUS= "git status -uno | grep Changes"
 
+cd /home/ubuntu/smartrater/backsrc
+
 while [ true ]; do
- 
- # do what you need to here
 
+git pull --dry-run | grep -q -v 'Already up-to-date.' && changed=1
 
-export STATUS="\"$(cd /home/ubuntu/smartrater/backsrc && git remote show origin)\""  
-SUB='not staged'
-
-case $STATUS in
-  *"$SUB"*)
-    echo "$STATUS"
-    ;;
-esac
-
-
-if [ "$STATUS" = *"$SUB"* ]; then
-    echo "Up-to-Date SmartRater"
-else 
-    echo "q vaina er diablo e"
-    cd /home/ubuntu/smartrater/backsrc
-    git pull origin master
 fi
+    sleep 5
 
-    sleep 2
 done

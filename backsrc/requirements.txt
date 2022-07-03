@@ -54,3 +54,6 @@ wsproto
 zope.interface==5.4.0
 MonthDelta==0.9.1
 gunicorn
+requests
+mechanize
+bs4

@@ -2,6 +2,7 @@ import React from 'react';
 import WhiteNavBar from '../elements/WhiteNavBar';
 import Signature from '../elements/Signature';
 import QuoteLine from '../elements/QuoteLine';
+import Button from './buttons/greenButton';
 
 //create a function that will render the quote card
 
@@ -85,12 +86,13 @@ function QuoteCard(props){
 function Body(props){
     return(
         <>
-         <div className="" style={{paddingTop:"86px",paddingLeft:"9vw",paddingRight:"9vw"}}>
+         <div className="" style={{paddingTop:"56px",paddingLeft:"9vw",paddingRight:"9vw"}}>
          <div className="myRow flexStart">
          <span className="karlaBold" style={{marginTop:10,fontSize:"28px",letterSpacing:"-0.05em",
 
           backgrouncColor:"black",color:"#000000"}}>
-            Saved Quotes </span>   
+            Results 
+            </span>   
             </div>
             <div className="myRow flexStart" >
             </div>
@@ -99,19 +101,33 @@ function Body(props){
             </div>
         <div className="myRow center" style={{marginTop:"26px"}}>
             <div className="flexWrap center" id="myBox" style={{width:"540px"}}>
-            {props.userPack.user.quoteList.map((quote,index)=>(
+            {/* {props.userPack.user.quoteList.map((quote,index)=>(
               <QuoteCard quote={quote} key={index} dimensions={props.userPack.dimensions}/>
-              ))}
-
-
-          <div className="Rectangle29" style={{wminWidth: "80vw", marginTop:107,display: 'flex',  padding: '3vw',boxSizing:"border-box",
+              ))} 
+                <div className="Rectangle29" style={{wminWidth: "80vw", marginTop:47,display: 'flex',  padding: '3vw',boxSizing:"border-box",
             flexDirection: 'column', alignItems: 'center', justifyContent: 'center',borderColor: 'rgba(116.88, 116.88, 116.88, 1)',
             height: 216, backgroundColor: 'white', borderRadius: 4, borderStyle: 'solid', borderWidth: 1, borderStyle: 'solid', }}>
             <p className="title3" style={{width: "74vw"}}>
               Get Your Policy Bound TODAY - Speak to an Agent.
             </p>
+              */}
+              <div className="myRow center">
+                <div className="lds-roller"><div></div><div></div><div></div><div>
+                </div><div></div><div></div><div></div><div></div></div>
+              </div>
 
 
+          <div className="Rectangle29 center" style={{marginTop:47,display: 'flex',  padding: '3vw',boxSizing:"border-box",
+            flexDirection: 'column', alignItems: 'center', justifyContent: 'center',borderColor: 'rgba(116.88, 116.88, 116.88, 1)',
+            height: 216, backgroundColor: 'white', borderRadius: 4, borderStyle: 'solid', borderWidth: 1, borderStyle: 'solid', }}>
+            <p className="title3" style={{width: ""}}>
+              Please sit back while we work for you
+            </p>
+
+            <a href="tel:+15615320620" style={{margin:"10px"}}>
+<Button text='Call us now!'/>
+</a>
+{/* 
         <div className="Rectangle28" style={{width:150, height: 10, marginTop:20, paddingTop: 19, paddingBottom: 18, paddingLeft: 79, paddingRight: 78,
         backgroundColor: 'rgba(15, 188, 157, 1)', boxShadow: '0px 4px 1px rgba(45.21, 157.25, 137.17, 1)',display: 'flex', flexDirection: 'row', 
            alignItems: 'center', justifyContent: 'center',}}>
@@ -120,7 +136,7 @@ function Body(props){
               <p className="2021" style={{fontSize: 26, fontWeight: '700', lineHeight: '100%', textAlign: 'center', color: 'white',}}>Call us now!</p>
               </a>
   
-</div>
+</div> */}
 
                 </div>
 
@@ -185,6 +201,7 @@ function LoadingPage(props) {
 }
 
 function Results(props){
+  console.log("tamo aqui con quote",props.userPack.data)
     return(
         <>
             

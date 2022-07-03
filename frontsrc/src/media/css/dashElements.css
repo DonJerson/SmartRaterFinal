@@ -1,13 +1,17 @@
 
 .profilePic{
-    margin-top: 33px;
 width: 136px;
 height: 136px;
 border-radius: 50%;
 
 background: #C4C4C4;
 }
-
+@media screen and (max-width: 768px) {
+    .profilePic{
+        width: 85px;
+height: 85px;
+    }
+}
 
 .profileAvatar:hover .mainHover{
     display:block;

@@ -14,7 +14,7 @@ import { waitFor } from '@testing-library/react';
         let neoData={...props.userPack.data}
         neoData.additionalDriverStep=0
         props.userPack.methods.stateHandling("data",neoData)
-        props.userPack.methods.quoteAuto();
+        //props.userPack.methods.quoteAuto();
         props.userPack.refs.resultsRef.current.click()
       }else{
       if(props.userPack.data[props.name].length==17){
@@ -112,6 +112,7 @@ import { waitFor } from '@testing-library/react';
     nextStep=()=>{
       this.updateLocalPack("step",this.state.localPack.step+1);
       this.props.userPack.methods.setAdditionalDrivs(this.state.localPack.step+1);
+      
     }
     setLocalPath=(newLocalPath)=>{
       this.setState({localPath:newLocalPath});
@@ -127,6 +128,9 @@ import { waitFor } from '@testing-library/react';
         default:
           return(key+"th")
       }
+    }
+    setAdditionalVehsNext=()=>{
+      this.props.userPack.refs.resultsRef.current.click()
     }
     nextStepDriver=(e)=>{
       e.preventDefault();e.stopPropagation()
@@ -153,7 +157,7 @@ import { waitFor } from '@testing-library/react';
      <div className="myRow center"  style={{marginTop:"1rem"}}>
 <div value={'/autoquote/'+this.props.userPack.quoteSteps[this.props.data.step+1]}
 className={'blueBox'} style={{minWidth:"22vw"}} 
-onClick={this.props.userPack.methods.setAdditionalVehsNext}>No</div>
+onClick={this.setAdditionalVehsNext}>No</div>
 <div value={'/autoquote/'+this.props.userPack.quoteSteps[this.props.data.step+1]}
  style={{minWidth:"22vw"}} className={'blueBox'} onClick={this.nextStep}>Yes</div>
 </div>

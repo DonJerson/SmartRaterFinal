@@ -20,13 +20,15 @@ from django.conf.urls.static import static
 from Insurance import views
 from django.urls import path, include
 from Insurance import urls as Insurance_urls
+from Maps import urls as Maps_urls
 from rest_framework_jwt.views import obtain_jwt_token
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(Insurance_urls)),
-    path('api/',include(Insurance_urls.insuranceRouter.urls))
+    path('api/',include(Insurance_urls.insuranceRouter.urls)),
+     path('api/',include(Maps_urls.mapRouter.urls))
 ]
 
 # urlpatterns = [

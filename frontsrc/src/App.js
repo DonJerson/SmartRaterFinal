@@ -12,7 +12,13 @@ import PrivacyPolicy from './views/PrivacyPolicy';
 import Dashboard from './views/Dashboard';
 import Policies from './views/Policies';
 import { createBrowserHistory } from 'history';
-
+import AutoSelect from './views/elements/AutoSelect';
+import Quote from './views/quotes/Quote';
+import EditQuote from './views/quotes/EditQuote';
+import NewDriver from './views/quotes/NewDriver';
+import NewCar from './views/quotes/NewCar';
+import EditLimits from './views/quotes/EditLimits';
+import EditCar from './views/quotes/EditCar';
 // Import the functions you need from the SDKs you need
 
 const axios = require('axios');
@@ -96,12 +102,17 @@ const brandss=
 
 const getUrl = window.location;
 
-let baseUrl = getUrl.protocol +"//backends.smartrater.us/";
+let baseUrl = getUrl.protocol +"//44.205.27.144/";
 
-let neoUrl =getUrl.protocol +"//backends.smartrater.us/";
+let neoUrl =getUrl.protocol +"//44.205.27.144/";
 
 let baseWss = "18.216.39.52";
-if(getUrl.host.includes(":8080")){
+if(getUrl.host.includes(":8080") ||
+getUrl.host.includes(":8082") ||
+getUrl.host.includes("localhost") ||
+getUrl.host.includes("127.0.0.1") ||
+getUrl.host.includes("10.0.0.229")
+){
   neoUrl=getUrl.hostname
   baseUrl = getUrl.protocol+ "//" + getUrl.hostname +":8081/";
 }
@@ -175,7 +186,8 @@ class App extends Component {
     //set listing user attributes
     data.vehicleLabel="How Many Additional Vehicles Will There Be?"
     data.driverLabel="How Many Additional Drivers Will There Be?"
-    this.state={dimensions:{width:1200,height:800},customer:cookieUser,newQuote,data,currentStep,
+    this.state={models:[],baseUrl,
+      dimensions:{width:1200,height:800},customer:cookieUser,newQuote,data,currentStep,
     newCustomer:newCustomerRaw,user:newCustomerRaw,quoteSteps:[],quoteNames:[],quoteStepsRaw:[],
   data,overlay:{active:false,innerLoading:false}
     
@@ -192,24 +204,33 @@ class App extends Component {
   }
   handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      if(this.state.data.modal.active && this.state.data.modal.type=="Login"){
-        this.login(this.state.data.username,this.state.data.password)
+      if(document.getElementsByClassName("outterModal")[0]){
+        const loginState =
+        document.querySelector("#root > div > div.outterModal.center > div > div.myRow.center > h2").textContent
+        if(loginState==="Login"){
+          this.login(this.state.data.username,this.state.data.password)
+        }
+        else{
+          this.handleRegister()
+        //
       }
+
+        //navigate("./")
+      }
+        
       // this.handleData("filterSearch",e.target.value)
     }
     if (e.key === 'Escape') {
       //close modal
-      this.handleData("modal",{active:false,type:"Login"})
+      if(document.getElementsByClassName("outterModal")[0]){
+        navigate("./")
+      }
       // this.handleData("filterSearch",e.target.value)
     }
   }
 
 
-  async getUserInfo(userId){
-    let data = await axios.get(baseUrl+"api/customer/"+userId).then(res=>
-    {return res.data})
-    this.setState({customer:data})
-  }
+
   refreshCurrentStep(){
     let myVar = window.location.pathname.substr(11,window.location.pathname.length)
     let newData={...this.state.data}
@@ -224,7 +245,7 @@ class App extends Component {
     
     }
     // if(this.state.filteredModels.length==0&&this.state.data.brand!=''){
-      this.fetchModels(this.state.data.brand)
+      // this.fetchModels(this.state.data.brand)
   }
   // ...
   
@@ -232,6 +253,7 @@ class App extends Component {
     if (this.props.location !== prevProps.location) {
       this.onRouteChanged();
     }
+ 
     // console.log("testeo",this.state.quoteSteps[3])
     if((window.location.pathname.substr(11,23)==this.state.quoteSteps[3]||
     
@@ -243,10 +265,18 @@ class App extends Component {
   }
 
   onRouteChanged() {
+    console.log("changed")
+    this.state.filteredBrands=this.state.data.brands
   }
 
   componentDidMount(){
-    this.updateDimensions()
+    let resultado = this.getUser()
+    if(resultado){
+      //
+    }else{
+      this.updateDimensions()
+    }
+    
     const elements = new Elements();
     let filteredBrands=[]
     let filteredModels=[]
@@ -254,7 +284,7 @@ class App extends Component {
 
 
     // if userid cookie is set, log in the user
-    this.getUser()
+    
     
     elements.brands.forEach(element => {
       let myElement = element.toLowerCase()
@@ -275,6 +305,7 @@ class App extends Component {
     let neoData={...this.state.data}
     let neoQuote={...this.state.newQuote}
     neoData.filteredBrands=filteredBrands
+    
     neoData.filteredModels=filteredModels
     const that=this
     async function fetcher(){
@@ -288,13 +319,12 @@ class App extends Component {
       let myBrand=neoQuote.brand
       let myEl = document.getElementById('myBox')
       /////1ST SEGMENT IF BRAND IS SET, FETCH MODELS DATA FROM BRAND
-      console.log("real faux",myVar,neoQuote.vin)
 
       //changemade
 
       // if(myBrand||neoQuote.vin){
       //   if(myBrand!=null){
-      //     getModels= await axios.post(`https://5m6n0z1yta.execute-api.us-east-2.amazonaws.com/dev/getModels/`,{"brand":myBrand}).then(resp=>{
+      //     getModels= await axios.post(`https://backends.smartrater.us/getModels/`,{"brand":myBrand}).then(resp=>{
 
       //     return resp.data
       //     })
@@ -355,8 +385,9 @@ class App extends Component {
             newData[element]=window.localStorage.getItem(element)
           }
         })
-        if(newData.brand){
-        that.fetchModels(newData.brand)}
+      //   if(newData.brand){
+      //   that.fetchModels(newData.brand)
+      // }
         newData.firstName=window.localStorage.getItem("firstName")
         newData.lastName=window.localStorage.getItem("lastName")
         newData.city=window.localStorage.getItem("city")
@@ -473,7 +504,7 @@ handleRegister = (data=false)=>{
 }
 
 login = (username,password) =>{
-  
+  username = username.toLowerCase()
   let neoData = {...this.state.data}
   let neoModal = {...neoData.modal}
   neoModal.innerLoading=true
@@ -496,7 +527,7 @@ login = (username,password) =>{
       neoData.modal=neoModal
       neoData.loading=false
       that.setState({data:neoData})
-      try{that.mainViewRef.current.click()}catch (err){console.log(err)}
+      // try{window.location.reload()}catch (err){console.log(err)}
       return
   },
   error=>{
@@ -520,9 +551,18 @@ quoteStateHandler=(e)=>{
 stateHandling=(tag,latter)=>{
   this.setState({[tag]:latter})
 }
+refreshUser=()=>{
+  const token = window.localStorage.getItem('token')
+  axios.defaults.headers.get['Authorization']="JWT "+token
+  axios.get(baseUrl + `current_user/`).then(res=>
+  {
+    this.setState({user:res.data})
+  })
+ 
+}
 getUser=()=>{
   const token = window.localStorage.getItem('token')
-  // console.log("hola chicos, no hagan drogas",firstName,zipzip,lastName,address1,state,city)
+  
   let userRequest=async function(){return null}
   let neoAxios ={...axios}
   if(token){
@@ -532,6 +572,10 @@ getUser=()=>{
     neoModal.innerLoading=true
     neoModal.innerError=null
     this.setState({modal:neoModal})
+    this.updateDimensions()
+    
+  }else{
+    return(false)
   }
   axios.defaults.headers.get['Content-Type']='application/x-www-form-urlencoded'
   
@@ -555,11 +599,13 @@ getUser=()=>{
     let neoCurrency = {...this.state.currency}
     neoCurrency.rates=currenciesData.rates
     data?switcher=true:switcher=false
+    // console.log("user",data)
     this.setState({user:data,
       fetchedUser:switcher,shippingAddress:true,
       logged:switcher,currency:neoCurrency,
       dialogFetching:false,steps:newSteps})
   }).catch(error=>{console.log("error getting user",error)})
+  return(true)
  }
   updateDimensions=()=>{
     const w = window;
@@ -588,15 +634,21 @@ getUser=()=>{
     this.setState({data:newData,newQuote:neoQuote})
   }
   handleData=(name,value)=>{
+    
     let newData={...this.state.data}
     window.localStorage.setItem(name,value)
     newData[name]=value
+
+    if(name=="filteredModels"){
+      this.setState({filteredModels:[...new Set(value)]})
+    }
+    else{this.setState({data:newData})}
     
-    this.setState({data:newData})
   }
   fetchModels=(brand)=>{
 
-    axios.post(`https://5m6n0z1yta.execute-api.us-east-2.amazonaws.com/dev/getModels/`,{"brand":brand}).then(resp=>{
+    axios.post(`https://backends.smartrater.us/getModels/`,{"brand":brand}).then(resp=>{
+      
       const newModels = resp.data
       let neoFilteredModels=[]
       let newData = {...this.state.data}
@@ -606,8 +658,10 @@ getUser=()=>{
           neoFilteredModels.push(element.model)
         }
       });
+      neoFilteredModels=[...new Set(neoFilteredModels)]
       newData.filteredModels=neoFilteredModels
-      this.setState({filteredModels:neoFilteredModels})
+      
+      this.setState({filteredModels:neoFilteredModels,models:neoFilteredModels})
       this.forceUpdate()
     })
   }
@@ -616,7 +670,7 @@ getUser=()=>{
     let myEl = document.getElementById('myBox')
     if(myEl){
       myEl.classList.add("outEffect")
-      await new Promise(r => setTimeout(r, 350));
+      await new Promise(r => setTimeout(r, 200));
       myEl.classList.remove("outEffect")
       this.handleData("step",step+1)
       navigate(url)
@@ -694,14 +748,17 @@ getUser=()=>{
         }
         
         setAdditionalDrivsNext = (e)=>{
-          //this.resultsRef.current.click()
+          e.preventDefault()
+          e.stopPropagation()
+          this.resultsRef.current.click()
+          console.log("clicked")
           // let newData = {...this.state.data}
           // let newQuote ={...this.state.newQuote}
           // newData.vehicleAmount=0
           // newQuote.vehicleAmount=0
           // window.localStorage.setItem(e.target.parentElement.getAttribute('name'),e.target.getAttribute('value'))
           // this.setState({data:newData,newQuote})
-          //this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step+1]}`,this.state.data.step)
+          // this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step+1]}`,this.state.data.step)
         }
         setAdditionalDrivs=(e)=>{
           let newData = {...this.state.data}
@@ -714,7 +771,7 @@ getUser=()=>{
         }
         logout=()=>{
           localStorage.removeItem('token');
-          this.mainViewRef.current.click();
+          // this.mainViewRef.current.click();
           window.location.reload()
         }
         newQuote=(newData,newQuote)=>{
@@ -738,8 +795,8 @@ getUser=()=>{
           
 
           this.newQuote(newData,newQuote)
-         this.resultsRef.current.click()
-         //this.flyOutEffect(`/autoquote/results`,this.state.data.step+1)
+         //this.resultsRef.current.click()
+         this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step+1]}`,this.state.data.step)
          
         }
         setAdditionalVehs=(e)=>{
@@ -797,7 +854,32 @@ getUser=()=>{
   quoteAuto=(e)=>{
     e.preventDefault()
     e.stopPropagation()
+    this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step+1]}`,this.state.data.step+1) 
+  }
+  goBack=()=>{
+    window.history.back()
+  }
+  nextStep=(e)=>{
+    e.preventDefault()
+    e.stopPropagation()
+   if(this.state.data.step+1===this.state.quoteSteps.length){
+      this.resultsRef.current.click()
+   }else{
     this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step+1]}`,this.state.data.step) 
+
+  }
+  
+  }
+  previousStep=(e)=>{
+    e.preventDefault()
+    e.stopPropagation()
+    //this.goBack()
+    if(this.state.data.vin.length===17&&this.state.data.step===4){
+      this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step-4]}`,this.state.data.step-5)
+  
+    }
+    else{    this.flyOutEffect(`/autoquote/${this.state.quoteSteps[this.state.data.step-1]}`,this.state.data.step-2)
+  }
   }
   render(){
     let myYears=[]
@@ -810,8 +892,10 @@ getUser=()=>{
       mainView:this.mainViewRef,driversRef:this.driversRef,vehiclesRef:this.vehiclesRef,resultsRef:this.resultsRef,resumeRef:this.resumeRef,}
     const methods={axios,baseUrl,selector:this.selector,setAdditionalVehs:this.setAdditionalVehs,
       setAdditionalVehsNext:this.setAdditionalVehsNext,logout:this.logout,
+      models:this.state.models,refreshUser:this.refreshUser,getUser:this.getUser,
       driverSelector:this.driverSelector,vehicleSelector:this.vehicleSelector,
       flyOutEffect:this.flyOutEffect,closeModal:this.closeModal,login:this.login,
+      nextStep:this.nextStep,previousStep:this.previousStep,
       handleRegister:this.handleRegister,systemLogin:this.systemLogin,next:this.next,
       stateHandling:this.stateHandling,fetchModels:this.fetchModels,quoteStateHandler:this.quoteStateHandler,
       eventStateHandling:this.eventStateHandling,handleData:this.handleData,
@@ -820,8 +904,8 @@ getUser=()=>{
       'select-additionalCar','select-insured','select-homeowner','select-married'
       ,'select-accident','select-dui','select-name','select-dob','select-sex','select-additionalDriver'
       ,'select-military','select-address','select-email','select-phone']
-    const userPack = {dimensions:this.state.dimensions,modal:this.state.modal,pathAux,
-      filteredModels:this.state.filteredModels,overlay:this.state.overlay,
+    const userPack = {dimensions:this.state.dimensions,modal:this.state.modal,pathAux,baseUrl:this.state.baseUrl,
+      filteredModels:this.state.filteredModels,overlay:this.state.overlay, models:this.state.models,
       filterSearch:this.state.filterSearch,filterModelSearch:
       this.state.filterModelSearch,newQuote:this.state.newQuote,
     methods,refs,data:this.state.data,user:this.state.user,logged:this.state.logged,
@@ -838,20 +922,25 @@ getUser=()=>{
     return(
       <>
       <Router>
+      <EditLimits path="/savedquotes/:quoteId/edit/limit"  userPack={userPack} />
+      <NewCar path="/savedquotes/:quoteId/edit/newcar"  userPack={userPack} />
+      <EditCar path="/savedquotes/:quoteId/edit/editcar"  userPack={userPack} />
+                <NewDriver path="/savedquotes/:quoteId/edit/driver"  userPack={userPack} />
+        <AutoSelect path='/freequote/autoselect' userPack={userPack}/>
+        <Quote path="/savedquotes/:quoteId" userPack={userPack}/>
+        <EditQuote path="/savedquotes/:quoteId/edit" userPack={userPack}/>
       <SavedQuotes path="/savedquotes" userPack={userPack}/>
       <Policies path="/policies" userPack={userPack}/>
         <MainView path="/" userPack={userPack}/>
         <Teteo path="/teteo" userPack={userPack}/>
         <QuoteView path="/freequote" userPack={userPack}/>
-        <Dashboard path="/dashboard" userPack={userPack}/>
+        <Dashboard default path="/dashboard" userPack={userPack}/>
         <PrivacyPolicy path="/privacypolicy" userPack={userPack}/>
         <Terms path="/terms" userPack={userPack}/>
         {elements.listOfAutoQuoteSteps.map((element,index)=>(
-          <>
             <AutoQuote type="autodefault" elements={portingElements}
             steps={this.state.quoteSteps} 
              path={'/autoquote/'+element.path} key={index} userPack={userPack}/>
-          </>
         ))}
 
         {['/autoquote','/homequote','/lifequote','/healthquote','/businessquote','/commercialquote']
@@ -859,15 +948,15 @@ getUser=()=>{
           <Results path={`${step}/results`} key={index} userPack={userPack}/>))
         }
       </Router>
-      <Link key={1} to="/" className="buttonClass" ref={this.mainViewRef}/>
-      <Link key={2} to="/autoquote/results" className="buttonClass" ref={this.resultsRef}/>
-      <Link key={3}  to="/savedquotes" className="buttonClass" ref={this.savedQuotesViewRef}/>
-      <Link key={4} to="/freequote" className="buttonClass" ref={this.quoteViewRef}/>
-      <Link key={5} to="/newquote/select-vehicle-vin" className="buttonClass" ref={this.newQuoteRef}/>
-      <Link key={6} to="/autoquote/select-vehicle-vin" className="buttonClass" ref={this.newAutoQuoteViewRef}/>
-      <Link key={7} to="/autoquote/select-driver-name0" className="buttonClass" ref={this.driversRef}/>
-      <Link key={8} to="/autoquote/select-vin0" className="buttonClass" ref={this.vehiclesRef}/>
-      <Link key={9} to="/autoquote/select-accidents" className="buttonClass" ref={this.resumeRef}/>
+      <Link to="/" className="buttonClass" ref={this.mainViewRef}/>
+      <Link to="/autoquote/results" className="buttonClass" ref={this.resultsRef}/>
+      <Link to="/savedquotes" className="buttonClass" ref={this.savedQuotesViewRef}/>
+      <Link to="/freequote" className="buttonClass" ref={this.quoteViewRef}/>
+      <Link to="/newquote/select-vehicle-vin" className="buttonClass" ref={this.newQuoteRef}/>
+      <Link to="/autoquote/select-vehicle-vin" className="buttonClass" ref={this.newAutoQuoteViewRef}/>
+      <Link to="/autoquote/select-driver-name0" className="buttonClass" ref={this.driversRef}/>
+      <Link to="/autoquote/select-vin0" className="buttonClass" ref={this.vehiclesRef}/>
+      <Link to="/autoquote/select-accidents" className="buttonClass" ref={this.resumeRef}/>
       
       </>
     )

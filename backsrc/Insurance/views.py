@@ -12,6 +12,12 @@ from .serializers import *
 from rest_framework.parsers import JSONParser
 # Create your views here.
 
+
+import requests
+from django.http import StreamingHttpResponse
+
+
+
 def index(request):
 	form = LoginForm()
 	return render(request, 'mainapp2.html',{'form':form})

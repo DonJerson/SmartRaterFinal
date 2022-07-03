@@ -6,25 +6,88 @@ import FileIcon from '../dashboard/fileIcon';
 import SaveButton from '../dashboard/SaveButton';
 import TrashIcon from '../dashboard/trashIcon';
 import OverLay from '../elements/OverLay';
+import Title from './dashelements/title';
 import Signature from '../elements/Signature';
 import TextField from '../elements/TextField';
 import WhiteNavBar from '../elements/WhiteNavBar';
-
 import '../media/css/dashElements.css';
-import GreenBox from '../secondaryelements/GreenBox';
+import {Router,Link, navigate} from '@reach/router';
+import NiceInput from '@donjerson2/uielements/dist/Elements/input';
+import './dashelements/animation.css';
+import EditView from './dashelements/EditView';
+import VerifyEmail from './dashelements/VerifyEmail';
+import ChangePassword from './dashelements/ChangePassword';
+import LeadView from './dashelements/LeadView';
+import DashBody from './dashelements/DashBody';
 
-// const isVarString =(a)=>{
-//   if(a){
-//     return a
-//   }else{
-//     return ""
-//   }
 
+function Client(props){
+  return(
+    <div className="myRow" style={{paddingTop:"10px"}}>
+      <Link to={`${props.client.id}`}>
+    <p className="link">{props.index+1}.  {props.client.first_name} {props.client.last_name}</p>
+    </Link>
+  </div>
+  )
+}
+function Clients(props){
+  const [filterText, setFilterText] = React.useState("");
+  const onChange = (event) => {
+    console.log("done",event.target.value.toString().toLowerCase())
+    setFilterText(event.target.value.toString().toLowerCase());
+  };
+
+  let clients=props.clients
+  let filteredClients=props.clients
+  if(filterText.length>0){
+  filteredClients=filteredClients.filter(client=>{
+    try {
+      console.log("tratando 1")
+      if(client.first_name.toLowerCase().includes(filterText)){
+        return client
+      }
+     
+    } catch (error) {
+      console.log(error)
+    }
+    try {
+      console.log("tratando")
+      if(client.last_name.toLowerCase().includes(filterText)){
+        return client
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
+      
+    })
+  }
   
-// }
+  const Elements=()=>{
+    return filteredClients.map((client,index)=>{
+      return(
+      <Client client={client} index={index} key={index}/>
+      )
+    })
+  }
+  const padding = "100px"
+    return(
+      // <Client client={props.clients[0]} index={0}/>
+      <>
+      <div className="myRow center"  style={{paddingTop:"10px",paddingBottom:"18px"}}>
+      <div className="" style={{minWidth:"30vw",maxWidth:"90vw",paddingRight:padding,paddingLeft:padding}}>
+
+      <input className='input' onChange={onChange} type="text" placeholder="Customer Search" />
+      <Elements/>
+      </div>
+      </div>
+      </>
+    )
+}
 
 function Dashboard(props){
   const [activeButton, setActiveButton] = React.useState(false);
+  const [masterUser, setMasterUser] = React.useState(false);
   const activateSave=()=>{
     setActiveButton(true)
   }
@@ -51,10 +114,34 @@ function Dashboard(props){
     neooverlay.active=!neooverlay.active
     props.userPack.methods.stateHandling('overlay',neooverlay)
   }
+  const adminSwitch = (e) => {
+    if(e.target.checked){
+      navigate('/dashboard/leads/', { replace: true });
+    }else{navigate('/dashboard/', { replace: true });}
+   
+    setMasterUser(e.target.checked)
+
+  }
   // console.log(props.userPack.user)
+  let master = false
+  try {props.userPack.user.agency.master?
+    master=true
+    :
+    master=false
+  } catch (error) {
+    
+  }
+
+  const user = props.userPack.user
+  let clients
+  try {
+    clients=props.userPack.user.agency.clients
+  } catch (error) {
+    clients=[]
+  }
+  const name = user.first_name+" "+user.last_name
     return(
       <>
-       {console.log(props.userPack.user)}
        <OverLay title='Card details'
 close={closeOverLay} 
 active={props.userPack.overlay.active} userPack={props.userPack}>
@@ -84,107 +171,39 @@ active={props.userPack.overlay.active} userPack={props.userPack}>
     </div>
     <div className="myRow center" style={{marginTop:"17px"}}>
      
-    <p className="title6">{props.userPack.user.first_name} {props.userPack.user.middle_name} {props.userPack.user.last_name}</p>
+
+
     </div>
-   
-    <div id='mainDashBox' className="myRow">
-        <div id="column">
-          <div id="container">
-        <p className="title6">
-        Active Policies
-    </p>
-    <GreenBox title="Auto">
-    <p className="" style={{fontSize: 12, fontWeight: '700', lineHeight: '100%', color: 'black',}}>Policy# G01-039942343</p>
-    <p className="Pip10,000 | $1,000 ded" style={{marginTop:"4px",
-      fontSize: 12, lineHeight: '100%', color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Honda Civic 2014</p>
-<p className="XUM" style={{fontSize: 12, lineHeight: '100%', marginTop:"10px",color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Premium: $1,350</p>
-<p className="XUM" style={{fontSize: 12, lineHeight: '100%',color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Term: 6 months</p>
-
-    </GreenBox>
-    </div>
-    <div id="container">
-    <p className="title6" style={{marginTop:"20px"}}>
-        Quotes
-    </p>
-    <GreenBox title="Auto">
-      
-    <p className="" style={{fontSize: 12, fontWeight: '700', lineHeight: '100%', color: 'black',}}>Quote# G01-039942343</p>
-    <p className="Pip10,000 | $1,000 ded" style={{marginTop:"4px",
-      fontSize: 12, lineHeight: '100%', color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Honda Civic 2014</p>
-<p className="XUM" style={{fontSize: 12, lineHeight: '100%', marginTop:"10px",color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Premium: $1,350</p>
-<p className="XUM" style={{fontSize: 12, lineHeight: '100%',color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Term: 6 months</p>
-</GreenBox>
-    </div>
-    </div>
-        
-        <div id="column">
-        <div id="container">
-              <p className="title6">
-                  Payment Methods
-              </p>
-              <div className="greenBoxSizing">
-
-                <div className="myRow flexStart">
-                  <CardIcon/> <p style={{padding:"12px"
-                }}>X-1885</p><EditIcon action={openOverlay}/><TrashIcon/>
-                </div>
-              </div>
-        {/* <GreenBox checkMark={false}/> */}
-        </div>
-
-
-        <div id="container">
-          <p className="title6" style={{marginTop:"20px"}}>
-                    Documents
-                </p>
-          <GreenBox smallBox={true} title={"Application.pdf"} checkMark={!false}>
-            <div className="myRow center">
-              <FileIcon/>
-              </div>
-          </GreenBox>
-        </div>
-
-
-        <div id="container">
-            <p className="title6" style={{marginTop:"20px"}}>
-              Drivers
-            </p>
-          <GreenBox title={"Jerson A. Mendez"} checkMark={!false}>
-          <p className="" style={{fontSize: 12, fontWeight: '700', lineHeight: '100%', color: 'black',}}>Licencia: M542-433-332-33-0</p>
-          <p className="Pip10,000 | $1,000 ded" style={{marginTop:"4px",
-      fontSize: 12, lineHeight: '100%', color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Date of Birth: 09/29/1995</p>
-        
-          </GreenBox>
-        </div>
-
-
-        <div id="container">
-            <p className="title6" style={{marginTop:"20px"}}>
-              Cars
-            </p>
-          <GreenBox title={"Honda Civic 2014"} checkMark={!false}>
-          <p className="" style={{fontSize: 12, fontWeight: '700', lineHeight: '100%', color: 'black',}}>VIN: J34223f1fd1s33</p>
-          <p className="Pip10,000 | $1,000 ded" style={{marginTop:"4px", fontSize: 12, lineHeight: '100%', color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Comprehensive: No</p>
-          <p className="Pip10,000 | $1,000 ded" style={{marginTop:"4px", fontSize: 12, lineHeight: '100%', color: 'rgba(71.19, 71.19, 71.19, 1)',}}>Collision: No</p>
-    
-          </GreenBox>
-        </div>
-
-
-
-        </div>
-
-        </div>
-
-<div className="myRow center" style={{marginTop:"40px"}}>
-
-  <div className="logOutBox center">
-    <p className="pinkButtonTitle link" onClick={logOut}>Logout</p>
+   <div className='center' style={{margin:"18px"}}>
+   <Title text={name}/>
+   {
+      user.agency?
+      <div style={{marginLeft:"10px"}}>
+      <div className="switch__container">
+        <input onChange={adminSwitch} id="switch-shadow" className="switch switch--shadow" type="checkbox"/>
+        <label htmlFor="switch-shadow"></label>
+      </div>
   </div>
-</div>
+      :
+      <></>
+    }
+   </div>
 
-
-<Signature userPack={props.userPack}/>
+   
+    <Router>
+    <LeadView path='dashboard/leads/:leadId' clients={clients}/>
+    
+    <ChangePassword path='dashboard/edit/password' userPack={props.userPack}/>
+    <VerifyEmail path='dashboard/edit/verify' userPack={props.userPack}/>
+    <EditView path='dashboard/edit' userPack={props.userPack}/>
+    <Clients path='dashboard/leads/' clients={clients} />
+      
+  </Router>
+    <DashBody userPack={props.userPack} name={name}
+    openOverlay={openOverlay} logOut={logOut}
+    />
+  <Signature userPack={props.userPack}/>
+   
       {props.children}
       </>
     )

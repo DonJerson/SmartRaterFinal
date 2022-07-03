@@ -4,15 +4,11 @@ from Cars.models import *
 from Files.models import *
 from Maps.models import *
 
-print("success")
-
-
-
 def addRD():
 	try:
 		RD = Country.objects.get(name="República Dominicana")
 	except:
-		RD = Country.objects.create(name="República Dominicana",abr="RD")
+		RD = Country.objects.create(name="República Dominicana",short="RD")
 		RD.save()
 
 	myStates=['Distrito Nacional','Santo Domingo','Azua','Bahoruco','Barahona','Dajabón','Duarte',
@@ -100,3 +96,5 @@ def initAll():
 	addRD()
 	getCars()
 	return
+
+initAll()

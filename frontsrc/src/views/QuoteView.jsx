@@ -3,6 +3,8 @@ import Modal from "../elements/Modal";
 import React from 'react';
 
 import Signature from "../elements/Signature";
+import { Link, navigate, Router } from "@reach/router";
+import { Route } from "react-router-dom";
 
   
 
@@ -14,7 +16,8 @@ import Signature from "../elements/Signature";
     const newAutoQuote=()=>{
       //if user has a quote, then
       if(props.userPack.user&&props.userPack.user.quoteList.length>0){
-        props.userPack.refs.savedQuotesView.current.click()
+        // props.userPack.refs.savedQuotesView.current.click()
+        navigate('/freequote/autoselect')
       }else{
       props.userPack.refs.newAutoQuoteView.current.click()
     }
@@ -36,9 +39,10 @@ import Signature from "../elements/Signature";
     }
     return(
       <>
+
         <div className="myRow center">
-          <h1 className="title1 blackTitle" style={{marginTop:"120px",marginBottom:"0px",
-          width:"90vw !important",backgrouncColor:"black",color:"#000000"}}>
+          <h1 className="title1 blackTitle" style={{marginTop:"120px",
+          backgrouncColor:"black",color:"#000000"}}>
             The Smart and Easy Way to Shop for Insurance</h1>
 
 
@@ -309,6 +313,7 @@ function MainView(props){
   }
     return(
       <>
+
         <Modal switcher={switcher} active={props.userPack.data.modal.active}>
 
         </Modal>

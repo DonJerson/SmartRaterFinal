@@ -66,8 +66,8 @@ import BlackTitle from '../secondaryelements/BlackTitle';
                     </div>
                     </a>
                 
-                    <a className={"row "+flexSwitch} href="mailto:contact@smartrater.us" style={{maxWidth:"310px"}}>   
-                        <div className={"row "+flexSwitch} style={{maxWidth:"310px",marginTop:"15px"}}>
+                    <a className={"row "+flexSwitch} href="mailto:contact@smartrater.us" style={{minWidth:"230px"}}>   
+                        <div className={"row "+flexSwitch} style={{maxWidth:"230px",marginTop:"15px"}}>
 
                         <div className="flexStart" style={{width:"3.0rem"}}>
                         <svg width="25" height="20" viewBox="0 0 25 20" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -10,6 +10,7 @@ function MainView(props){
     neoData.modal.active=!neoData.modal.active
     props.userPack.methods.stateHandling('data',neoData)
   }
+  console.log(props.userPack.user.agency)
     return(
       <>
       <Modal switcher={switcher} active={props.userPack.data.modal.active}>

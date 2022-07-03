@@ -14,7 +14,13 @@ import monthdelta as mdt
 
 PROPERTY_CHOICES = [('house','House'),('apt','Apartment'),('bulding','Building')]
 
-BUSINESS_TYPES = [('PA','Personal Auto'),('CA','Commercial Auto'),('HO','HomeOwners')]
+BUSINESS_TYPES = [('PA','Personal Auto'),('CA','Commercial Auto'),('HO3','Homeowners')
+,('HO3','Homeowners'),('HO4','Tenant Rental'),('HO6','Condo'),('HO8','Custom Home')
+	,('HE','Health'),('LI','Life'),('BU','Business'),('FL','Flood'),
+	('DP1','Fire'),('DP2','Dwelling'),('DP3','Rental'),('DP4','Other')
+	,('OT','Other')
+	]
+
 
 #missing options 
 #occupations
@@ -46,32 +52,40 @@ def daterange(start_date, end_date):
 
 class Agency(models.Model):
 	name=models.CharField(max_length=50,null=True,blank=True)
-	address=models.ForeignKey(Address,on_delete=models.CASCADE,null=True,blank=True)
 	website=models.CharField(max_length=50,null=True,blank=True)
 	logo=models.CharField(max_length=50,null=True,blank=True)
 	phone=models.CharField(max_length=13,null=True,blank=True)
+	address=models.ForeignKey(Address,on_delete=models.CASCADE,null=True,blank=True)
+
 
 	@property
-	def agencyQuotes(self):
-		return self.agencyquote_set.all()
+	def clients(self):
+		return self.customer_set.all().filter(role=3)
 
 	@property
-	def agencyClients(self):
-		return self.agencyclient_set.all()
+	def agents(self):
+		return self.customer_set.all().filter(role=2)
 
 	@property
-	def authorizedAgents(self):
-		return self.authorizedagent_set.all()	
-
-	@property
-	def policies(self):
-		return self.policy_set.all()
+	def master(self):
+		return self.customer_set.all().filter(role=1)
+		
 	pass
 	def __str__(self):
 		return self.name
 	pass
 
 class Customer(AbstractUser):
+	MASTER = 1
+	AGENT = 2
+	CUSTOMER = 3
+      
+	ROLE_CHOICES = (
+          (MASTER, 'Master'),
+          (AGENT, 'Agent'),
+          (CUSTOMER, 'Customer'),
+    )
+	role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, blank=True, null=True)
 	agency = models.ForeignKey(Agency,blank=True,null=True,on_delete=models.CASCADE)
 	address = models.ForeignKey(Address,blank=True,null=True,on_delete=models.CASCADE)
 	first_name = models.CharField(max_length=50,blank=True,null=True)
@@ -118,6 +132,8 @@ class Customer(AbstractUser):
 			return "No name"
 	pass
 
+
+
 class Car(models.Model):
 	customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
 	vin = models.CharField(max_length=50,null=True,blank=True)
@@ -130,10 +146,11 @@ class Car(models.Model):
 	licensePlate = models.CharField(max_length=50,null=True,blank=True)
 
 	def __str__(self):
-		return self.year+ ' ' + self.vin
+		return str(self.year)+ ' ' + str(self.vin)
 	pass
 
 class NamedInsured(models.Model):
+	customer = models.ForeignKey(Customer,on_delete=models.CASCADE,blank=True,null=True)
 	first_name = models.CharField(max_length=50,blank=True,null=True)
 	middle_name = models.CharField(max_length=50,blank=True,null=True)
 	last_name = models.CharField(max_length=50,blank=True,null=True)
@@ -141,7 +158,7 @@ class NamedInsured(models.Model):
 	relationship = models.CharField(max_length=50,blank=True,null=True,
 	choices = [('MAIN INSURED','Main Insured'),('SPOUSE','Spouse'),
 	('CHILD','Child'),('SIBLING','Sibling'),('OTHER','Other')])
-	customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
+	
 	driversLicense = models.CharField(max_length=50,blank=True,null=True)
 	passport = models.CharField(max_length=50,blank=True,null=True)
 	ssn = models.CharField(max_length=50,blank=True,null=True)
@@ -195,10 +212,187 @@ class AgencyAppointment(models.Model):
 	def __str__(self):
 		return self.insurer.name
 	pass
+class PersonalAutoQuoteElements(models.Model):
+	mainInsured = models.ForeignKey(NamedInsured,on_delete=models.CASCADE,null=True,
+	blank=True,related_name="mainPAInsured")
+	propertyDamageCoverage = models.IntegerField(blank=True,null=True,default=10000)
+	biCoverage = models.IntegerField(blank=True,null=True)
+	uninsuredMotorist = models.CharField(max_length=50,blank=True,null=True)
+	pipCoverage = models.IntegerField(default=10000)
+	pipDeductible = models.IntegerField(default=1000)
+	rentalDeductible = models.IntegerField(blank=True,null=True)
+	towingDeductible = models.IntegerField(blank=True,null=True)
+	createdDate=models.DateField(auto_now_add=True,blank=True,null=True)
+	additionalInsureds = models.ManyToManyField(NamedInsured,blank=True,
+	related_name="additionalPAInsureds")
+	homeOwner = models.BooleanField(default=False,blank=True,null=True)
+	millitary=models.BooleanField(default=False,blank=True,null=True)
 
+	@property
+	def coveredAutos(self):
+		return self.coveredauto_set.all()
+
+	def __str__(self):
+		#return minimum price
+		if self.coveredauto_set.all().count()>0:
+			auto = self.coveredauto_set.all()[0].make +" "+self.coveredauto_set.all()[0].model+" "+str(self.coveredauto_set.all()[0].year)
+		
+		return (
+			str(self.createdDate) +" "+self.mainInsured.first_name+" "+self.mainInsured.last_name
+			# auto
+		)
+	pass
+class CoveredAuto(models.Model):
+	driver=models.ForeignKey(NamedInsured,on_delete=models.CASCADE,null=True,blank=True,related_name='driver')
+	secondaryDriver=models.ForeignKey(NamedInsured,on_delete=models.CASCADE,null=True,blank=True,related_name='secondaryDriver')
+	vin = models.CharField(max_length=50,null=True,blank=True)
+	year = models.IntegerField(null=True,blank=True)
+	make = models.CharField(max_length=50,null=True,blank=True)
+	model = models.CharField(max_length=50,null=True,blank=True)
+	trim = models.CharField(max_length=50,null=True,blank=True)
+	bodyStyle = models.CharField(max_length=50,null=True,blank=True)
+	color = models.CharField(max_length=50,null=True,blank=True)
+	licensePlate = models.CharField(max_length=50,null=True,blank=True)
+	collisionDeductible = models.IntegerField(blank=True,null=True)
+	comprehensiveDeductible = models.IntegerField(blank=True,null=True)
+	rentalDeductible = models.CharField(max_length=50,blank=True,null=True)
+	autoQuote=models.ForeignKey(PersonalAutoQuoteElements,on_delete=models.CASCADE,null=True,blank=True)
+
+	def __str__(self):
+		#self.make + " " + self.model+ " " + str(self.year)
+		return "self.make + " " + self.model+ " " + str(self.year)"
+	pass
+
+
+
+class HomeQuoteElements(models.Model):
+	mainInsured = models.ForeignKey(NamedInsured,on_delete=models.CASCADE,related_name="HOmainInsured",
+	null=True,blank=True)
+	additionalInsureds = models.ManyToManyField(NamedInsured,blank=True,
+	related_name="HOadditionalInsureds")
+	propertyAddress = models.ForeignKey(Address,on_delete=models.CASCADE,null=True,blank=True)
+	millitary=models.BooleanField(default=False,blank=True,null=True)
+	replacementCost = models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
+	purchasePrice = models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
+	propertyValue= models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
+	propertyType = models.CharField(max_length=50,null=True,blank=True)
+	propertyRoof = models.CharField(max_length=50,null=True,blank=True)
+	propertyRoofType = models.CharField(max_length=50,null=True,blank=True)
+	propertyRoofMaterial = models.CharField(max_length=50,null=True,blank=True)
+	propertyRoofColor = models.CharField(max_length=50,null=True,blank=True)
+	dwellingCoverage=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+	coverageB=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+	personalPropertyCoverage=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+	lossOfUseCoverage=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+	numberOfDogs=models.IntegerField(blank=True,null=True)
+	smokeDetector=models.BooleanField(default=False,blank=True,null=True)
+	fireExtinguisher=models.BooleanField(default=False,blank=True,null=True)
+	fireAlarm=models.BooleanField(default=False,blank=True,null=True)
+	fireAlarmType=models.CharField(max_length=50,null=True,blank=True)
+	deadboltLock=models.BooleanField(default=False,blank=True,null=True)
+	sprinklerSystem=models.BooleanField(default=False,blank=True,null=True)
+	numberOfFamilies=models.IntegerField(blank=True,null=True)
+	numberOfTenants=models.IntegerField(blank=True,null=True)
+	heatingType=models.CharField(max_length=50,null=True,blank=True)
+	heatingSystemUpdated=models.BooleanField(default=False,blank=True,null=True)
+	heatingSystemUpdateDate=models.DateField(blank=True,null=True)
+	plumbingSystemUpdated=models.BooleanField(default=False,blank=True,null=True)
+	plumbingSystemUpdateDate=models.DateField(blank=True,null=True)
+	roofUpdated=models.BooleanField(default=False,blank=True,null=True)
+	roofUpdateDate=models.DateField(blank=True,null=True)
+	electricalWiringUpdated=models.BooleanField(default=False,blank=True,null=True)
+	electricalWiringUpdateDate=models.DateField(blank=True,null=True)
+	#coverageE=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+	liabiltyLimit=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+	sinkholeCoverage=models.BooleanField(default=False,blank=True,null=True)
+	medicalPayments=models.IntegerField(default=2000,blank=True,null=True)
+	hurricaineDeductible=models.CharField(max_length=50,blank=True,null=True)
+	allPerilsDeuctible=models.IntegerField(blank=True,null=True)
+	#Wind Mitigation
+	WMInspectionDate=models.DateField(blank=True,null=True)
+	terrainType=models.CharField(max_length=50,blank=True,null=True)
+	roofShape=models.CharField(max_length=50,blank=True,null=True)
+	roofCover=models.CharField(max_length=50,blank=True,null=True)
+	roofDeckAttachment=models.CharField(max_length=50,blank=True,null=True)
+	roofWallConnection=models.CharField(max_length=50,blank=True,null=True)
+	secondaryWindResistance=models.CharField(max_length=50,blank=True,null=True)
+	openingProtection=models.CharField(max_length=50,blank=True,null=True)
+	fbcWindSpeed=models.CharField(max_length=50,blank=True,null=True)
+	fbcWindSpeedDesign=models.CharField(max_length=50,blank=True,null=True)
+	skyLight=models.BooleanField(default=False,blank=True,null=True)
+	overhang=models.BooleanField(default=False,blank=True,null=True)
+	buildingCodeGrade=models.CharField(max_length=50,blank=True,null=True)
+	protectionClass=models.CharField(max_length=50,blank=True,null=True)
+	
+	def __str__(self):
+		#return minimum price
+		return 'No name'
+	pass
+
+class Company(models.Model):
+	companyName = models.CharField(max_length=50,null=True,blank=True)
+	companyOwner= models.ForeignKey(Customer,on_delete=models.CASCADE)
+	companyAddress = models.ForeignKey(Address,on_delete=models.CASCADE,null=True,blank=True)
+	companyFein=models.CharField(max_length=50,null=True,blank=True)
+	companyType=models.CharField(max_length=50,null=True,blank=True)
+	totalPayroll=models.IntegerField(blank=True,null=True)
+	numberOfEmployees=models.IntegerField(blank=True,null=True)
+	companyActivityDescription=models.CharField(max_length=50,null=True,blank=True)
+	companyStartDate=models.DateField(blank=True,null=True)
+	yearsOfExperience=models.IntegerField(blank=True,null=True)
+	companyPhone = models.CharField(max_length=50,null=True,blank=True)
+	companyFax = models.CharField(max_length=50,null=True,blank=True)
+	companyEmail = models.CharField(max_length=50,null=True,blank=True)
+	companyWebsite = models.CharField(max_length=50,null=True,blank=True)
+	def __str__(self):
+		return self.companyName
+
+class CommercialAutoQuoteElements(models.Model):
+	ownedBy = models.CharField(max_length=50,null=True,blank=True)
+	mainInsured = models.ForeignKey(Company,on_delete=models.CASCADE,
+	related_name="mainCAInsured",null=True,blank=True)
+
+	propertyDamageCoverage = models.IntegerField(blank=True,null=True,default=10000)
+	biCoverage = models.IntegerField(blank=True,null=True)
+	uninsuredMotorist = models.CharField(max_length=50,blank=True,null=True)
+	pipDeductible = models.IntegerField(default=10000)
+	pipDeductible = models.IntegerField(default=1000)
+	rentalDeductible = models.IntegerField(blank=True,null=True)
+	towingDeductible = models.IntegerField(blank=True,null=True)
+	homeOwner = models.BooleanField(default=False,blank=True,null=True)
+	millitary=models.BooleanField(default=False,blank=True,null=True)
+
+	@property
+	def coveredAutos(self):
+		return self.coveredauto_set.all()
+
+	def __str__(self):
+		#return minimum price
+		return 'No name'
+	pass
+	
+class LifeQuoteElements(models.Model):
+	mainInsured = models.ForeignKey(NamedInsured,on_delete=models.CASCADE,null=True,blank=True)
+	additionalInsureds = models.ManyToManyField(NamedInsured,blank=True,related_name="additionalLifeInsureds")
+	planType = models.CharField(max_length=50,blank=True,null=True)
+	income = models.IntegerField(blank=True,null=True)
+	pass
+
+class HealthQuoteElements(models.Model):
+	mainInsured = models.ForeignKey(NamedInsured,on_delete=models.CASCADE,null=True,blank=True)
+	additionalInsureds = models.ManyToManyField(NamedInsured,blank=True,related_name="additionalHealthInsureds")
+	planType = models.CharField(max_length=50,blank=True,null=True)
+	income = models.IntegerField(blank=True,null=True)
+	pass
+
+class BusinessQuoteElements(models.Model):
+	mainInsured = models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)
+	planType = models.CharField(max_length=50,blank=True,null=True)
+	liabiltyLimit = models.IntegerField(blank=True,null=True)
+	pass
+	
 
 class Quote(models.Model):
-	agency=models.ForeignKey(Agency,on_delete=models.CASCADE,null=True,blank=True)
 	owner = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
 	businessType= models.CharField(choices=BUSINESS_TYPES,
 	max_length=50,null=True,blank=True)
@@ -207,27 +401,22 @@ class Quote(models.Model):
 	quote_date = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	pendingReview = models.BooleanField(default=True)
+	personalAutoQuoteElements = models.OneToOneField(PersonalAutoQuoteElements,
+	blank=True,null=True,on_delete=models.CASCADE)
+	commercialAutoQuoteElements = models.OneToOneField(CommercialAutoQuoteElements,
+	blank=True,null=True,on_delete=models.CASCADE)
+	lifeQuoteElements = models.OneToOneField(LifeQuoteElements,
+	blank=True,null=True,on_delete=models.CASCADE)
+	healthQuoteElements = models.OneToOneField(HealthQuoteElements,
+	blank=True,null=True,on_delete=models.CASCADE)
+	businessQuoteElements = models.OneToOneField(BusinessQuoteElements,
+	blank=True,null=True,on_delete=models.CASCADE)
 	@property
 	def lines(self):
 		return self.quoteline_set.all()
-	@property
-	def quoteElements(self):
-		if(self.businessType=="Personal Auto"):
-			return self.personalautoquoteelement_set.all()
-		elif(self.businessType=="Commercial Auto"):
-			return self.commercialautoquoteelement_set.all()
-		elif(self.businessType=="HomeOwner"):
-			return self.homeownerquoteelement_set.all()
-		elif(self.businessType=="Health"):
-			return self.healthquoteelement_set.all()
-		elif(self.businessType=="Life"):
-			return self.lifequoteelement_set.all()
-		elif(self.businessType=="Business"):
-			return self.businessquoteelement_set.all()
-
 	def __str__(self):
 		#return minimum price
-		return self.quoteId	
+		return self.businessType+" "+self.quoteId	
 	pass
 class PriorInsurance(models.Model):
 	customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
@@ -325,8 +514,8 @@ class Policy(models.Model):
 	commisionPercentage=models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
 	commisionPaid=models.BooleanField(default=False)
 	quote=models.ForeignKey(Quote,on_delete=models.CASCADE,null=True,blank=True)
-	bindDate = models.DateField(null=True,blank=True,default=dt.today())
-	effectiveDate=models.DateField(null=True,blank=True,default=dt.today())
+	bindDate = models.DateField(null=True,blank=True)
+	effectiveDate=models.DateField(null=True,blank=True)
 	expirationDate=models.DateField(null=True,blank=True)
 	policyLength=models.IntegerField(null=True,blank=True)
 	policyNumber = models.CharField(max_length=50,null=True,blank=True)
@@ -379,166 +568,4 @@ class QuoteLine(models.Model):
 		return self.insurer.name + " "+str(self.totalPremium)
 	pass
 
-class PersonalAutoQuoteElements(models.Model):
-	quote=models.ForeignKey(Quote,on_delete=models.CASCADE,null=True,blank=True)
-	mainInsured = models.ForeignKey(NamedInsured,on_delete=models.CASCADE,null=True,
-	blank=True,related_name="mainPAInsured")
-	propertyDamageCoverage = models.IntegerField(blank=True,null=True,default=10000)
-	biCoverage = models.IntegerField(blank=True,null=True)
-	uninsuredMotorist = models.CharField(max_length=50,blank=True,null=True)
-	pipCoverage = models.IntegerField(default=10000)
-	pipDeductible = models.IntegerField(default=1000)
-	rentalDeductible = models.IntegerField(blank=True,null=True)
-	towingDeductible = models.IntegerField(blank=True,null=True)
-	additionalInsureds = models.ManyToManyField(NamedInsured,blank=True,
-	related_name="additionalPAInsureds")
-	homeOwner = models.BooleanField(default=False,blank=True,null=True)
-	millitary=models.BooleanField(default=False,blank=True,null=True)
-
-	@property
-	def coveredAutos(self):
-		return self.coveredauto_set.all()
-
-	def __str__(self):
-		#return minimum price
-		return self.quote.quoteId
-	pass
-
-class HomeQuoteElements(models.Model):
-	quote=models.ForeignKey(Quote,on_delete=models.CASCADE,null=True,blank=True)
-	mainInsured = models.ForeignKey(NamedInsured,on_delete=models.CASCADE,related_name="HOmainInsured",
-	null=True,blank=True)
-	additionalInsureds = models.ManyToManyField(NamedInsured,blank=True,
-	related_name="HOadditionalInsureds")
-	millitary=models.BooleanField(default=False,blank=True,null=True)
-	propertyAddress = models.ForeignKey(Address,on_delete=models.CASCADE,null=True,blank=True)
-	replacementCost = models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
-	purchasePrice = models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
-	propertyValue= models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
-	propertyType = models.CharField(max_length=50,null=True,blank=True)
-	propertyRoof = models.CharField(max_length=50,null=True,blank=True)
-	propertyRoofType = models.CharField(max_length=50,null=True,blank=True)
-	propertyRoofMaterial = models.CharField(max_length=50,null=True,blank=True)
-	propertyRoofColor = models.CharField(max_length=50,null=True,blank=True)
-	dwellingCoverage=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
-	coverageB=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
-	personalPropertyCoverage=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
-	lossOfUseCoverage=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
-	numberOfDogs=models.IntegerField(blank=True,null=True)
-	smokeDetector=models.BooleanField(default=False,blank=True,null=True)
-	fireExtinguisher=models.BooleanField(default=False,blank=True,null=True)
-	fireAlarm=models.BooleanField(default=False,blank=True,null=True)
-	fireAlarmType=models.CharField(max_length=50,null=True,blank=True)
-	deadboltLock=models.BooleanField(default=False,blank=True,null=True)
-	sprinklerSystem=models.BooleanField(default=False,blank=True,null=True)
-	numberOfFamilies=models.IntegerField(blank=True,null=True)
-	numberOfTenants=models.IntegerField(blank=True,null=True)
-	heatingType=models.CharField(max_length=50,null=True,blank=True)
-	heatingSystemUpdated=models.BooleanField(default=False,blank=True,null=True)
-	heatingSystemUpdateDate=models.DateField(blank=True,null=True)
-	plumbingSystemUpdated=models.BooleanField(default=False,blank=True,null=True)
-	plumbingSystemUpdateDate=models.DateField(blank=True,null=True)
-	roofUpdated=models.BooleanField(default=False,blank=True,null=True)
-	roofUpdateDate=models.DateField(blank=True,null=True)
-	electricalWiringUpdated=models.BooleanField(default=False,blank=True,null=True)
-	electricalWiringUpdateDate=models.DateField(blank=True,null=True)
-	#coverageE=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
-	liabiltyLimit=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
-	sinkholeCoverage=models.BooleanField(default=False,blank=True,null=True)
-	medicalPayments=models.IntegerField(default=2000,blank=True,null=True)
-	hurricaineDeductible=models.CharField(max_length=50,blank=True,null=True)
-	allPerilsDeuctible=models.IntegerField(blank=True,null=True)
-	#Wind Mitigation
-	WMInspectionDate=models.DateField(blank=True,null=True)
-	terrainType=models.CharField(max_length=50,blank=True,null=True)
-	roofShape=models.CharField(max_length=50,blank=True,null=True)
-	roofCover=models.CharField(max_length=50,blank=True,null=True)
-	roofDeckAttachment=models.CharField(max_length=50,blank=True,null=True)
-	roofWallConnection=models.CharField(max_length=50,blank=True,null=True)
-	secondaryWindResistance=models.CharField(max_length=50,blank=True,null=True)
-	openingProtection=models.CharField(max_length=50,blank=True,null=True)
-	fbcWindSpeed=models.CharField(max_length=50,blank=True,null=True)
-	fbcWindSpeedDesign=models.CharField(max_length=50,blank=True,null=True)
-	skyLight=models.BooleanField(default=False,blank=True,null=True)
-	overhang=models.BooleanField(default=False,blank=True,null=True)
-	buildingCodeGrade=models.CharField(max_length=50,blank=True,null=True)
-	protectionClass=models.CharField(max_length=50,blank=True,null=True)
-	
-	def __str__(self):
-		#return minimum price
-		return self.quote.quoteId
-	pass
-
-class Company(models.Model):
-	companyName = models.CharField(max_length=50,null=True,blank=True)
-	companyOwner= models.ForeignKey(Customer,on_delete=models.CASCADE)
-	companyAddress = models.ForeignKey(Address,on_delete=models.CASCADE,null=True,blank=True)
-	companyFein=models.CharField(max_length=50,null=True,blank=True)
-	companyType=models.CharField(max_length=50,null=True,blank=True)
-	totalPayroll=models.IntegerField(blank=True,null=True)
-	numberOfEmployees=models.IntegerField(blank=True,null=True)
-	companyActivityDescription=models.CharField(max_length=50,null=True,blank=True)
-	companyStartDate=models.DateField(blank=True,null=True)
-	yearsOfExperience=models.IntegerField(blank=True,null=True)
-	companyPhone = models.CharField(max_length=50,null=True,blank=True)
-	companyFax = models.CharField(max_length=50,null=True,blank=True)
-	companyEmail = models.CharField(max_length=50,null=True,blank=True)
-	companyWebsite = models.CharField(max_length=50,null=True,blank=True)
-	def __str__(self):
-		return self.companyName
-
-class CommercialAutoQuoteElements(models.Model):
-	ownedBy = models.CharField(max_length=50,null=True,blank=True)
-	quote=models.ForeignKey(Quote,on_delete=models.CASCADE,null=True,blank=True)
-	mainInsured = models.ForeignKey(Company,on_delete=models.CASCADE,
-	related_name="mainCAInsured",null=True,blank=True)
-
-	propertyDamageCoverage = models.IntegerField(blank=True,null=True,default=10000)
-	biCoverage = models.IntegerField(blank=True,null=True)
-	uninsuredMotorist = models.CharField(max_length=50,blank=True,null=True)
-	pipDeductible = models.IntegerField(default=10000)
-	pipDeductible = models.IntegerField(default=1000)
-	rentalDeductible = models.IntegerField(blank=True,null=True)
-	towingDeductible = models.IntegerField(blank=True,null=True)
-	homeOwner = models.BooleanField(default=False,blank=True,null=True)
-	millitary=models.BooleanField(default=False,blank=True,null=True)
-
-	@property
-	def coveredAutos(self):
-		return self.coveredauto_set.all()
-
-	def __str__(self):
-		#return minimum price
-		return self.quote.quoteId
-	pass
-	
-class LifeQuoteElements(models.Model):
-	quote=models.ForeignKey(Quote,on_delete=models.CASCADE,null=True,blank=True)
-	mainInsured = models.ForeignKey(NamedInsured,on_delete=models.CASCADE,null=True,blank=True)
-	additionalInsureds = models.ManyToManyField(NamedInsured,blank=True,related_name="additionalLifeInsureds")
-	planType = models.CharField(max_length=50,blank=True,null=True)
-	income = models.IntegerField(blank=True,null=True)
-	pass
-
-class HealthQuoteElements(models.Model):
-	quote=models.ForeignKey(Quote,on_delete=models.CASCADE,null=True,blank=True)
-	mainInsured = models.ForeignKey(NamedInsured,on_delete=models.CASCADE,null=True,blank=True)
-	additionalInsureds = models.ManyToManyField(NamedInsured,blank=True,related_name="additionalHealthInsureds")
-	planType = models.CharField(max_length=50,blank=True,null=True)
-	income = models.IntegerField(blank=True,null=True)
-	pass
-
-class BusinessQuoteElements(models.Model):
-	quote=models.ForeignKey(Quote,on_delete=models.CASCADE,null=True,blank=True)
-	mainInsured = models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)
-	planType = models.CharField(max_length=50,blank=True,null=True)
-	liabiltyLimit = models.IntegerField(blank=True,null=True)
-	pass
-	
-class CoveredAuto(models.Model):
-	car = models.ForeignKey(Car,on_delete=models.CASCADE,null=True,blank=True)
-	collisionDeductible = models.IntegerField(blank=True,null=True)
-	rentalDeductible = models.CharField(max_length=50,blank=True,null=True)
-	autoquotelements=models.ForeignKey(PersonalAutoQuoteElements,on_delete=models.CASCADE,null=True,blank=True)
-	pass
 

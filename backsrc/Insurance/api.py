@@ -28,7 +28,7 @@ from time import sleep
 from selenium import webdriver
 import time
 from selenium.webdriver.chrome.service import Service as ChromeService
-
+from Cars.serializers import *
 
 class TokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
@@ -36,6 +36,55 @@ class TokenGenerator(PasswordResetTokenGenerator):
             six.text_type(user.pk) + six.text_type(timestamp) +
             six.text_type(user.is_active)
         )
+
+import mechanize
+import re
+from bs4 import BeautifulSoup
+#start timer
+import json
+import time
+
+@api_view(['POST'])
+@permission_classes([])
+def get_county(request):
+    zipcode=request.data['zipcode']
+    start_time = time.time()
+    br = mechanize.Browser()
+    br.set_handle_robots(False)
+    br.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0')]
+    zipcode = '33467'
+    br.open('http://uscounties.com/zipcodes/search.pl?query='+zipcode+'&stpos=0&stype=AND')
+    html = br.response().read()
+    soup = BeautifulSoup(html,features="html5lib")
+    scrapedLink =''
+    county = soup.select_one('body > table:nth-child(2) > tbody > tr > td:nth-child(2) > p > table > tbody > tr.results > td:nth-child(3)').text.lower()
+    countyCode=soup.select_one('body > table:nth-child(2) > tbody > tr > td:nth-child(2) > p > table > tbody > tr.results > td:nth-child(5)').text.lower()
+
+    br.open('http://www.google.com/')
+    br.select_form(nr=0)
+    br.form['q'] = county+' county property appraiser search tax'
+    br.submit()
+    html = br.response().read()
+
+    soup = BeautifulSoup(html,features="html5lib")
+
+    scrapedLink =''
+
+    for(i,link) in enumerate(soup.find_all('a')):
+        if i > 13:
+            linkRef = link.get('href')
+            if i ==14:
+                scrapedLink= linkRef[linkRef.find("http"):linkRef.find('&sa')]
+                break
+
+    processingTime = "%s seconds" % round(time.time() - start_time,3)
+    jsonVar=            {
+                    'county': county[:-1],'countyCode':countyCode,
+                    'processingTime':processingTime,'link':scrapedLink
+                }
+    jsonString =  json.dumps(jsonVar)
+    print(jsonString)
+    return Response(jsonString)
 
 @api_view(['POST'])
 def new_quote(request):
@@ -45,11 +94,11 @@ def new_quote(request):
     return Response(QuoteSerializer(newQuote, many=False).data)
 
 @api_view(['POST'])
+@permission_classes([])
 def get_models(request):
     brand = request.data["brand"]
-    allModels = Brand.objects.filter(name=brand)
-    return Response(BrandSerializer(allModels, many=True).data)
-
+    allModels = CarEntry.objects.filter(brand=brand)
+    return Response(CarEntrySerializer(allModels, many=True).data)
     
 @api_view(['POST'])
 @permission_classes([])
@@ -295,7 +344,10 @@ class NamedInsuredViewSet(viewsets.ModelViewSet):
     serializer_class = NamedInsuredSerializer
     pass
 
-
+class CoveredAutoViewSet(viewsets.ModelViewSet):
+    queryset = CoveredAuto.objects.all()
+    serializer_class = CoveredAutoSerializer
+    pass
 
 class CarViewSet(viewsets.ModelViewSet):
     queryset = Car.objects.all()

@@ -86,7 +86,7 @@ function LoginForm(props) {
      <> 
       <div className="myRow center" style={{marginTop:"40px"}}>
 
-<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </div>
 </>
 :
@@ -267,7 +267,6 @@ active={props.userPack.data.modal.active} userPack={props.userPack}>
 {/* check if customer is logged in */}
 {props.userPack.user && props.userPack.logged?
           <>
-          <Link to='/dashboard'>
             <div className="navHeader1 center link profileAvatar" style={{width:"40px",height:"50px"}}>
             <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fillRule="evenodd" clipRule="evenodd" d="M19.3333 10.8751C19.3333 12.157 18.8241 13.3863 17.9176 14.2928C17.0112 15.1992 15.7818 15.7084 14.5 15.7084C13.2181 15.7084 11.9887 15.1992 11.0823 14.2928C10.1759 13.3863 9.66663 12.157 9.66663 10.8751C9.66663 9.5932 10.1759 8.36382 11.0823 7.4574C11.9887 6.55097 13.2181 6.04175 14.5 6.04175C15.7818 6.04175 17.0112 6.55097 17.9176 7.4574C18.8241 8.36382 19.3333 9.5932 19.3333 10.8751V10.8751ZM16.9166 10.8751C16.9166 11.516 16.662 12.1307 16.2088 12.5839C15.7556 13.0371 15.1409 13.2917 14.5 13.2917C13.859 13.2917 13.2443 13.0371 12.7911 12.5839C12.3379 12.1307 12.0833 11.516 12.0833 10.8751C12.0833 10.2341 12.3379 9.61945 12.7911 9.16624C13.2443 8.71303 13.859 8.45842 14.5 8.45842C15.1409 8.45842 15.7556 8.71303 16.2088 9.16624C16.662 9.61945 16.9166 10.2341 16.9166 10.8751V10.8751Z" fill="black"/>
@@ -289,7 +288,6 @@ active={props.userPack.data.modal.active} userPack={props.userPack}>
                     </div>
                </div>
          
-               </Link>
           </>:
 
             <> 

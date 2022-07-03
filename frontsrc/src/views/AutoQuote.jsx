@@ -33,7 +33,7 @@ function Body(props){
      ?
      <>
       <div className="myRow center" style={{height:"50vh",width:"100vw"}}>
-        <div class="lds-roller" style={{marginTop:"22vh"}}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <div className="lds-roller" style={{marginTop:"22vh"}}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
       </div>
      </>
      :

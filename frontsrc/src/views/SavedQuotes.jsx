@@ -4,7 +4,9 @@ import Embellishment from '../secondaryelements/Embellishment';
 import Carriers from '../secondaryelements/Carriers';
 import Signature from '../elements/Signature';
 import QuoteLine from '../elements/QuoteLine';
-
+import AutoQuote from './dashelements/AutoQuote';
+import HomeQuote from './dashelements/HomeQuote';
+import Button from './buttons/greenButton';
 //create a function that will render the quote card
 
 
@@ -13,13 +15,17 @@ function QuoteCard(props){
   return(
 <>
 <div className="Rectangle30" style={{width: "80vw", backgroundColor: 'white',
-             borderRadius: 4, borderStyle: 'solid', borderWidth: 1, position: 'relative',
+             borderRadius: 4, borderStyle: 'solid', borderWidth: 1, 
+             position: 'relative',
               borderStyle: 'solid', borderColor: 'rgba(15, 188, 157, 1)',}}
               >
-                <div className="Rectangle32" style={{width: "80vw", height: 54, 
-                  backgroundColor: 'rgba(15, 188, 157, 1)', borderTopLeftRadius: 4, borderTopRightRadius: 4,}}>
-                  <div className="Checkmark" style={{padding:12,display:"flex",width:700,height: 25}}>
-                  <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<div className="Rectangle32" style={{width: "80vw", height: 54, 
+backgroundColor: 'rgba(15, 188, 157, 1)', 
+borderTopLeftRadius: 4, borderTopRightRadius: 4,}}>
+<div className="Checkmark" style={{padding:12,display:"flex",
+width:700,height: 25}}>
+<svg width="25" height="25" viewBox="0 0 25 25" fill="none"
+xmlns="http://www.w3.org/2000/svg">
 <circle cx="12.5" cy="12.5" r="12.5" fill="white"/>
 <path d="M11.3902 16.7164H11.3918H11.3986V16.7164L11.4048 16.7163C11.5669 16.7143 11.7268 16.6788 11.8745 16.612C12.0216 16.5455 12.1535 16.4494 12.2619 16.3297C12.2622 16.3292 12.2626 16.3288 12.263 16.3283L18.4286 9.58262C18.5378 9.47264 18.6242 9.34212 18.6828 9.19854C18.7434 9.05017 18.773 8.89099 18.7698 8.73077C18.7666 8.57056 18.7306 8.41268 18.6642 8.26685C18.5978 8.12102 18.5022 7.99032 18.3834 7.88276L18.0478 8.25341L18.3834 7.88276C18.2646 7.77521 18.1251 7.69307 17.9734 7.6414C17.8217 7.58973 17.6611 7.56962 17.5013 7.5823C17.3416 7.59498 17.1861 7.64018 17.0444 7.71513C16.9082 7.78724 16.7875 7.88543 16.6891 8.00405L11.3802 13.8117L8.96589 11.2391C8.96588 11.2391 8.96587 11.2391 8.96586 11.2391C8.75237 11.0116 8.45726 10.8782 8.14543 10.8683C7.83359 10.8583 7.53058 10.9727 7.30306 11.1862C7.07554 11.3997 6.94215 11.6948 6.93224 12.0067C6.92232 12.3185 7.03669 12.6215 7.25018 12.849L7.25048 12.8494L10.532 16.3401C10.5324 16.3406 10.5329 16.3411 10.5333 16.3416C10.6427 16.4591 10.7749 16.553 10.922 16.6174C11.0696 16.6822 11.229 16.7158 11.3902 16.7164Z" fill="#0FBC9D" stroke="#0FBC9D"/>
 </svg>
@@ -48,53 +54,53 @@ function QuoteCard(props){
 function Body(props){
     return(
         <>
-         <div className="" style={{paddingTop:"86px",paddingLeft:"9vw",paddingRight:"9vw"}}>
-         <div className="myRow flexStart">
-         <span className="karlaBold" style={{marginTop:10,fontSize:"28px",letterSpacing:"-0.05em",
-
+         <div className="" style={{paddingTop:"3.5rem",position:"relative",
+         paddingLeft:"3vw",paddingRight:"3vw"}}>
+          </div>
+         <div className="myRow flexStart" style={{marginTop:"10px"}}>
+         <span className="karlaBold" style={{
+         fontSize:"22px",letterSpacing:"-0.05em",
+          marginLeft:props.userPack.dimensions.width<754?"25px":"15vw",
           backgrouncColor:"black",color:"#000000"}}>
-            Saved Quotes </span>   
+            Quotes </span>   
+            <img style={{marginLeft:"10px"}}
+              src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/c0hskcsi42p-975%3A1704?alt=media&token=a7013aa8-ab91-4501-b14f-83f2d7aba2e1"
+              alt="Not Found"
+              className="frame-1004 link"
+            />
             </div>
-            <div className="myRow flexStart" >
-            </div>
-          
 
-            </div>
-        <div className="myRow center" style={{marginTop:"26px"}}>
-            <div className="flexWrap center" id="myBox" style={{width:"540px"}}>
-            {props.userPack.user.quoteList.map((quote,index)=>(
-              <QuoteCard quote={quote} key={index} dimensions={props.userPack.dimensions}/>
+            <div className="myRow center" style={{marginTop:"14px"}}>
+              {/* <AutoQuote/> */}
+              {props.userPack.user.quoteList.map((quote,index)=>(
+               <AutoQuote quote={quote} />
               ))}
 
+              
+            </div>
+            <div className="myRow center" style={{marginTop:"24px"}}>
+            <div className="frame-67 flex-col-hcenter-vstart">
+        <div className="frame-71 flex-col-hcenter-vstart">
+          <p className="txt-365 flex-hcenter">
+            Get Your Policy Bound TODAY - Talk to an Agent.
+          </p>
+          <p className="txt-908 genKarla flex-hcenter">
+            Tell us what car you drive and we’ll get the best insurance rates
+            for you!
+          </p>
+        </div>
 
-          <div className="Rectangle29" style={{wminWidth: "80vw", marginTop:107,display: 'flex',  padding: '3vw',boxSizing:"border-box",
-            flexDirection: 'column', alignItems: 'center', justifyContent: 'center',borderColor: 'rgba(116.88, 116.88, 116.88, 1)',
-            height: 216, backgroundColor: 'white', borderRadius: 4, borderStyle: 'solid', borderWidth: 1, borderStyle: 'solid', }}>
-            <p className="title3" style={{width: "74vw"}}>
-              Get Your Policy Bound TODAY - Speak to an Agent.
-            </p>
-
-
-        <div className="Rectangle28" style={{width:150, height: 10, marginTop:20, paddingTop: 19, paddingBottom: 18, paddingLeft: 79, paddingRight: 78,
-        backgroundColor: 'rgba(15, 188, 157, 1)', boxShadow: '0px 4px 1px rgba(45.21, 157.25, 137.17, 1)',display: 'flex', flexDirection: 'row', 
-           alignItems: 'center', justifyContent: 'center',}}>
-             <a href="tel:+15615320620">
-
-              <p className="2021" style={{fontSize: 26, fontWeight: '700', lineHeight: '100%', textAlign: 'center', color: 'white',}}>Call us now!</p>
-              </a>
-  
-</div>
-
-                </div>
-
-
-              {/* <CurrentStep localPack={props.localPack} userPack={props.userPack}/> */}
-          
-          
+        <Button text="Chat with us!"/>
+      {/* <a href="tel:+15615320620">
+        <div className="callbutton flex-col-hcenter-vcenter link" style={{marginTop:"10px"}}>
+        
+          <p className="txt-937 flex-hcenter">Call us now!</p>
+       
+        </div>   
+        </a> */}
+      </div>
             </div>
 
-
-        </div>
         {props.children}
       
       </>

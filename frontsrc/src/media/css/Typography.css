@@ -78,7 +78,7 @@
 .mainTitleBlack {
     font-family: PostNoBillsJaffnaBold;
     font-size: 28px;
-    max-width: 140px;
+    width: 140px;
 }
 
 .navHeader1 {
@@ -87,11 +87,31 @@
 }
 
 @media (max-width:762px) {
+    .mainTitleBlack {
+        font-family: PostNoBillsJaffnaBold;
+        font-size: 20px;
+        min-width: 100px;
+        height: fit-content;
+        width: fit-content;
+    }
+    .buttonText {
+        font-size: 18px !important;
+        height: fit-content;
+        text-align: center;
+    }
+    .button1 {
+        width: fit-content !important;
+        height: fit-content !important;
+        padding:20px;
+    }
+    .title2{
+        font-size: 30px !important;
+    }
     .title1 {
-        font-size: 50px !important;
+        font-size: 36px !important;
         max-width: 88vw;
         text-align: center;
-        max-height: 140px !important;
+        height: fit-content !important;
         margin-bottom: 5px;
     }
     .title6{
@@ -101,11 +121,7 @@
 }
 @media (max-width:916px) {
 
-    .title2 {
-        font-size: 40px !important;
-        max-width: 85% !important;
-        text-align: center;
-    }
+
     .title3 {
         font-size: 22px !important;
     }
@@ -117,10 +133,6 @@
         align-content: center;
         text-align: center;
         max-width: 80% !important;
-    }
-    .blackTitle {
-        font-size: 40px !important;
-        width: 90vw !important;
     }
 }
 
@@ -140,17 +152,16 @@
     /* Get Insured WhilstPaying LESS */
     width: 800px !important;
     font-family: SpectralBold;
-    font-size: 74px;
+    font-size: 64px;
     color: #FFFFFF;
+    text-align: center;
     max-height: 160px;
-    margin-bottom: 24px;
 }
 
 h1.blackTitle {
     /* Get Insured WhilstPaying LESS */
-    width: 80vw !important;
     font-family: SpectralBold;
-    font-size: 64px;
+    font-size: 54px;
     line-height: 100%;
     color: #000000;
     text-align: center;
@@ -161,7 +172,14 @@ h1.blackTitle {
 }
 
 .buttonText {
-    font-family: KarlaBold;
+    font-size: 18px !important;
+    height: fit-content;
+    text-align: center;
+}
+.button1 {
+    width: fit-content !important;
+    height: fit-content !important;
+    padding:20px;
 }
 
 .white {

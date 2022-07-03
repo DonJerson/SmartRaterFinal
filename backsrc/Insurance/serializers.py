@@ -106,16 +106,6 @@ class ExistingCustomerSerializer(serializers.ModelSerializer):
         print("really just created one")
         return user
 
-
-
-class NamedInsuredSerializer(serializers.ModelSerializer):
-    customer = ExistingCustomerSerializer(required=True,many=False)
-
-    class Meta:
-        model=NamedInsured
-        fields="__all__"
-    pass
-
 class ProfilePictureSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True)
     class Meta:
@@ -134,6 +124,17 @@ class OwnerSerializer(serializers.ModelSerializer):
         model=Customer
         fields=('id','first_name','last_name','date_joined','profilePicture',)
     pass
+class NamedInsuredSerializer(serializers.ModelSerializer):
+    customer = OwnerSerializer(read_only=True,many=False)
+
+    class Meta:
+        model=NamedInsured
+        fields="__all__"
+    pass
+
+
+
+
 
 class SupportMessageSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True,allow_null=True)
@@ -179,6 +180,7 @@ class BankAccountSerializer(serializers.ModelSerializer):
 class QuoteLineSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True,allow_null=True)
     insurer = InsurerSerializer(read_only=True,many=False)
+
     class Meta:
         model=QuoteLine
         fields='__all__'
@@ -189,11 +191,95 @@ class AgencySerializer(serializers.ModelSerializer):
         model=Agency
         fields='__all__'
 
+class CoveredAutoSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True,allow_null=True)
+    driver = NamedInsuredSerializer(read_only=True,many=False)
+    secondaryDriver = NamedInsuredSerializer(read_only=True,many=False)
+    class Meta:
+        model=CoveredAuto
+        fields='__all__'
+    pass
+
+
+class PersonalAutoQuoteElementsSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True,allow_null=True)
+    mainInsured=NamedInsuredSerializer(read_only=True,many=False)
+    coveredAutos=CoveredAutoSerializer(read_only=True,many=True)
+    additionalInsureds=NamedInsuredSerializer(read_only=True,many=True)
+    class Meta:
+        model=PersonalAutoQuoteElements
+        fields='__all__'
+    pass
+
+class HomeQuoteElementsSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True,allow_null=True)
+    mainInsured=NamedInsuredSerializer(read_only=True,many=False)
+    additionalInsureds=NamedInsuredSerializer(read_only=True,many=True)
+    propertyAddress=AddressSerializer(read_only=True,many=False)
+    class Meta:
+        model=HomeQuoteElements
+        fields='__all__'
+    pass
+
+class CompanySerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True,allow_null=True)
+    companyOwner = OwnerSerializer(read_only=True,many=False)
+    companyAddress = AddressSerializer(read_only=True,many=False)
+
+    class Meta:
+        model=Company
+        fields='__all__'
+    pass
+
+class CommercialAutoQuoteElementsSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True,allow_null=True)
+    mainInsured=CompanySerializer(read_only=True,many=False)
+    class Meta:
+        model=CommercialAutoQuoteElements
+        fields='__all__'
+    pass
+
+
+
+class LifeQuoteElementsSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True,allow_null=True)
+    mainInsured=NamedInsuredSerializer(read_only=True,many=False)
+    additionalInsureds=NamedInsuredSerializer(read_only=True,many=True)
+    class Meta:
+        model=LifeQuoteElements
+        fields='__all__'
+    pass
+
+class HealthQuoteElementsSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True,allow_null=True)
+    mainInsured=NamedInsuredSerializer(read_only=True,many=False)
+    additionalInsureds=NamedInsuredSerializer(read_only=True,many=True)
+    class Meta:
+        model=HealthQuoteElements
+        fields='__all__'
+    pass
+
+class BusinessQuoteElementsSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True,allow_null=True)
+    mainInsured=CompanySerializer(read_only=True,many=False)
+    class Meta:
+        model=BusinessQuoteElements
+        fields='__all__'
+    pass
+
+class CustomersSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True,allow_null=True)
+    namedInsureds=NamedInsuredSerializer(read_only=True,many=True)
+    class Meta:
+        model=Customer
+        fields='__all__'
+    pass
 class QuoteSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(allow_null=True)
     lines = QuoteLineSerializer(many=True,read_only=True)
     agency = AgencySerializer(many=False,read_only=True)
-    owner = OwnerSerializer(many=False,read_only=True)
+    owner = CustomersSerializer(many=False,read_only=True)
+    personalAutoQuoteElements = PersonalAutoQuoteElementsSerializer(many=False,read_only=True)
     class Meta:
         model=Quote
         fields='__all__'
@@ -259,14 +345,15 @@ class AgencyAppointmentSerializer(serializers.ModelSerializer):
         fields='__all__'
 class AgencySerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True,allow_null=True)
-    agencyOwner = OwnerSerializer(read_only=True,many=False)
-    agencyAddress = AddressSerializer(read_only=True,many=False)
-    agencyDocuments=FileSeriealizer(read_only=True,many=True)
-    agencyUWFiles=FileSeriealizer(read_only=True,many=True)
-    agencyQuotes=QuoteSerializer(read_only=True,many=True)
-    agencyClients=OwnerSerializer(read_only=True,many=True)
-    authorizedAgents=AuthorizedAgentSerializer(read_only=True,many=True)
-    policies=PolicySerializer(read_only=True,many=True)
+    master = OwnerSerializer(read_only=True,many=True)
+    # agencyAddress = AddressSerializer(read_only=True,many=False)
+    # agencyDocuments=FileSeriealizer(read_only=True,many=True)
+    # agencyUWFiles=FileSeriealizer(read_only=True,many=True)
+    # agencyQuotes=QuoteSerializer(read_only=True,many=True)
+    # policies=PolicySerializer(read_only=True,many=True)
+    clients=OwnerSerializer(read_only=True,many=True)
+    agents=OwnerSerializer(read_only=True,many=True)
+   
     agencyAppointments=AgencyAppointmentSerializer(read_only=True,many=True)
     class Meta:
         model=Agency
@@ -297,88 +384,11 @@ class EndorsementSerializer(serializers.ModelSerializer):
         fields='__all__'
     pass
 
-class CoveredAutoSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True,allow_null=True)
-    car=CarSerializer(read_only=True,many=False)
-    class Meta:
-        model=CoveredAuto
-        fields='__all__'
-    pass
 
-class PersonalAutoQuoteElementsSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True,allow_null=True)
-    quote=QuoteReferenceSerializer(read_only=True,many=False)
-    mainInsured=NamedInsuredSerializer(read_only=True,many=False)
-    coveredAutos=CoveredAutoSerializer(read_only=True,many=True)
-    additionalInsureds=NamedInsuredSerializer(read_only=True,many=True)
-    class Meta:
-        model=PersonalAutoQuoteElements
-        fields='__all__'
-    pass
-
-class HomeQuoteElementsSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True,allow_null=True)
-    quote=QuoteReferenceSerializer(read_only=True,many=False)
-    mainInsured=NamedInsuredSerializer(read_only=True,many=False)
-    additionalInsureds=NamedInsuredSerializer(read_only=True,many=True)
-    propertyAddress=AddressSerializer(read_only=True,many=False)
-    class Meta:
-        model=HomeQuoteElements
-        fields='__all__'
-    pass
-
-class CompanySerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True,allow_null=True)
-    companyOwner = OwnerSerializer(read_only=True,many=False)
-    companyAddress = AddressSerializer(read_only=True,many=False)
-
-    class Meta:
-        model=Company
-        fields='__all__'
-    pass
-
-class CommercialAutoQuoteElementsSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True,allow_null=True)
-    quote=QuoteReferenceSerializer(read_only=True,many=False)
-    mainInsured=CompanySerializer(read_only=True,many=False)
-    class Meta:
-        model=CommercialAutoQuoteElements
-        fields='__all__'
-    pass
-
-
-
-class LifeQuoteElementsSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True,allow_null=True)
-    quote=QuoteReferenceSerializer(read_only=True,many=False)
-    mainInsured=NamedInsuredSerializer(read_only=True,many=False)
-    additionalInsureds=NamedInsuredSerializer(read_only=True,many=True)
-    class Meta:
-        model=LifeQuoteElements
-        fields='__all__'
-    pass
-
-class HealthQuoteElementsSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True,allow_null=True)
-    quote=QuoteReferenceSerializer(read_only=True,many=False)
-    mainInsured=NamedInsuredSerializer(read_only=True,many=False)
-    additionalInsureds=NamedInsuredSerializer(read_only=True,many=True)
-    class Meta:
-        model=HealthQuoteElements
-        fields='__all__'
-    pass
-
-class BusinessQuoteElementsSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True,allow_null=True)
-    quote=QuoteReferenceSerializer(read_only=True,many=False)
-    mainInsured=CompanySerializer(read_only=True,many=False)
-    class Meta:
-        model=BusinessQuoteElements
-        fields='__all__'
-    pass
 
 class CustomerSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
+    agency=AgencySerializer(read_only=True,many=False)
     profilePicture = ProfilePictureSerializer(read_only=False,many=False,allow_null=True)
     address = AddressSerializer(read_only=False,many=False,allow_null=True)
     supportChats = SupportChatSerializer(read_only=True,many=True)
@@ -390,13 +400,14 @@ class CustomerSerializer(serializers.ModelSerializer):
     paypals=PayPalSerializer(read_only=True,many=True)
     cryptos=CryptoSerializer(read_only=True,many=True)
     bankAccounts=BankAccountSerializer(read_only=True,many=True)
-    def update(self, myUser,validated_data):
-        myUser.phoneNumber = validated_data.pop("phoneNumber")
-        myUser.firstName = validated_data.pop("first_name")
-        myUser.lastName = validated_data.pop("last_name")
-        myUser.verified = validated_data.pop("verified")
-        myUser.save()
-        return myUser
+    # def update(self, myUser,validated_data):
+    #     # myUser.phoneNumber = validated_data.pop("phoneNumber")
+    #     # myUser.firstName = validated_data.pop("first_name")
+    #     # myUser.lastName = validated_data.pop("last_name")
+    #     # myUser.verified = validated_data.pop("verified")
+        
+    #     myUser.save()
+    #     return myUser
     class Meta:
         model=Customer
         fields='__all__'

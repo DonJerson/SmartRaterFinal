@@ -1,0 +1,19 @@
+.nameline {
+    width: 211px;
+    height: 42px;
+  }
+  
+  .txt-375 {
+    font-size: 36px;
+    font-family: Karla, sans-serif;
+    font-weight: 700;
+    letter-spacing: -1.8px;
+    color: rgba(0, 0, 0, 1);
+    word-wrap: break-word;
+    margin-right: 37px;
+  }
+  
+  .group-89 {
+    width: 29px;
+    height: 29px;
+  }

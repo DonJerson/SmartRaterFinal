@@ -27,18 +27,18 @@ function InnsuranceLanding(props){
   <div className="col-12 col-xl-7" style={{zIndex:"2"}}>
   <div className="col-12 center textAlign">
   <p className="title1" style={{width: 659.86, 
-    height: 222.25, fontSize: 74, fontWeight: '700', 
-    lineHeight: '100%',color:"white",paddingBottom:props.userPack.dimensions.width<930?"0rem":"3rem"}}>
-      Get Insured Whilst Paying
+ fontSize: 74, fontWeight: '700', 
+    lineHeight: '100%',color:"white",paddingBottom:props.userPack.dimensions.width<930?"0rem":"1rem"}}>
+      Get Insured, Pay
      <span className="green1"> LESS</span>
      </p>
       <div style={{height: props.userPack.dimensions.width<600?0:40}}/>
   </div>
-  <div className="col-12 center">
+  <div className="col-12 center" style={{marginTop:"50px"}}>
     <Link to='freequote'>
-  <div className="button1" style={{width: 296.73, height: 73.76,}}>
+  <div className="button1" >
          
-         <p className="buttonText" style={{height: 26, fontSize: 26, fontWeight: '700', lineHeight: '100%', color: 'white',}}>GET A FREE QUOTE</p>
+  <p className="butonText" style={{fontSize: 18, fontWeight: '700', lineHeight: '100%', color: 'white',}}>GET A FREE QUOTE</p>
      </div>
      </Link>
   </div>
@@ -79,33 +79,28 @@ function InnsuranceLanding(props){
 
   
   </div>
-  {console.log("la dimension",props.userPack.dimensions.width)}
   <div className={"myRow ".concat(props.userPack.dimensions.width>1399?"flexEnd":"center")} style={{marginTop:"8px"}}>
   <p className="subtitle4"
    style={{fontSize:"24px",color:"white",
-  fontFamily: 'Karla',
-  fontStyle: 'normal',
-  fontWeight: 700,
-  fontWize: '26px',
-  lineHeight: '30px',
-  fontWeight:1000,zIndex:1,paddingRight:"20px",paddingTop:"10px"}}>
+  fontFamily: 'Karla', fontStyle: 'normal',fontWeight: 700, fontWize: '26px',
+  lineHeight: '30px',fontWeight:1000,zIndex:1,paddingRight:"20px",paddingTop:"35px"}}>
     Find affordable  <span style={{color: "#1BC19E"}}>HOME
     </span>,  <span style={{color: "#1BC19E"}}>AUTO</span>, <span style={{color: "#1BC19E"}}>LIFE
     </span> and <span style={{color: "#1BC19E"}}>HEALTH</span> coverage</p>
   </div>
   </div>
-    <div className="center" style={{marginTop:"10rem",overflow:"hidden"}}>
+    <div className="center" style={{marginTop:"15rem",overflow:"hidden"}}>
     <p className="title2 karlaBold" style={{minWidth: "80vw",
      textAlign: 'center', color: 'black',}}>
        Powered with Cloud Computing and AI, get dozens of insurance quotes in seconds</p>
     </div>
-    <div className="center" style={{marginTop:props.userPack.dimensions.width<900?"70px":"30px",overflow:"hidden"}}>
+    {/* <div className="center" style={{marginTop:props.userPack.dimensions.width<900?"70px":"30px",overflow:"hidden"}}>
     <p className="body1 karlaRegular" style={{minWidth: "80vw", textAlign: 'center',
      color: 'black',}}>
        Enter your zipcode and begin quoting now </p>
-    </div>
+    </div> */}
 
-    <div className="row center" style={{marginLeft:"0px",marginTop:"80px",overflow:"hidden"}}>
+    {/* <div className="row center" style={{marginLeft:"0px",marginTop:"0px",overflow:"hidden"}}>
    
     <div  style={{width: 318.75}}>
     <select className="myRectangle" style={{width: 318.75}}>
@@ -136,9 +131,16 @@ function InnsuranceLanding(props){
   <div className="pinkButton center" ><Link to='/freequote'>
           <p className="pinkButtonTitle">Get Quotes</p></Link>
         </div>
-    </div>
-    <div className="row center" style={{marginLeft:"0px",marginTop:"30px",overflow:"hidden"}}>
-
+    </div> */}
+    <div className="row center" style={{marginLeft:"0px",marginTop:"55px",overflow:"hidden"}}>
+    <div className="col-12 center" >
+    <Link to='freequote'>
+  <div className="button1">
+         
+         <p className="buttonText" style={{color: 'white',}}>GET A FREE QUOTE</p>
+     </div>
+     </Link>
+  </div>
     </div>
       {props.children}
       </>

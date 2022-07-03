@@ -5,7 +5,7 @@ import React from 'react';
 
       return(
         <>
-        <div className="myRow">
+        <div className="myRow center">
         <input type={props.type} required={props.required} 
         className="generalField" name={props.name} value={props.value}
          placeholder={props.placeholder} onChange={props.onChange} />

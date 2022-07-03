@@ -52,13 +52,7 @@ import { waitFor } from '@testing-library/react';
           <input style={{minWidth:"200px"}} className="blueBox center"
            type="submit" value="Continue"/>
           </div>
-      {/* <div className="myRow center" style={{marginTop:"12px"}}>
-      <div className="bodyText textAlign">Don't have access to your car ATM?</div>
-      </div>
-      <div className="myRow center" style={{marginTop:"12px"}}>
-      <input onClick={()=>{}} style={{minWidth:"200px"}} 
-       className="blueBox center" type="submit" value="Continue without VIN"/>
-      </div> */}
+
       </form>
         {props.children}
         </>

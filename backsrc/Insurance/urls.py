@@ -11,6 +11,7 @@ from Insurance.api import *
 insuranceRouter = SimpleRouter()
 insuranceRouter.register(r'customer', CustomerViewSet, basename='customer')
 insuranceRouter.register(r'namedinsured', NamedInsuredViewSet, basename='namedinsured')
+insuranceRouter.register(r'coveredauto', CoveredAutoViewSet, basename='coveredauto')
 insuranceRouter.register(r'car', CarViewSet, basename='car')
 insuranceRouter.register(r'quote', QuoteViewSet, basename='quote')
 insuranceRouter.register(r'insurer', InsurerViewSet, basename='insurer')
@@ -25,6 +26,7 @@ urlpatterns = [
     path('runQuote/', views2.run_quote),
     path('getModels/', views2.get_models),
     path('newQuote/', views2.new_quote),
+    path('getCounty/', views2.get_county),
     # path('getModels/', views2.getModels, name='index'),
 ]
 
