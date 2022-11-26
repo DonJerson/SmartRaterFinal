@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   backend:
     restart: always
@@ -7,7 +6,7 @@ services:
     ports:
       - "8081:8081"
     volumes:
-      - ./backsrc:/backend
+      - backend:/backsrc
     working_dir: /backend
     links:
       - redis:redis
@@ -20,8 +19,8 @@ services:
       - "8080:8080"
     env_file: ./frontsrc/.env
     volumes:
-      - ./frontsrc:/frontend
-      - /frontend/node_modules
+      - frontend:/frontsrc
+      - frontend:/frontsrc/node_modules
     working_dir: /frontend
 
   # nginx:
@@ -56,8 +55,6 @@ services:
       - redisdata:/data
       
 volumes:
-  web-static:
-  # pgdata:
-  redisdata:
   frontend:
   backend:
+  redisdata:

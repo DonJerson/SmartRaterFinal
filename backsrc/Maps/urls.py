@@ -5,83 +5,72 @@ from re import T
 from django.urls import path
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework.routers import SimpleRouter
-from rest_framework import serializers
+
 from Insurance.models import *
 from .models import *
-from rest_framework import viewsets,status
 
-class CountrySerializer(serializers.ModelSerializer):
-    id=serializers.IntegerField(read_only=True)
-    
-    class Meta:
-        model = Country
-        fields = '__all__'
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view,permission_classes
+from rest_framework.response import Response
+import requests
 
-class StateSerializer(serializers.ModelSerializer):
-    id=serializers.IntegerField(read_only=True)
-    country = CountrySerializer(read_only=True)
-    
-    class Meta:
-        model = State
-        fields = '__all__'
 
-class CitySerializer(serializers.ModelSerializer):
-    id=serializers.IntegerField(read_only=True)
-    state = StateSerializer(read_only=True)
-    
-    class Meta:
-        model = City
-        fields = '__all__'
-class CountySerializer(serializers.ModelSerializer):
-    id=serializers.IntegerField(read_only=True)
-    city = CitySerializer(read_only=True)
-    
-    class Meta:
-        model = County
-        fields = '__all__'
+@api_view(['POST'])
+def new_property(request):
+    customer = request.user.id
+    addressData = request.data['newProperty']
+    address = Address.objects.create(**addressData)
+    return Response(AddressSerializer(customer,many=False).data)
+from django.core.exceptions import ObjectDoesNotExist
+import time
 
-class ZipcodeSerializer(serializers.ModelSerializer):
-    id=serializers.IntegerField(read_only=True)
-    value = serializers.CharField(max_length=5, required=False)
-    county = CountySerializer(read_only=True)
-    class Meta:
-        model = Zipcode
-        fields = '__all__'
+@api_view(['POST'])
+@permission_classes([])
+def get_or_create_address(request):
+    addressData = request.data
+    try:
+        address = Address.objects.get(**addressData)
+    except ObjectDoesNotExist:
+        address = Address.objects.create(**addressData)
+    return Response(AddressSerializer(address,many=False).data)
 
-class AddressSerializer(serializers.ModelSerializer):
-    id=serializers.IntegerField(read_only=True)
-    address1=serializers.CharField(max_length=50,required=True)
-    address2=serializers.CharField(max_length=50,required=False)
-    zipcode=ZipcodeSerializer(read_only=True)
-
-    class Meta:
-        model = Address
-        fields = '__all__'
-
-class AddressViewSet(viewsets.ModelViewSet):
-    queryset = Address.objects.all()
-    serializer_class = AddressSerializer
-    pass
-
-class zipcodeViewSet(viewsets.ModelViewSet):
-    queryset = Zipcode.objects.all()
-    serializer_class = ZipcodeSerializer
-    pass
-
-class cityViewSet(viewsets.ModelViewSet):
-    queryset = City.objects.all()
-    serializer_class = CitySerializer
-    pass
-
-class stateViewSet(viewsets.ModelViewSet):
-    queryset = State.objects.all()
-    serializer_class = StateSerializer
-    pass
-
-class countyViewSet(viewsets.ModelViewSet):
-    queryset = County.objects.all()
-    serializer_class = CountySerializer
-    pass
+@api_view(['POST'])
+@permission_classes([])
+def get_county(request):
+    countyName = request.data['county']
+    try:
+        county = County.objects.get(name=countyName)
+    except County.DoesNotExist as e:
+        headers={'Content-Type':'application/json',
+            'Access-Control-Allow-Origin':'*',
+            'Connection':'keep-alive',
+            'Accept-Encoding':'gzip, deflate, br'
+            }
+        #Start timer
+        req = requests.post('https://u2f8ql6avi.execute-api.us-east-1.amazonaws.com/',json={'county':countyName},headers=headers)
+        # print current time - start time
+        json_data = req.json()
+        
+        county = County.objects.create(name=countyName,
+        propertySearchUrl=json_data['link'],url=json_data['link'])
+        county.save()
+    if county.propertySearchUrl is None:
+        headers={'Content-Type':'application/json',
+            'Access-Control-Allow-Origin':'*',
+            'Connection':'keep-alive',
+            'Accept-Encoding':'gzip, deflate, br'
+            }
+        #Start timer
+        req = requests.post('https://u2f8ql6avi.execute-api.us-east-1.amazonaws.com/',json={'county':countyName},headers=headers)
+        # print current time - start time
+        json_data = req.json()
+        
+        county.propertySearchUrl=json_data['link']
+        county.url=json_data['link']
+        county.save()
+    print(county.name,county.qualityGrade)
+    return Response(CountySerializer(county,many=False).data)
 
 mapRouter = SimpleRouter()
 mapRouter.register(r'address', AddressViewSet, basename='address')
@@ -90,14 +79,10 @@ mapRouter.register(r'city', cityViewSet, basename='city')
 mapRouter.register(r'state', stateViewSet, basename='state')
 mapRouter.register(r'county', countyViewSet, basename='county')
 
-# urlpatterns = [
-#     path('custom-auth/', views2.custom_auth),
-#     path('token-auth/', obtain_jwt_token),
-#     path('current_user/', views2.get_current_user),
-#     path('runQuote/', views2.run_quote),
-#     path('getModels/', views2.get_models),
-#     path('newQuote/', views2.new_quote),
-#     path('getCounty/', views2.get_county),
-#     # path('getModels/', views2.getModels, name='index'),
-# ]
+urlpatterns = [
+    path('newProperty/', new_property),
+    path('getCounty/', get_county),
+    path('getOrCreateAddress/', get_or_create_address),
+    # path('getModels/', views2.getModels, name='index'),
+]
 

@@ -53,12 +53,8 @@ class ModelSerializer(serializers.ModelSerializer):
         fields='__all__'
     pass
 
-class AddressSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True)
-    class Meta:
-        model=Address
-        fields='__all__'
-    pass
+
+
 class PickTrimSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True)
     class Meta:
@@ -125,6 +121,7 @@ class OwnerSerializer(serializers.ModelSerializer):
         fields=('id','first_name','last_name','date_joined','profilePicture',)
     pass
 class NamedInsuredSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True)
     customer = OwnerSerializer(read_only=True,many=False)
 
     class Meta:
@@ -192,9 +189,9 @@ class AgencySerializer(serializers.ModelSerializer):
         fields='__all__'
 
 class CoveredAutoSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True,allow_null=True)
-    driver = NamedInsuredSerializer(read_only=True,many=False)
-    secondaryDriver = NamedInsuredSerializer(read_only=True,many=False)
+    id = serializers.IntegerField(required=True,allow_null=True)
+    driver = NamedInsuredSerializer(read_only=False,many=False,allow_null=True)
+    secondaryDriver = NamedInsuredSerializer(read_only=False,many=False,allow_null=True)
     class Meta:
         model=CoveredAuto
         fields='__all__'
@@ -203,9 +200,8 @@ class CoveredAutoSerializer(serializers.ModelSerializer):
 
 class PersonalAutoQuoteElementsSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True,allow_null=True)
-    mainInsured=NamedInsuredSerializer(read_only=True,many=False)
-    coveredAutos=CoveredAutoSerializer(read_only=True,many=True)
-    additionalInsureds=NamedInsuredSerializer(read_only=True,many=True)
+    coveredAutos=CoveredAutoSerializer(read_only=False,many=True)
+    mainInsured=NamedInsuredSerializer(read_only=True,many=False,allow_null=True)
     class Meta:
         model=PersonalAutoQuoteElements
         fields='__all__'
@@ -274,12 +270,70 @@ class CustomersSerializer(serializers.ModelSerializer):
         model=Customer
         fields='__all__'
     pass
+
+def updateList(list,type):
+    for item in list:
+        driver = None
+        secondaryDriver = None
+        itemId = item['id']
+        if type=='NamedInsured':
+            
+            myElement = NamedInsured.objects.filter(id=itemId).update(**item)
+        elif type=='CoveredAuto':
+            try:
+                driverId = item.pop('driver')['id']
+                # print("driver"+str(driverId))
+                driver = NamedInsured.objects.get(id=driverId)
+                
+            except Exception as e:
+                print("error driver"+str(e))
+                pass
+            try:
+                secondaryDriverId = item.pop('secondaryDriver')['id']
+                secondaryDriver = NamedInsured.objects.get(id=secondaryDriverId)
+            
+            except Exception as e:
+                print("error secondaryDriver"+str(e))
+                pass 
+            myElement = CoveredAuto.objects.get(id=itemId)
+            if driver:
+                myElement.driver = driver
+                print("driver"+str(driver))
+            if secondaryDriver:
+                myElement.secondaryDriver=secondaryDriver
+            myElement.save()
+            print("final",itemId)
+            CoveredAuto.objects.filter(id=itemId).update(**item)
+
+
+    pass
+
 class QuoteSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(allow_null=True)
     lines = QuoteLineSerializer(many=True,read_only=True)
     agency = AgencySerializer(many=False,read_only=True)
     owner = CustomersSerializer(many=False,read_only=True)
-    personalAutoQuoteElements = PersonalAutoQuoteElementsSerializer(many=False,read_only=True)
+    personalAutoQuoteElements = PersonalAutoQuoteElementsSerializer(many=False,read_only=False)
+    homeQuoteElements = HomeQuoteElementsSerializer(many=False,read_only=False)
+
+    def update(self, instance, validated_data):
+        quoteId = validated_data.pop('id')
+       
+        personalAutoQuoteElements=validated_data.pop('personalAutoQuoteElements')
+        personalAutoQuoteElementsId=personalAutoQuoteElements.pop('id')
+        personalAutoQuoteElementsObj=PersonalAutoQuoteElements.objects.get(id=personalAutoQuoteElementsId)
+        print(personalAutoQuoteElements)
+        print("veamos")
+        coveredAutos=personalAutoQuoteElements.pop('coveredAutos')
+        # namedInsureds=personalAutoQuoteElements.namedInsureds
+        # updateList(namedInsureds,'NamedInsured')
+        updateList(coveredAutos,'CoveredAuto')
+        personalAutoQuoteElementsObj=PersonalAutoQuoteElements.objects.filter(id=personalAutoQuoteElementsId)
+        personalAutoQuoteElementsObj.update(**personalAutoQuoteElements)
+        # instance.update(**validated_data)
+        # instance.save()
+        Quote.objects.filter(id=quoteId).update(**validated_data)
+        return instance
     class Meta:
         model=Quote
         fields='__all__'
@@ -391,9 +445,25 @@ class CustomerSerializer(serializers.ModelSerializer):
     agency=AgencySerializer(read_only=True,many=False)
     profilePicture = ProfilePictureSerializer(read_only=False,many=False,allow_null=True)
     address = AddressSerializer(read_only=False,many=False,allow_null=True)
+    # def update(self, myUser,validated_data):
+    #     # myUser.phoneNumber = validated_data.pop("phoneNumber")
+    #     # myUser.firstName = validated_data.pop("first_name")
+    #     # myUser.lastName = validated_data.pop("last_name")
+    #     # myUser.verified = validated_data.pop("verified")
+        
+    #     myUser.save()
+    #     return myUser
+    class Meta:
+        model=Customer
+        fields='__all__'
+
+class LeadSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+    owner=OwnerSerializer(read_only=True,many=False)
+    address = AddressSerializer(read_only=False,many=False,allow_null=True)
     supportChats = SupportChatSerializer(read_only=True,many=True)
     carList = CarSerializer(read_only=True,many=True)
-    namedInsureds = NamedInsuredSerializer(read_only=True,many=True)
+    additionalInsureds = NamedInsuredSerializer(read_only=True,many=True)
     quoteList = QuoteSerializer(read_only=True,many=True)
     files = FileSeriealizer(read_only=True,many=True)
     cards=CardSerializer(read_only=True,many=True)
@@ -409,9 +479,15 @@ class CustomerSerializer(serializers.ModelSerializer):
     #     myUser.save()
     #     return myUser
     class Meta:
-        model=Customer
+        model=Lead
         fields='__all__'
-        
+
+class Property(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+    class Meta:
+        model=Property
+        fields='__all__'
+
 class CustomerWithTokenSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     token = serializers.SerializerMethodField()

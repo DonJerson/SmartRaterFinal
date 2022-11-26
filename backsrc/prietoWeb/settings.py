@@ -8,14 +8,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING: keep the secret key used in production s'.ecret!
 SECRET_KEY = '^$am8n_mab&2u^lobwr4gd9wwi8f04jg5frtil^0u_*z214%2('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['prieto','44.205.27.144','backends.smartrater.us','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','inversionesmendez.herokuapp.com','127.0.0.1','localhost']
-
+#ALLOWED_HOSTS = ['prieto','44.205.27.144','backends.smartrater.us','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','inversionesmendez.herokuapp.com','127.0.0.1','http://localhost:3000']
+ALLOWED_HOSTS = ['*']
 # Application definition   
 CORS_ORIGIN_ALLOW_ALL=True
 #CSRF_COOKIE_SECURE = False
@@ -23,13 +23,14 @@ CORS_ORIGIN_ALLOW_ALL=True
 CORS_ALLOW_CREDENTIALS = True
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.contenttypes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
+    
     'storages',
     "sslserver",
     'rest_framework',
@@ -134,7 +135,6 @@ if(BASE_DIR=="/backend"):
     dev=True
 # # aws settings
 
-
 if(dev):
     DATABASES = {
         'default': {
@@ -149,13 +149,13 @@ else:
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'smartrater',
         'USER': 'donjerson',
-        'PASSWORD': 'Pri3to.Server',
-        'HOST': '44.205.27.144',
+        'PASSWORD': 'Pri3sto.ServerDb',
+        'HOST': 'backends.smartrater.us',
         'PORT': '5432'
         }}
-    AWS_ACCESS_KEY_ID = 'AKIAVFWEVUY5W5ZNHSVD'
-    AWS_SECRET_ACCESS_KEY = '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'
-    AWS_STORAGE_BUCKET_NAME = 'smartopenbucket'
+    AWS_ACCESS_KEY_ID = 'AKIA6FEMQ2A5NO62MK7L'
+    AWS_SECRET_ACCESS_KEY = '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'
+    AWS_STORAGE_BUCKET_NAME = 'prietoopenbucket'
     AWS_DEFAULT_ACL = 'public-read'
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com'%(AWS_STORAGE_BUCKET_NAME)
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
@@ -163,16 +163,15 @@ else:
     AWS_LOCATION = 'static'
     STATIC_URL = 'https://%s/%s/'%(AWS_S3_CUSTOM_DOMAIN,AWS_LOCATION)
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    # STATIC_URL = '/static/'
+    # STATIC_ROOT = BASE_DIR + '\static'
 
-
-
-
-
-CORS_ORIGIN_WHITE_LIST = 'prieto','44.205.27.144','backends.smartrater.us','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','127.0.0.1:8080','localhost:8080',
+#CORS_ORIGIN_WHITE_LIST = 'prieto','44.205.27.144','backends.smartrater.us','172.20.10.3','10.1.10.191','10.1.10.229','10.0.0.229','10.1.10.178','teteo.smartrater.us','smartrater.us','civiltools.club','jersonmendez.com','127.0.0.1:3000','localhost',
 
 JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER' :   'Insurance.utils.custom_jwt_response_handler',
     'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=myMinutes)
 }
+JWT_AUTH_CORS_ENABLE= True
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'

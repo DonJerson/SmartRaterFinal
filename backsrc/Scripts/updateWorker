@@ -1,0 +1,22 @@
+#!/bin/sh
+
+while [ true ]; do
+git fetch
+UPSTREAM=${1:-'@{u}'}
+LOCAL=$(git rev-parse @{0})
+REMOTE=$(git rev-parse "$UPSTRsEAM")
+BASE=$(git merge-base @{0} "$UPSTREAM")
+
+if [ $LOCAL = $REMOTE ]; then
+    echo "Up-to-date"
+elif [ $LOCAL = $BASE ]; then
+    echo "Need to pull"
+    git pull origin master
+    service smartback restart
+elif [ $REMOTE = $BASE ]; then
+    echo "Need to push"
+else
+    echo "Diverged"
+fi
+sleep 2
+done

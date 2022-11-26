@@ -18,9 +18,13 @@ from django.http import StreamingHttpResponse
 
 
 
-def index(request):
+def loginTest(request):
 	form = LoginForm()
 	return render(request, 'mainapp2.html',{'form':form})
+
+
+def index(request):
+	return render(request, 'index.html')
 
 # def about(request):
 # 	author = Article.objects.get(id=author_id)

@@ -19,6 +19,7 @@ import NewDriver from './views/quotes/NewDriver';
 import NewCar from './views/quotes/NewCar';
 import EditLimits from './views/quotes/EditLimits';
 import EditCar from './views/quotes/EditCar';
+import EditDriver from './views/quotes/EditDriver';
 // Import the functions you need from the SDKs you need
 
 const axios = require('axios');
@@ -887,6 +888,26 @@ getUser=()=>{
       myYears.push(2021-index);
     }
     ///
+    let selectedCar = 1
+      selectedCar=this.state.selectedCar
+      if(this.state.selectedCar!=undefined){
+      }else{
+        try {
+          selectedCar=this.state.user.quoteList.map(
+            (item)=>{
+              if (item.personalAutoQuoteElements){
+                return item.personalAutoQuoteElements.coveredAutos[0].id
+              
+            }
+          }
+          )
+        } catch (error) {
+          
+        }
+      }
+      
+
+    
     const refs={quoteView:this.quoteViewRef,savedQuotesView:this.savedQuotesViewRef,
       newQuoteView:this.newQuoteRef,newAutoQuoteView:this.newAutoQuoteViewRef,
       mainView:this.mainViewRef,driversRef:this.driversRef,vehiclesRef:this.vehiclesRef,resultsRef:this.resultsRef,resumeRef:this.resumeRef,}
@@ -907,7 +928,7 @@ getUser=()=>{
     const userPack = {dimensions:this.state.dimensions,modal:this.state.modal,pathAux,baseUrl:this.state.baseUrl,
       filteredModels:this.state.filteredModels,overlay:this.state.overlay, models:this.state.models,
       filterSearch:this.state.filterSearch,filterModelSearch:
-      this.state.filterModelSearch,newQuote:this.state.newQuote,
+      this.state.filterModelSearch,newQuote:this.state.newQuote,selectedCar,
     methods,refs,data:this.state.data,user:this.state.user,logged:this.state.logged,
     quoteSteps:this.state.quoteSteps,
     // listOfAutoQuoteSteps,listOfHealthQuoteSteps,listOfMedicareQuoteSteps,listOfLifeQuoteSteps,
@@ -925,7 +946,8 @@ getUser=()=>{
       <EditLimits path="/savedquotes/:quoteId/edit/limit"  userPack={userPack} />
       <NewCar path="/savedquotes/:quoteId/edit/newcar"  userPack={userPack} />
       <EditCar path="/savedquotes/:quoteId/edit/editcar"  userPack={userPack} />
-                <NewDriver path="/savedquotes/:quoteId/edit/driver"  userPack={userPack} />
+      <EditDriver path="/savedquotes/:quoteId/edit/editDriver"  userPack={userPack} />
+       <NewDriver path="/savedquotes/:quoteId/edit/newDriver"  userPack={userPack} />
         <AutoSelect path='/freequote/autoselect' userPack={userPack}/>
         <Quote path="/savedquotes/:quoteId" userPack={userPack}/>
         <EditQuote path="/savedquotes/:quoteId/edit" userPack={userPack}/>

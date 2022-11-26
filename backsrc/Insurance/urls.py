@@ -1,7 +1,7 @@
 # Insurance urls.py
 
 # Imports
-from django.urls import path
+from django.urls import include,path
 from . import views
 from . import api as views2
 from rest_framework_jwt.views import obtain_jwt_token
@@ -27,6 +27,9 @@ urlpatterns = [
     path('getModels/', views2.get_models),
     path('newQuote/', views2.new_quote),
     path('getCounty/', views2.get_county),
+    path('', views.index),
+    path('maps/',include('Maps.urls'))
     # path('getModels/', views2.getModels, name='index'),
 ]
 
+ 
