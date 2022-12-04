@@ -1,0 +1,19 @@
+.blueIcon{
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 10px;
+
+width: 41px;
+height: 38px;
+
+background: #6A8BFF;
+border-radius: 40px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+}

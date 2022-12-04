@@ -19,6 +19,8 @@ import NewDriver from './views/quotes/NewDriver';
 import NewCar from './views/quotes/NewCar';
 import EditLimits from './views/quotes/EditLimits';
 import EditCar from './views/quotes/EditCar';
+import Lead from './views/dashelements/Lead';
+import NewClient from './views/dashelements/NewClient';
 // Import the functions you need from the SDKs you need
 
 const axios = require('axios');
@@ -919,9 +921,17 @@ getUser=()=>{
       // console.log('beast')
       // console.log("current Quote",this.state.newQuote)
       // console.log("elements",elements.listOfAutoQuotePaths)
-    return(
+      let clients
+      try {
+        clients=this.state.user.agency.clients
+      } catch (error) {
+        clients=[]
+      }
+      return(
       <>
       <Router>
+      <Lead path='dashboard/leads/:leadId' clients={clients} userPack={userPack}/>
+      <NewClient path='dashboard/leads/new' clients={clients} userPack={userPack}/>
       <EditLimits path="/savedquotes/:quoteId/edit/limit"  userPack={userPack} />
       <NewCar path="/savedquotes/:quoteId/edit/newcar"  userPack={userPack} />
       <EditCar path="/savedquotes/:quoteId/edit/editcar"  userPack={userPack} />

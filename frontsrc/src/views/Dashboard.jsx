@@ -19,6 +19,7 @@ import VerifyEmail from './dashelements/VerifyEmail';
 import ChangePassword from './dashelements/ChangePassword';
 import LeadView from './dashelements/LeadView';
 import DashBody from './dashelements/DashBody';
+import Lead from './dashelements/Lead';
 
 
 function Client(props){
@@ -27,6 +28,7 @@ function Client(props){
       <Link to={`${props.client.id}`}>
     <p className="link">{props.index+1}.  {props.client.first_name} {props.client.last_name}</p>
     </Link>
+    
   </div>
   )
 }
@@ -66,7 +68,10 @@ function Clients(props){
   const Elements=()=>{
     return filteredClients.map((client,index)=>{
       return(
+        <>     
       <Client client={client} index={index} key={index}/>
+      
+      </>
       )
     })
   }
@@ -76,11 +81,22 @@ function Clients(props){
       <>
       <div className="myRow center"  style={{paddingTop:"10px",paddingBottom:"18px"}}>
       <div className="" style={{minWidth:"30vw",maxWidth:"90vw",paddingRight:padding,paddingLeft:padding}}>
-
+      <div className="myRow flexStart" style={{flexDirection:"row"}}>
+      <div>
       <input className='input' onChange={onChange} type="text" placeholder="Customer Search" />
+      </div>
+      <Link to='/dashboard/leads/new'>
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/c0hskcsi42p-975%3A1728?alt=media&token=3646f0b9-9e8f-45ad-b921-2d948848b99e"
+        alt="Not Found"
+        className="framee-104 link"
+      /></Link>
+</div>
       <Elements/>
       </div>
+      
       </div>
+      
       </>
     )
 }
@@ -191,13 +207,13 @@ active={props.userPack.overlay.active} userPack={props.userPack}>
 
    
     <Router>
-    <LeadView path='dashboard/leads/:leadId' clients={clients}/>
-    
+    {/* <LeadView path='dashboard/leads/:leadId' clients={clients}/>
+     */}
     <ChangePassword path='dashboard/edit/password' userPack={props.userPack}/>
     <VerifyEmail path='dashboard/edit/verify' userPack={props.userPack}/>
     <EditView path='dashboard/edit' userPack={props.userPack}/>
     <Clients path='dashboard/leads/' clients={clients} />
-      
+    
   </Router>
     <DashBody userPack={props.userPack} name={name}
     openOverlay={openOverlay} logOut={logOut}
