@@ -7,7 +7,7 @@ services:
     ports:
       - "8081:8081"
     volumes:
-      - ./backsrc:/backend
+      - backend:/backsrc
     working_dir: /backend
     links:
       - redis:redis
@@ -21,7 +21,8 @@ services:
     env_file: ./frontsrc/.env
     volumes:
       - ./frontsrc:/frontend
-      - /frontend/node_modules
+      # - frontend:/frontsrc
+      - frontend:/frontend/node_modules
     working_dir: /frontend
 
   # nginx:

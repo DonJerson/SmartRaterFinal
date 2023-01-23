@@ -8,13 +8,13 @@ export default function(props){
         return(
         <>
 
-        <div className="myRow" style={{minWidth:"200px"}}>
+        <div className="myRow">
           <p className='txt-290'> {props.label}:</p>
            
     <select className="select-text" required name={props.name} onChange={props.onChange} 
     value={props.value}>
         {props.options.map((c,index)=>(
-            index==0?
+            c.value==props.value?
 <option key={index}  value={props.selected}>{c.value}</option>
             :
             
@@ -22,7 +22,7 @@ export default function(props){
             value={props.value==c.label?true:false}>{c.label}</option>
         ))}
     </select>
-    <div className="myRow flexEnd" style={{width:"60px"}}>
+    {/* <div className="myRow flexEnd" style={{width:"60px"}}>
     {props.edit?
     <img onClick={props.onClick} 
     src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/th56l9v6g6p-974%3A1659?alt=media&token=1307f33e-6c02-4969-a314-f4990f6f9d80"
@@ -37,7 +37,7 @@ export default function(props){
   />
 
     }
-  </div>
+  </div> */}
     {/* <label className="select-label">State</label> */}
     </div>
 </>)}

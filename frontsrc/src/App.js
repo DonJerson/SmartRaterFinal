@@ -21,6 +21,7 @@ import EditLimits from './views/quotes/EditLimits';
 import EditCar from './views/quotes/EditCar';
 import Lead from './views/dashelements/Lead';
 import NewClient from './views/dashelements/NewClient';
+import NewLeadForm from './views/dashelements/NewLeadForm';
 // Import the functions you need from the SDKs you need
 
 const axios = require('axios');
@@ -207,9 +208,10 @@ class App extends Component {
   handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       if(document.getElementsByClassName("outterModal")[0]){
-        const loginState =
-        document.querySelector("#root > div > div.outterModal.center > div > div.myRow.center > h2").textContent
-        if(loginState==="Login"){
+        //get page url
+        let getUrl = window.location;
+        //if url includes Login
+        if(getUrl.href.includes("Login")){
           this.login(this.state.data.username,this.state.data.password)
         }
         else{
@@ -930,6 +932,7 @@ getUser=()=>{
       return(
       <>
       <Router>
+      <NewLeadForm path='freequotenew' userPack={userPack}/>
       <Lead path='dashboard/leads/:leadId' clients={clients} userPack={userPack}/>
       <NewClient path='dashboard/leads/new' clients={clients} userPack={userPack}/>
       <EditLimits path="/savedquotes/:quoteId/edit/limit"  userPack={userPack} />

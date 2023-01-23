@@ -99,7 +99,17 @@ def get_models(request):
     brand = request.data["brand"]
     allModels = CarEntry.objects.filter(brand=brand)
     return Response(CarEntrySerializer(allModels, many=True).data)
-    
+
+@api_view(['POST'])
+@permission_classes([])
+def newProspect(request):
+    lead = request.data
+    owner = Customer.objects.get(id=1)
+    print("lead")
+    print(lead)
+    newLead = Prospect.objects.create(**lead,owner=owner)
+    return Response(ProspectSerializer(newLead, many=False).data)
+ 
 @api_view(['POST'])
 @permission_classes([])
 def custom_auth(request):
@@ -364,6 +374,10 @@ class PolicyViewSet(viewsets.ModelViewSet):
 class AgencyViewSet(viewsets.ModelViewSet):
     queryset = Agency.objects.all()
     serializer_class = AgencySerializer
+    pass
+class ProspectViewSet(viewsets.ModelViewSet):
+    queryset = Prospect.objects.all()
+    serializer_class = ProspectSerializer
     pass
 class InsurerViewSet(viewsets.ModelViewSet):
     queryset = Insurer.objects.all()

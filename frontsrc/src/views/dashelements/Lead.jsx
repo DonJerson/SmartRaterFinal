@@ -3,6 +3,7 @@ import React from "react"
 import WhiteNavBar from "../../elements/WhiteNavBar"
 import Title from "../dashelements/title";
 import "../css/lead.css";
+
 export default function Lead(props) {
     //get lead from props.clients
     const lead = props.clients.find(lead => lead.id === props.leadId)
@@ -34,7 +35,7 @@ export default function Lead(props) {
 
     </div>
    <div className='center' style={{margin:"18px"}}>
-   <Title text={name}/>
+   <Title text={'No name'}/>
    </div>
 <div className="myRow center" style={{gap:"10px"}}>
 <div className="blueIcon center">
@@ -156,3 +157,6 @@ export default function Lead(props) {
 </>
   )
 }
+
+
+

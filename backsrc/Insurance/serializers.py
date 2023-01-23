@@ -116,6 +116,14 @@ class ProfilePictureSerializer(serializers.ModelSerializer):
             "id")
     pass
 
+class BasicOwnerSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True)
+
+    class Meta:
+        model=Customer
+        fields=('id','first_name','last_name','date_joined',)
+    pass
+
 class OwnerSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True)
     profilePicture = ProfilePictureSerializer(read_only=True,many=False)
@@ -343,6 +351,15 @@ class AgencyAppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model=AgencyAppointment
         fields='__all__'
+
+class ProspectSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=True,allow_null=True)
+    owner = BasicOwnerSerializer(read_only=True,many=False)
+   
+    class Meta:
+        model=Prospect
+        fields='__all__'
+
 class AgencySerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True,allow_null=True)
     master = OwnerSerializer(read_only=True,many=True)
