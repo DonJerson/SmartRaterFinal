@@ -20,7 +20,7 @@ services:
     env_file: ./frontsrc/.env
     volumes:
       - frontend:/frontsrc
-      - frontend:/frontsrc/node_modules
+      - ./frontsrc/node_modules:/frontsrc/node_modules
     working_dir: /frontend
 
   # nginx:
