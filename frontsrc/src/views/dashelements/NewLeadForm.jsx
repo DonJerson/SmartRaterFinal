@@ -24,6 +24,7 @@ let framesiding=['Frame - Stucco','Frame','Aluminum Siding','Vinyl Siding','Wood
 ]
 let masonrysiding=['Concrete Block - Stucco','Concrete Block','Solid Brick','Solid Stone','Superior'
 ]
+let wallConstruction=["Masonry", "Frame - Stucco", "Aluminum Siding", "Vinyl Siding", "Wood Siding", "Masonry Veneer", "Brick Veneer", "Stone Veneer", "Logs", "Asbestos"]
 
 
 export default function Teteo(props) {
@@ -58,6 +59,7 @@ export default function Teteo(props) {
             wallMasonry:"Concrete Block - Stucco",
             wallConstruction:"Masonry",
         foundationShape:"4-5 Corners - Square/Rectangle",
+        plumbingType:"PVC",
         floor:1,
         stories:1,
             families:1,
@@ -216,7 +218,7 @@ const inject=()=>{
     </div>
     <div className="myRow" style={{gap:8}}>
     <MaterialInput value={lead.first_name} onChange={onChange} name='first_name'
-    label="First Nameeess" type="text"/>
+    label="First Name" type="text"/>
 
     <MaterialInput label="Middle" onChange={onChange}  value={lead.middle_name} 
     type="text" name='middle_name'/>
@@ -293,7 +295,7 @@ const inject=()=>{
 <MaterialInput label="Frame Construction" onChange={onChange} options={labelize(framesiding)} value={lead.wallFrame} type='select' name='wallFrame'/>
 </>
 :
-<MaterialInput label="Wall Material" onChange={onChange} options={labelize(masonrysiding)} value={lead.wallMasonry} type='select' name='wallMasonry'/>
+<MaterialInput label="Wall Material" onChange={onChange} options={labelize(lead.wallType==='Masonry'?masonrysiding:lead.wallType==='Frame'?framesiding:[])} value={lead.wallMaterial} type='select' name='wallMaterial'/>
 }
 
 </div>
@@ -306,7 +308,7 @@ const inject=()=>{
 <MaterialInput label="Type" onChange={onChange} options={labelize(['Slab','Basement','Crawlspace','Piers','Other'
 ])} value={lead.foundationType} type='select' name='foundationType'/>
 
-<MaterialInput label="Material" onChange={onChange} options={labelize(['Concrete','Block','Wood','Other'
+<MaterialInput label="Foundation Material" onChange={onChange} options={labelize(['Concrete','Block','Wood','Other'
 ])} value={lead.foundationMaterial} type='select' name='foundationMaterial'/>
 
 </div>
@@ -335,9 +337,10 @@ const inject=()=>{
 <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
       <MaterialInput label="Year Built" onChange={onChange}  value={lead.year} 
     type="text" name='year'/>
-            <MaterialInput label="Sq Ft" onChange={onChange}  value={lead.area} 
+            <MaterialInput label="Living area (Sq Ft)" onChange={onChange}  value={lead.area} 
     type="text" name='area'/>
-
+<MaterialInput label="Plumbing Type" onChange={onChange} options={labelize(['PVC','Galvanized','Copper','Polybutylene','PEX'
+      ])} value={lead.plumbingType} type='select' name='plumbingType'/>
         </div>
 
         {lead.structureType==='Condo'?
@@ -420,7 +423,7 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
       ])} value={lead.lossAssessment} type='select' name='lossAssessment'/>
 </div>
        <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
-        <div>Prior</div>
+        <div>Prior Insurance</div>
      <Toggle function={setClient} name="prior" lead= {lead} />
       <div>Mortgage</div>
       <Toggle function={setClient} name="mortgage" lead= {lead}/> 
@@ -428,7 +431,7 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
 
       </div>
       <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
-      <div>New</div>
+      <div>New Purchase</div>
        <Toggle function={setClient} name="new" lead= {lead}/><div>Married</div>
        <Toggle function={setClient} name="married" lead= {lead}/></div>
       <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
@@ -468,6 +471,7 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
   
   
         </div>
+
         <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
         
         <div>Fenced</div>
@@ -513,11 +517,13 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
       {lead.married?
 <>
 <div className="myRow" style={{gap:8,marginTop:"10px"}}>
-      <MaterialInput label="Spouse name" onChange={onChange}  value={lead.cofirst_name} 
+      <MaterialInput label="CoApplicant First Name" onChange={onChange}  value={lead.cofirst_name} 
+      type="text" name='cofirst_name'/>   
+            <MaterialInput label="CoApplicant Last Name" onChange={onChange}  value={lead.cofirst_name} 
       type="text" name='cofirst_name'/>   
       </div>
       <div className="myRow" style={{gap:8,marginTop:"10px"}}>
-      <MaterialInput label="Spouse date of birth" onChange={onChange}  value={lead.codob} 
+      <MaterialInput label="CoApplicant date of birth" onChange={onChange}  value={lead.codob} 
       type="date" name='codob'/>   
       </div>
       </>
@@ -534,6 +540,32 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
       <MaterialInput label="Loan number" onChange={onChange}  value={lead.loan} 
       type="text" name='loan'/>   
       </div>
+      </>
+:
+<></>}
+
+{lead.new?
+<>
+<div className="myRow" style={{gap:8,marginTop:"10px"}}>
+<p>Prior Address</p>
+ </div>
+ <div className="myRow" style={{gap:8,marginTop:"10px"}}>
+    <MaterialInput value={lead.priorAddress} onChange={onChange} name='priorAddress'
+    label="Address" type="text"/>
+
+    </div>
+    <div className="myRow" style={{gap:8,marginTop:"10px"}}>
+    <MaterialInput label="Address2" onChange={onChange}  value={lead.priorAddress2} 
+    type="text" name='priorAddress2'/>
+       </div>
+       <div className="myRow" style={{gap:8,marginTop:"10px"}}>
+    <MaterialInput label="City" onChange={onChange}  value={lead.priorCity} 
+    type="text" name='priorCity'/>
+        <MaterialInput label="State" onChange={onChange}  value={lead.priorState} 
+    type="text" name='priorState'/>
+        <MaterialInput label="Zipcode" onChange={onChange}  value={lead.priorZipcode} 
+    type="text" name='priorZipcode'/>
+       </div>
       </>
 :
 <></>}
@@ -610,7 +642,7 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
                               <MaterialInput label="Date Inspected" onChange={onChange}  value={lead.inspectionDate} 
       type="date" name='inspectionDate'/></div>
             <div className="myRow" style={{gap:8,marginTop:"10px"}}>
-                                    <MaterialInput label="Inspector" onChange={onChange}  value={lead.inspectionDate} 
+                                    <MaterialInput label="Inspector" onChange={onChange}  value={lead.inspectionName} 
       type="text" name='inspectorName'/>
                                          <MaterialInput label="License" onChange={onChange}  value={lead.inspectorNumber} 
       type="text" name='inspectorNumber'/>

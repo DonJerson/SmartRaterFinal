@@ -20,6 +20,8 @@ let keysMatch = [
     {"QR":"NameFirst","local":"first_name"},
     {"QR":"NameLast","local":"last_name"},
     {"QR":"DateOfBirth","local":"dob","default":defaultDob},
+    //add gender
+    {"QR":"Gender","local":"gender"},
     {"QR":"MaritalStatus","local":"married"},
     {"QR":"PhonePrimary","local":"phone"},
     {"QR":"PhoneCell","local":"phone"},
@@ -33,7 +35,7 @@ let keysMatch = [
 
     {"QR":"CurrentCarrier","local":"carrier"},
     {"QR":"CurrentPolicyNumber","local":"policy"},
- 
+    
 
     {"QR":"CurrentPolicyExpirationDate","local":"priorexp"},
     {"QR":"Lapses","local":"lapses"},
@@ -107,6 +109,15 @@ let keysMatch = [
     {"QR":"InspectorCompanyName","local":"inspectionCompany"},
     {"QR":"InspectorNumber","local":"inspectorLicense"},
     {"QR":"InspectionDate","local":"inspectionDate"},
+    {"QR":"CoverageA","local":"coverageA"},
+    {"QR":"CoverageB","local":"coverageB"},
+    {"QR":"CoverageC","local":"coverageC"},
+    {"QR":"CoverageD","local":"coverageD"},
+    {"QR":"CoverageE","local":"coverageE"},
+    {"QR":"CoverageF","local":"coverageF"},
+    {"QR":"Medical","local":"medical"},
+    {"QR":"LossAssessment","local":"lossAssessment"},
+    {"QR":"PlumbingType","local":"plumbingType"},
 
 ]
 
@@ -116,6 +127,7 @@ const yesNoList=[
     "Lapses",
     "Claims",
     "SecondaryWaterResistance",
+    "SecondaryWaterResistance"
 ]
 const alarmList=[
     "BurglarAlarm",
@@ -130,6 +142,7 @@ const ExportAsJSON = (lead)=> {
     lead.codob=convertDate(lead.codob)
     lead.inspectionDate=convertDate(lead.inspectionDate)
 
+    neoLead.ProtectionClass='3'
     //create a neoLead with qrKeys and lead values
     let bathsSplit=(lead.baths).toString().split(".")
     keysMatch.map(item => {
@@ -143,12 +156,12 @@ const ExportAsJSON = (lead)=> {
         if (value === undefined) {
             value = item.default;
         }
-        yesNoList.forEach(element => {
+        alarmList.forEach(element => {
             if(element==qrKey){
                 value = value ? "Rep to Central Station" : "None";
             }
         });
-        alarmList.forEach(element => {
+        yesNoList.forEach(element => {
             if(element==qrKey){
                 value = value ? "Yes" : "No";
             }
@@ -177,7 +190,7 @@ const ExportAsJSON = (lead)=> {
             value='0'}
         }
         if(qrKey=="CentralHeatAndAir"){
-            value = value ? "Yes" : "None";
+            value = value ? "Yes" : "No";
         }
         console.log(qrKey, value);
         neoLead[qrKey]= value;
