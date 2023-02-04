@@ -1,0 +1,2 @@
+/home/smartback/smartvenv/bin/python /home/smartback/manage.py collectstatic
+

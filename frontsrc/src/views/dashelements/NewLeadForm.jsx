@@ -140,7 +140,6 @@ async function download(){
       lead.mailingCity = lead.city
       lead.mailingState = lead.state
       lead.mailingZipcode= lead.zipcode
-      lead.mailingCounty= lead.county
      
       let matchedLead = [ExportAsJSON(lead)]
       const worksheet = XLSX.utils.json_to_sheet(matchedLead);

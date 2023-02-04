@@ -52,7 +52,6 @@ let keysMatch = [
     {"QR":"MailingCity","local":"mailingCity"},
     {"QR":"MailingState","local":"mailingState"},
     {"QR":"MailingZip","local":"mailingZipcode"},
-    {"QR":"MailingCounty","local":"mailingCounty"},
 
    
     {"QR":"YearBuilt","local":"year"},

@@ -1,0 +1,17 @@
+#!/bin/sh
+#cd /home/ubuntu/smartrater/backsrc
+sudo /home/ubuntu/smartvenv/bin/gunicorn prietoWeb.wsgi:application --bind 0.0.0.0:443 --certfile /etc/letsencrypt/live/backends.smartrater.us/fullchain.pem --keyfile /etc/letsencrypt/live/backends.smartrater.us/privkey.pem
+
+#screen -d -m -RR django -t django bash -c 'cd /home/ubuntu && source smartratervenv/bin/activate && cd /home/ubuntu/smartrater && /home/ubuntu/smartvenv/bin/gunicorn prietoWeb.wsgi:application --bind 0.0.0.0:443 --certfile /etc/letsencrypt/live/backends.smartrater.us/fullchain.pem --keyfile /etc/letsencrypt/live/backends.smartrater.us/privkey.pem'
+
+#source /home/ubuntu/smartvenv/bin/activate
+
+
+#/home/ubuntu/smartvenv/bin/gunicorn prietoWeb.wsgi:application --bind 0.0.0.0:443 --certfile /etc/letsencrypt/live/backends.smartrater.us/fullchain.pem --keyfile /etc/letsencrypt/live/backends.smartrater.us/privkey.pem
+
+
+#screen -d -m -RR django -t django bash -c 'cd /home/ubuntu && source smartratervenv/bin/activate && cd /home/ubuntu/smartrater && python manage.py runsslserver 0.0.0.0:8181'
+
+#screen -d -m -RR node -t node bash -c 'cd /home/ubuntu/smartrater && node server.js'
+
+#screen -d -m -RR worker -t worker bash -c 'cd /home/ubuntu && source smartratervenv/bin/activate && cd /home/ubuntu/smartrater && python manage.py shell'
