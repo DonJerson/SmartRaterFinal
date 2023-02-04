@@ -70,7 +70,8 @@ export default function Teteo(props) {
         coverageB:'2%',
         coverageC:'25%',
             coverageD:'10%',
-            medical:'$5000',
+            coverageE:"$100,000",
+            medical:'$5,000',
             aop:"$2500",
             hurricane:"2%",
             lossAssessment:"$0",
@@ -406,7 +407,7 @@ onChange={onChange} options={labelize(['0%','1%','2%','5%','10%','15%','20%'
       '%', ''))/100)*lead.coverageA).toFixed(0) +")"} 
 onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} value={lead.coverageD} type='select' name='coverageD'/>
 
-      <MaterialInput label="Coverage E" onChange={onChange} options={labelize(['$100,000','$200,000','$300,000','$400,000','$500,000','$600,000','$700,000','$800,000','$900,000','$1,000,000'
+      <MaterialInput label="Coverage E" onChange={onChange} options={labelize(['$100,000','$200,000','$300,000','$400,000','$500,000','$1,000,000'
       ])} value={lead.coverageE} type='select' name='coverageE'/>
 
       <MaterialInput label="Medical" onChange={onChange} options={labelize(['$0','$1000','$2000','$3000','$4000','$5000'

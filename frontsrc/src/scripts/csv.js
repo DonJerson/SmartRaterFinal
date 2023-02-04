@@ -139,12 +139,12 @@ const ExportAsJSON = (lead)=> {
         if (value === undefined) {
             value = item.default;
         }
-        yesNoList.forEach(element => {
+        alarmList.forEach(element => {
             if(element==qrKey){
                 value = value ? "Rep to Central Station" : "None";
             }
         });
-        alarmList.forEach(element => {
+        yesNoList.forEach(element => {
             if(element==qrKey){
                 value = value ? "Yes" : "No";
             }

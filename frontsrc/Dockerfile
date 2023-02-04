@@ -8,7 +8,7 @@ FROM node:14
 # RUN apt-get update
 WORKDIR /frontend
 COPY ./package.json ./
-RUN npm install
+#RUN npm install
 # Disable warning error messages
 ENV DISABLE_ESLINT_PLUGIN=true
 COPY . ./

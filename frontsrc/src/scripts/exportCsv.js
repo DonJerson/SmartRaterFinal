@@ -126,7 +126,6 @@ const yesNoList=[
     "Lapses",
     "Claims",
     "SecondaryWaterResistance",
-    "SecondaryWaterResistance"
 ]
 const alarmList=[
     "BurglarAlarm",

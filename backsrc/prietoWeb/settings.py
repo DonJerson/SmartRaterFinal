@@ -130,8 +130,8 @@ USE_TZ = True
 USE_S3 = os.getenv('USE_S3') == 'TRUE'
 myMinutes=2500
 dev=False
-if(BASE_DIR=="/backend"):
-    dev=True
+# if(BASE_DIR=="/backend"):
+#     dev=True
 # # aws settings
 
 
@@ -146,12 +146,12 @@ if(dev):
 else:
     DATABASES = {
         'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'smartrater',
-        'USER': 'donjerson',
-        'PASSWORD': 'Pri3to.Server',
-        'HOST': '44.205.27.144',
-        'PORT': '5432'
+        'USER': 'donsmart',
+        'PASSWORD': 'Du@B5X$LGH5%gSu%',
+        'HOST': '54.146.87.78',
+        'PORT': '3306'
         }}
     AWS_ACCESS_KEY_ID = 'AKIAVFWEVUY5W5ZNHSVD'
     AWS_SECRET_ACCESS_KEY = '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'
