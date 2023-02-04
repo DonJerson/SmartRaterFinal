@@ -18,6 +18,7 @@ insuranceRouter.register(r'insurer', InsurerViewSet, basename='insurer')
 insuranceRouter.register(r'existing', ExistingCustomerViewSet, basename='existing')
 insuranceRouter.register(r'policy', PolicyViewSet, basename='policy')
 insuranceRouter.register(r'agency', AgencyViewSet, basename='agency')
+insuranceRouter.register(r'prospect', ProspectViewSet, basename='prospect')
 
 urlpatterns = [
     path('custom-auth/', views2.custom_auth),
@@ -28,7 +29,8 @@ urlpatterns = [
     path('newQuote/', views2.new_quote),
     path('getCounty/', views2.get_county),
     path('', views.index),
-    path('maps/',include('Maps.urls'))
+    path('maps/',include('Maps.urls')),
+    path('newProspect/', views2.newProspect)
     # path('getModels/', views2.getModels, name='index'),
 ]
 

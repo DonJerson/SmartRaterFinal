@@ -609,6 +609,7 @@ PRODUCTS_CHOICES = (
 	('Business', 'Business'),
 )
 
+
 class Property(models.Model):
     owner = models.ForeignKey(Lead, related_name='properties', default=None,blank=True,null=True,on_delete=models.CASCADE)
     additionalInsureds = models.ManyToManyField(NamedInsured, related_name='namedinsured')
@@ -672,3 +673,93 @@ class Property(models.Model):
             self.address + ', ' + self.zipcodeObject.county.city.name + ', ' + self.zipcodeObject.county.city.state.short + ', ' + self.zipcodeObject.value)
         else: return self.address
     pass
+
+
+# Create a prospect model from the previous fields
+class Prospect(models.Model):
+    owner=models.ForeignKey(Customer,
+                            on_delete=models.CASCADE,null=True,blank=True)
+    status = models.CharField(max_length=50,blank=True,null=True)
+    
+    first_name = models.CharField(max_length=50,blank=True,null=True)
+    last_name = models.CharField(max_length=50,blank=True,null=True)
+    email = models.EmailField(blank=True,null=True)
+    phone=models.CharField(max_length=50,blank=True,null=True)
+    gender=models.CharField(max_length=50,blank=True,null=True)
+    address=models.CharField(max_length=50,blank=True,null=True)
+    
+    mailing_address=models.CharField(max_length=50,blank=True,null=True)
+    mailing_address2=models.CharField(max_length=50,blank=True,null=True)
+    mailing_city=models.CharField(max_length=50,blank=True,null=True)
+    mailing_state=models.CharField(max_length=50,blank=True,null=True)
+    mailing_zipcode=models.CharField(max_length=50,blank=True,null=True)
+    mailing_county=models.CharField(max_length=50,blank=True,null=True)
+    
+    city=models.CharField(max_length=50,blank=True,null=True)
+    state=models.CharField(max_length=50,blank=True,null=True)
+    zipcode=models.CharField(max_length=50,blank=True,null=True)
+    county=models.CharField(max_length=50,blank=True,null=True)
+    address2=models.CharField(max_length=50,blank=True,null=True)
+    
+    prior=models.BooleanField(default=False)
+    new=models.BooleanField(default=False)
+    married=models.BooleanField(default=False)
+    mortgage=models.BooleanField(default=False)
+    inspections=models.BooleanField(default=False)
+    primary=models.BooleanField(default=False)
+    claims=models.BooleanField(default=False)
+    damage=models.BooleanField(default=False)
+    beds=models.IntegerField(blank=True,null=True)
+    
+    policyType=models.CharField(max_length=50,blank=True,null=True)
+    
+    #HO
+    baths=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+    middle_name=models.CharField(max_length=50,blank=True,null=True)
+    dob=models.DateField(blank=True,null=True)
+   
+    area=models.CharField(max_length=50,blank=True,null=True)
+    roofYear=models.CharField(max_length=50,blank=True,null=True)
+    roofType=models.CharField(max_length=50,blank=True,null=True)
+    roofMaterial=models.CharField(max_length=50,blank=True,null=True)
+    roofCover=models.CharField(max_length=50,blank=True,null=True)
+    roofWall=models.CharField(max_length=50,blank=True,null=True)
+    roofDeck=models.CharField(max_length=50,blank=True,null=True)
+    waterheater=models.CharField(max_length=50,blank=True,null=True)
+    foundation = models.CharField(max_length=50,blank=True,null=True)
+    foundationMaterial = models.CharField(max_length=50,blank=True,null=True)
+    foundationType = models.CharField(max_length=50,blank=True,null=True)
+    wall = models.CharField(max_length=50,blank=True,null=True)
+    pool=models.CharField(max_length=50,blank=True,null=True)
+    year=models.CharField(max_length=50,blank=True,null=True)
+    stories=models.CharField(max_length=50,blank=True,null=True)
+    families=models.CharField(max_length=50,blank=True,null=True)
+    effective=models.DateField(blank=True,null=True)
+    cofirst_name=models.CharField(max_length=50,blank=True,null=True)
+    colast_name=models.CharField(max_length=50,blank=True,null=True)
+    codob=models.DateField(blank=True,null=True)
+    mortgagee=models.CharField(max_length=50,blank=True,null=True)
+    loan=models.CharField(max_length=50,blank=True,null=True)
+    carrier=models.CharField(max_length=50,blank=True,null=True)
+    policy=models.CharField(max_length=50,blank=True,null=True)
+    priorexp=models.DateField(blank=True,null=True)
+    comments=models.CharField(max_length=50,blank=True,null=True)
+    occupancy=models.CharField(max_length=50,blank=True,null=True)
+    fireAlarm=models.BooleanField(default=False)
+    burglarAlarm=models.BooleanField(default=False)
+    gatedCommunity=models.BooleanField(default=False)
+    centralAir=models.BooleanField(default=False)
+    
+    
+    purchaseDate=models.DateField(blank=True,null=True)
+    purchasePrice=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+    
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+    pass
+ 
+
+
+
+#Calculate the factorial of a number given by the user
+

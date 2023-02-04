@@ -1,0 +1,395 @@
+p{
+    margin:0;
+}
+html{
+    overflow-x: hidden;
+}
+.row{
+    margin-left: 0px;
+}
+a{
+    padding:0px !important;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+body{
+    overflow-x: hidden;
+}
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.halfRow{
+    display:grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+}
+.thirdRow{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    width: 100%;
+}
+.fifthRow{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    width: 100%;
+}
+.seventhRow{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    width: 100%;
+}
+.center{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.flexStart{
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding:0px;
+}
+.flexEnd{
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
+.spaceBetween{
+    display:flex;
+    align-content: center;
+    justify-content: space-between;
+}
+.textAlign{
+    text-align: center;
+}
+
+/* Estilo iOS */
+
+.switch__container {
+    width: 60px;
+  }
+  
+  .switch {
+    visibility: hidden;
+    position: absolute;
+    margin-left: -9999px;
+  }
+  
+  .switch + label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+  }
+  
+  .switch--shadow + label {
+    padding: 2px;
+    width: 60px;
+    height: 30px;
+    background-color: #dddddd;
+    border-radius: 60px;
+  }
+  .switch--shadow + label:before,
+  .switch--shadow + label:after {
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    bottom: 1px;
+    content: "";
+  }
+  .switch--shadow + label:before {
+    right: 1px;
+    background-color: #f1f1f1;
+    border-radius: 60px;
+    transition: background 0.4s;
+  }
+  .switch--shadow + label:after {
+    width: 31px;
+    background-color: #fff;
+    border-radius: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s;
+  }
+  .switch--shadow:checked + label:before {
+    background-color: #8ce196;
+  }
+  .switch--shadow:checked + label:after {
+    transform: translateX(30px);
+  }
+  
+  /* Estilo Flat */
+  .switch--flat + label {
+    padding: 2px;
+    width: 6px;
+    height: 20px;
+    background-color: #dddddd;
+    border-radius: 60px;
+    transition: background 0.4s;
+  }
+  .switch--flat + label:before,
+  .switch--flat + label:after {
+    display: block;
+    position: absolute;
+    content: "";
+  }
+  .switch--flat + label:before {
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    right: 2px;
+    background-color: #fff;
+    border-radius: 60px;
+    transition: background 0.4s;
+  }
+  .switch--flat + label:after {
+    top: 4px;
+    left: 4px;
+    bottom: 4px;
+    width: 56px;
+    background-color: #dddddd;
+    border-radius: 52px;
+    transition: margin 0.4s, background 0.4s;
+  }
+  .switch--flat:checked + label {
+    background-color: #8ce196;
+  }
+  .switch--flat:checked + label:after {
+    margin-left: 60px;
+    background-color: #8ce196;
+  }
+
+  
+.txt-947 {
+  font-size: 12px;
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.25px;
+  color: rgba(0, 0, 0, 1);
+  width: 244px;
+  word-wrap: break-word;
+  margin-bottom: 9px;
+}
+
+.line {
+  margin-bottom: 9px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.iconholder {
+  width: 30px;
+  height: 15px;
+  margin-right: 8px;
+}
+
+.txt-817 {
+  font-size: 12px;
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.25px;
+  color: rgba(0, 0, 0, 1);
+  text-align: center;
+  width: 178px;
+  word-wrap: break-word;
+  margin-right: 8px;
+}
+
+.addbutton {
+  width: 20px;
+  height: 100%;
+}
+
+.line {
+  margin-bottom: 9px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.iconholder-1 {
+  width: 30px;
+  margin-right: 8px;
+  height: 100%;
+}
+
+.txt-817 {
+  font-size: 12px;
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.25px;
+  color: rgba(0, 0, 0, 1);
+  text-align: center;
+  width: 178px;
+  word-wrap: break-word;
+  margin-right: 8px;
+}
+
+.addbutton {
+  width: 20px;
+  height: 100%;
+}
+
+.line-1 {
+  position: relative;
+  width: 100%;
+}
+
+.addbutton-1 {
+  position: absolute;
+  top: 0px;
+  left: 223px;
+  width: 20px;
+  height: 100%;
+}
+
+.iconholder-2 {
+  width: 30px;
+  height: 100%;
+}
+
+.txt-851 {
+  font-size: 12px;
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.25px;
+  color: rgba(0, 0, 0, 1);
+  text-align: center;
+  width: 194px;
+  word-wrap: break-word;
+}
+
+
+.dashbody {
+  gap:18px;
+  max-width: 100%;
+  height: 150px;
+}
+
+.leftwing {
+  gap:6px;
+  margin-right: 21px;
+  box-sizing: border-box;
+  width: 244px;
+  height: 100%;
+}
+
+.elementline {
+  position: relative;
+  width: 100%;
+}
+.framee-104 {
+  width: 20px;
+  height: 20px;
+}
+
+.frame-104 {
+  position: absolute;
+  left: 224px;
+  width: 20px;
+  height: 20px;
+}
+.frame-1004 {
+  width: 20px;
+  height: 20px;
+}
+
+.txt-873 {
+  font-size: 26px;
+  font-family: Karla, sans-serif;
+  font-weight: 700;
+  letter-spacing: -1.3px;
+  color: rgba(0, 0, 0, 1);
+  width: 225px;
+  word-wrap: break-word;
+}
+
+.rightwing {
+  gap:6px;
+  width: 245px;
+  height: 100%;
+}
+
+.elementline-1 {
+  position: relative;
+  width: 100%;
+}
+
+.frame-1041 {
+  position: absolute;
+  top: 5px;
+  left: 225px;
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 768px) {
+
+  .leftwing {
+    margin-right: 21px;
+    box-sizing: border-box;
+    width: 40%;
+    height: 100%;
+  }
+  .elementline {
+    position: relative;
+    width: 100%;
+  }
+  .frame-104 {
+    position: absolute;
+    left: 95%;
+    width: 20px;
+    height: 20px;
+  }
+  .txt-838 {
+    font-size: 16px !important;
+    font-family: Karla, sans-serif;
+    font-weight: 700;
+    letter-spacing: -1.3px;
+    color: rgba(0, 0, 0, 1);
+    width: 225px;
+    word-wrap: break-word;
+  }
+  .rightwing {
+    width: 40%;
+    height: 100%;
+  }
+  .elementline-1 {
+    position: relative;
+    width: 100%;
+  }
+  .frame-1041 {
+    position: absolute;
+    top: 5px;
+    left: 95%;
+    width: 20px;
+    height: 20px;
+  }
+}
+  
+
+.txt-838 {
+  font-size: 26px;
+  font-family: Karla, sans-serif;
+  font-weight: 700;
+  letter-spacing: -1.3px;
+  color: rgba(0, 0, 0, 1);
+  width: 226px;
+  word-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+  .modalGreenCard{
+    max-width: 40vw;
+  }
+  
+}

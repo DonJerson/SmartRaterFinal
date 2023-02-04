@@ -1,7 +1,6 @@
 import { Link } from "@reach/router"
 import React from "react"
 import "../css/dash.css"
-
 export default function Nameline(props) {
   return (
     <div className=" center" style={{minWidth:"120px"}}>

@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+bash -c 'cd /home/smartback && /home/smartback/smartvenv/bin/gunicorn prietoWeb.wsgi:application --bind 0.0.0.0:443 --certfile /etc/letsencrypt/live/backends.smartrater.us/fullchain.pem --keyfile /etc/letsencrypt/live/backends.smartrater.us/privkey.pem'
+
+# bash -c 'source /home/smartback/smartvenv/bin/activate &&
+#  cd /home/smartback && /home/smartback/smartvenv/bin/gunicorn prietoWeb.wsgi:application --bind 0.0.0.0:443 --certfile /etc/letsencrypt/live/backends.smartrater.us/fullchain.pem --keyfile /etc/letsencrypt/live/backends.smartrater.us/privkey.pem'
+
+
+# bash -c 'source /home/smartback/smartvenv/bin/activate &&
+#  cd /home/smartback && python manage.py runserver 0.0.0.0:8081'
