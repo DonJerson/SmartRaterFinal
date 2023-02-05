@@ -626,11 +626,11 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
 <div className="myRow" style={{gap:8,marginTop:"10px"}}>
       <MaterialInput label="CoApplicant First Name" onChange={onChange}  value={lead.cofirst_name} 
       type="text" name='cofirst_name'/>   
-            <MaterialInput label="CoApplicant Last Name" onChange={onChange}  value={lead.cofirst_name} 
-      type="text" name='cofirst_name'/>   
+            <MaterialInput label="CoApplicant Last Name" onChange={onChange}  value={lead.colast_name} 
+      type="text" name='colast_name'/>   
       </div>
       <div className="myRow" style={{gap:8,marginTop:"10px"}}>
-      <MaterialInput label="CoApplicant date of birth" onChange={onChange}  value={lead.codob} 
+      <MaterialInput label="licant date of birth" onChange={onChange}  value={lead.codob} 
       type="date" name='codob'/>   
       </div>
       </>
