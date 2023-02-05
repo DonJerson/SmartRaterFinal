@@ -359,6 +359,17 @@ class ProspectSerializer(serializers.ModelSerializer):
     class Meta:
         model=Prospect
         fields='__all__'
+    def create(self, validated_data):
+        id = validated_data.get('id')
+        instance = Prospect.objects.filter(id=id).first()
+        if instance:
+            print("Existing")
+            instance.__dict__.update(validated_data)
+            instance.save()
+            return instance
+        else:
+            print("New")
+        return Prospect.objects.create(**validated_data)
 
 class AgencySerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=True,allow_null=True)

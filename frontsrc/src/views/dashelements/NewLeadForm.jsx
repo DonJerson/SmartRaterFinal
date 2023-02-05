@@ -26,6 +26,10 @@ let masonrysiding=['Concrete Block - Stucco','Concrete Block','Solid Brick','Sol
 ]
 let wallConstruction=["Masonry", "Frame - Stucco", "Aluminum Siding", "Vinyl Siding", "Wood Siding", "Masonry Veneer", "Brick Veneer", "Stone Veneer", "Logs", "Asbestos"]
 
+let homePolicyTypes = ['HO3','HO4','HO5','HO6','HO8','DP1','DP2','DP3','MOH','MOD'
+]
+let primaryPolicyTypes=['HO3','HO6','HO8','MOH']
+let secondaryPolicyTypes=['DP1','DP2','DP3','MOD']
 
 export default function Teteo(props) {
     const [lead, setClient] = React.useState({
@@ -33,6 +37,7 @@ export default function Teteo(props) {
         last_name: "",
         email: "",
         phone: "",
+        policyType:"HO3",
         address: "",
         city: "",
         state: "",
@@ -40,16 +45,19 @@ export default function Teteo(props) {
         address2: "",
         prior:true,
         new:false,
-        married:false,
+        additionalOwner:false,
         mortgage:true,
+        lapses:false,
         inspections:false,
         primary:true,
         claims:false,
         damage:false,
         centralHeat:true,
+        risk:'Home',
         roofMaterial:"Composite Shingle",
         beds:2,
         baths:2,
+        gender:'Male',
         usage:"Primary",
         wallType:"Masonry",
         wallMaterial:"Concrete Block - Stucco",
@@ -61,6 +69,7 @@ export default function Teteo(props) {
         foundationShape:"4-5 Corners - Square/Rectangle",
         plumbingType:"PVC",
         floor:1,
+        swr:"No",
         stories:1,
             families:1,
             foundationType:"Slab",
@@ -86,6 +95,81 @@ export default function Teteo(props) {
         //get element tag
         let tag = e.tagName
         //if tag is select
+        // if event target name is usage
+      if(event.target.name=="usage"){
+            console.log('usage',lead.structureType=='Mobile Home',lead.usage==e[e.selectedIndex].textContent?'MOH':'MOD',lead.structureType=='Mobile Home'?
+            lead.usage==e[e.selectedIndex].textContent?'MOH':'MOD'
+            :'DP1')
+            setClient({ ...lead, 
+                  [event.target.name]: e[e.selectedIndex].textContent ,
+                  policyType:lead.structureType=='Mobile Home'?
+                  lead.usage==e[e.selectedIndex].textContent=='Primary'?'MOH':'MOD'
+                  :
+                  lead.usage==e[e.selectedIndex].textContent=='Primary'?'HO3':'DP1'
+            })
+            return
+      }
+      if(event.target.name=="structureType"){
+           
+            //if mobile home set policyType to be the last index of the array (if usage is Primary use primaryPolicyTypes else use secondaryPolicyTypes)
+            if(e[e.selectedIndex].textContent=="Mobile Home"){
+
+            setClient({ ...lead,
+                  [event.target.name]: e[e.selectedIndex].textContent ,
+                  wallMaterial:e[e.selectedIndex].textContent,
+                  policyType:lead.usage=="Primary"?primaryPolicyTypes[primaryPolicyTypes.length-1]:secondaryPolicyTypes[secondaryPolicyTypes.length-1],
+                  foundationType:'Piers',foundationMaterial:"Wood",
+                  wallType:"Frame",wallMaterial:"Aluminum Siding",
+                  roofMaterial:"Metal"
+            })
+            return
+      }else{
+            console.log("not Mobile Home")
+            setClient({ ...lead,
+                  [event.target.name]: e[e.selectedIndex].textContent ,
+                  wallMaterial:e[e.selectedIndex].textContent,
+                  policyType:lead.usage=="Primary"?primaryPolicyTypes[0]:secondaryPolicyTypes[0],
+                  wallType:"Masonry",foundationMaterial:"Concrete",
+                  foundationType:'Slab',wallMaterial:"Concrete Block - Stucco",
+                  roofMaterial:"Composite Shingle"
+            })
+            return
+      }
+      }
+      // if policy type event and value.substr(0,2)==MO
+      if(event.target.name=="policyType"){
+            if(e[e.selectedIndex].textContent.substr(0,2)=='MO'){
+            setClient({ ...lead,
+                  [event.target.name]: e[e.selectedIndex].textContent ,
+                  structureType:"Mobile Home",
+                  wallMaterial:e[e.selectedIndex].textContent,
+                  policyType:lead.usage=="Primary"?primaryPolicyTypes[primaryPolicyTypes.length-1]:secondaryPolicyTypes[secondaryPolicyTypes.length-1],
+                  foundationType:'Piers',foundationMaterial:"Wood",
+                  wallType:"Frame",wallMaterial:"Aluminum Siding",
+                  roofMaterial:"Metal"
+            })
+            return
+      
+      }else{
+
+            if(lead.structureType=="Mobile Home"){
+                  setClient({ ...lead,
+                        [event.target.name]: e[e.selectedIndex].textContent ,
+                        wallMaterial:e[e.selectedIndex].textContent,
+                        structureType:"Single Family",
+                        policyType:lead.usage=="Primary"?primaryPolicyTypes[0]:secondaryPolicyTypes[0],
+                        wallType:"Masonry",foundationMaterial:"Concrete",
+                        foundationType:'Slab',wallMaterial:"Concrete Block - Stucco",
+                        roofMaterial:"Composite Shingle"
+                  })
+                  return
+            }else{
+                  console.log("not Mobile Home")
+            }
+
+      }}
+
+
         if(tag==="SELECT"){
           setClient({ ...lead, [event.target.name]: e[e.selectedIndex].textContent })
           return
@@ -94,10 +178,11 @@ export default function Teteo(props) {
       }
     
       const save=()=>{
-
-
-            axios.post('http://10.0.0.229:8081/newProspect/',
-            lead)
+            let neolead={...lead}
+            delete neolead.json
+            //http://127.0.0.1:8081/newProspect/
+            axios.post('http://127.0.0.1:8081/api/prospect/',
+            neolead)
             .then(res=>{
                   console.log(res)
 
@@ -136,12 +221,13 @@ async function download(){
     
       //let csv = Export(lead)
       //if lead primary, set mailing address to address
+      if(lead.structureType=='Primary'){
+            lead.mailingAddress = lead.address
+            lead.mailingCity = lead.city
+            lead.mailingState = lead.state
+            lead.mailingZipcode= lead.zipcode
+      }
 
-      lead.mailingAddress = lead.address
-      lead.mailingCity = lead.city
-      lead.mailingState = lead.state
-      lead.mailingZipcode= lead.zipcode
-     
       let matchedLead = [ExportAsJSON(lead)]
       const worksheet = XLSX.utils.json_to_sheet(matchedLead);
       let name = 'No name'
@@ -156,6 +242,8 @@ async function download(){
 const print=()=>{
       let neoLead = {...lead}
       delete neoLead['json']
+      delete neoLead['owner']
+      console.log("printing",neoLead.foundationShape)
       neoLead['json'] = JSON.stringify(neoLead)+'\n\n'
       setClient(neoLead)
 }
@@ -235,6 +323,7 @@ const inject=()=>{
      </div>
    
      </div>
+
     <div className="myRow" style={{gap:8,marginTop:"10px"}}>
     
     <MaterialInput label="Phone" type="text" name='phone' value={lead.phone} 
@@ -267,22 +356,34 @@ const inject=()=>{
     <div className="myRow center" style={{gap:16,marginTop:"10px"}}>
     <p className='link' onClick={getCounty} >Get County</p>    <p className='link' onClick={scrapeAddress}>Scrape Address</p>  
     </div>
+
+    <div className="myRow" style={{gap:8,marginTop:"10px"}}>
+    <MaterialInput label="Risk" onChange={onChange} options={labelize(['Home','Auto','Commercial','Flood','Umbrella','Life','Health','Other'
+      ])} value={lead.risk} type='select' name='risk'/>
+      <MaterialInput label="Home Usage" onChange={onChange} options={labelize(['Primary','Secondary','Seasonal','Rental','Vacant'
+      ])} value={lead.usage} type='select' name='usage'/>
+
+
+      </div>
+
     <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
-      <MaterialInput label="Type" onChange={onChange} options={labelize(['HO3','HO4','HO5','HO6','HO8','DP1','DP2','DP3','Flood','Auto','Umbrella','Life','Health','Other'
-      ])} value={lead.policyType} type='select' name='policyType'/>
+
             <MaterialInput label="Occupancy" onChange={onChange} options={labelize(['9 months or more','4 - 8 months','0 - 3 months','Vacant'
       ])} value={lead.occupancy} type='select' name='occupancy'/>
 
-<MaterialInput label="Usage" onChange={onChange} options={labelize(['Primary','Secondary','Seasonal','Rental','Vacant'
-      ])} value={lead.usage} type='select' name='usage'/>
+<MaterialInput label="Policy Type" onChange={onChange} options={labelize(
+      lead.risk=='Home'?lead.usage=='Primary'?
+      primaryPolicyTypes:secondaryPolicyTypes:[]
+    )} 
+    value={lead.policyType} type='select' name='policyType'/>
 
         </div>
         <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
-        <MaterialInput label="Structure Type" onChange={onChange} options={labelize(['Single Family','Condo','Townhouse (End Unit)','Townhouse (Center Unit)','Rowhouse(End Unit)',
+        <MaterialInput label="Structure Type" onChange={onChange} options={labelize(['Single Family','Condo','Mobile Home','Townhouse (End Unit)','Townhouse (Center Unit)','Rowhouse(End Unit)',
 ,'Rowhouse(Center Unit)','Duplex','Triplex','Quadruplex'
       ])} value={lead.structureType} type='select' name='structureType'/>
 
-        <MaterialInput label="Wall Type" onChange={onChange} options={labelize(['Masonry','Frame','Mobile Home','Mixed Masonry-Frame','Other'
+        <MaterialInput label="Wall Type" onChange={onChange} options={labelize(['Masonry','Frame','Mixed Masonry-Frame','Other'
 ])} value={lead.wallType} type='select' name='wallType'/>
 
 
@@ -295,17 +396,25 @@ const inject=()=>{
 <MaterialInput label="Frame Construction" onChange={onChange} options={labelize(framesiding)} value={lead.wallFrame} type='select' name='wallFrame'/>
 </>
 :
-<MaterialInput label="Wall Material" onChange={onChange} options={labelize(lead.wallType==='Masonry'?masonrysiding:lead.wallType==='Frame'?framesiding:[])} value={lead.wallMaterial} type='select' name='wallMaterial'/>
+<MaterialInput label="Wall Material" onChange={onChange} options={labelize(lead.wallType==='Masonry'?masonrysiding
+:
+lead.wallType==='Frame'?framesiding
+:
+lead.wallType==='Mobile Home'?framesiding
+:
+[]
+
+)} value={lead.wallMaterial} type='select' name='wallMaterial'/>
 }
 
 </div>
 
 
         <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
-<MaterialInput label="Foundation" onChange={onChange} options={labelize(['4-5 Corners - Square/Rectangle','6-7 Corners - L Shape','8-10 Corners - T,U,Z Shape','11-12 Corners - H or Custom Shape','13+ Corners - Irregular/Complex'
+<MaterialInput label="Foundation Shape" onChange={onChange} options={labelize(['4-5 Corners - Square/Rectangle','6-7 Corners - L Shape','8-10 Corners - T,U,Z Shape','11-12 Corners - H or Custom Shape','13+ Corners - Irregular/Complex'
 ])} value={lead.foundationShape} type='select' name='foundationShape'/>
 
-<MaterialInput label="Type" onChange={onChange} options={labelize(['Slab','Basement','Crawlspace','Piers','Other'
+<MaterialInput label="Foundation Type" onChange={onChange} options={labelize(['Slab','Basement','Crawlspace','Piers','Other'
 ])} value={lead.foundationType} type='select' name='foundationType'/>
 
 <MaterialInput label="Foundation Material" onChange={onChange} options={labelize(['Concrete','Block','Wood','Other'
@@ -432,14 +541,12 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
       </div>
       <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
       <div>New Purchase</div>
-       <Toggle function={setClient} name="new" lead= {lead}/><div>Married</div>
-       <Toggle function={setClient} name="married" lead= {lead}/></div>
+       <Toggle function={setClient} name="new" lead= {lead}/><div>Additional Owner</div>
+       <Toggle function={setClient} name="additionalOwner" lead= {lead}/></div>
       <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
         
       <div>Inspections</div>
        <Toggle function={setClient} name="inspections" lead= {lead}/>
-        <div>Primary</div>
-       <Toggle function={setClient} name='primary' lead= {lead}/>
 
 
       </div>
@@ -514,7 +621,7 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
 <></>}
 
 
-      {lead.married?
+      {lead.additionalOwner?
 <>
 <div className="myRow" style={{gap:8,marginTop:"10px"}}>
       <MaterialInput label="CoApplicant First Name" onChange={onChange}  value={lead.cofirst_name} 
@@ -570,7 +677,7 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
 :
 <></>}
 
-{!lead.primary?
+{!(lead.usage=='Primary')?
 <>
 <div className="myRow" style={{gap:8,marginTop:"10px"}}>
 <p>Mailing Address</p>
@@ -626,10 +733,10 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
       <MaterialInput label="Roof Deck" onChange={onChange}  value={lead.roofDeck}
        options={labelize(['Unknown','Level A','Level B','Level C','Metal Deck - Type II or III','Wood Deck - Type II only'
        ])} type='select' name='roofDeck'/> 
-             <MaterialInput label="Roof Wall" onChange={onChange}  value={lead.rooWall}
+             <MaterialInput label="Roof Wall" onChange={onChange}  value={lead.roofWall}
        options={labelize(['Unknown','Toe Nails','Clips','Single Wraps',
        'Double Wraps','N/A','Structural',
-       ])} type='select' name='rooWall'/> 
+       ])} type='select' name='roofWall'/> 
       </div>
       <div className="myRow" style={{gap:8,marginTop:"10px"}}>
                   <MaterialInput label="SWR" onChange={onChange}  value={lead.swr} 
@@ -642,10 +749,10 @@ onChange={onChange} options={labelize(['0%','5%','10%','20%','25%','30%'])} valu
                               <MaterialInput label="Date Inspected" onChange={onChange}  value={lead.inspectionDate} 
       type="date" name='inspectionDate'/></div>
             <div className="myRow" style={{gap:8,marginTop:"10px"}}>
-                                    <MaterialInput label="Inspector" onChange={onChange}  value={lead.inspectionName} 
+                                    <MaterialInput label="Inspector Name" onChange={onChange}  value={lead.inspectorName} 
       type="text" name='inspectorName'/>
-                                         <MaterialInput label="License" onChange={onChange}  value={lead.inspectorNumber} 
-      type="text" name='inspectorNumber'/>
+                                         <MaterialInput label="License" onChange={onChange}  value={lead.inspectorLicense} 
+      type="text" name='inspectorLicense'/>
                                                <MaterialInput label="Number" onChange={onChange}  value={lead.inspectorPhone} 
       type="text" name='inspectorPhone'/>
                                                      <MaterialInput label="Company" onChange={onChange}  value={lead.inspectionCompany} 

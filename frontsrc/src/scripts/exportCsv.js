@@ -40,7 +40,7 @@ let keysMatch = [
     {"QR":"CurrentPolicyExpirationDate","local":"priorexp"},
     {"QR":"Lapses","local":"lapses"},
     {"QR":"EffectiveDate","local":"effective","default":date},
-    {"QR":"Claims","local":"claims"},
+    {"QR":"PreviousClaims","local":"claims"},
     {"QR":"Address","local":"address"},
     {"QR":"Address2","local":"address2"},
     {"QR":"City","local":"city"},
@@ -105,7 +105,7 @@ let keysMatch = [
     {"QR":"RoofWallConnection","local":"roofWall"},
     {"QR":"OpeningProtection","local":"opening"},
     {"QR":"InspectorName","local":"inspectorName"},
-    {"QR":"InspectorCompanyName","local":"inspectionCompany"},
+    {"QR":"InspectionCompanyName","local":"inspectionCompany"},
     {"QR":"InspectorNumber","local":"inspectorLicense"},
     {"QR":"InspectionDate","local":"inspectionDate"},
     {"QR":"CoverageA","local":"coverageA"},
@@ -124,8 +124,8 @@ const yesNoList=[
     "NewPurchase",
     "CurrentlyInsured",
     "Lapses",
-    "Claims",
-    "SecondaryWaterResistance",
+    "PreviousClaims",
+    "CentralHeatAndAir",
 ]
 const alarmList=[
     "BurglarAlarm",
@@ -139,7 +139,15 @@ const ExportAsJSON = (lead)=> {
     lead.dob=convertDate(lead.dob)
     lead.codob=convertDate(lead.codob)
     lead.inspectionDate=convertDate(lead.inspectionDate)
-
+    // if undefined
+   
+    if (lead.effective==undefined){
+        lead.effective=date
+    }
+    if (lead.priorexp==undefined && lead.prior){
+        lead.priorexp=lead.effective
+    }
+    console.log("lead.priorexp",lead.effective,lead.priorexp,lead.priorexp==undefined,lead.prior)
     neoLead.ProtectionClass='3'
     //create a neoLead with qrKeys and lead values
     let bathsSplit=(lead.baths).toString().split(".")
@@ -161,9 +169,13 @@ const ExportAsJSON = (lead)=> {
         });
         yesNoList.forEach(element => {
             if(element==qrKey){
+                console.log(value,"value",qrKey)
                 value = value ? "Yes" : "No";
             }
         });
+        if (qrKey == "CentralHeatAndAir") {
+            value = value ? "Yes" : "No";
+        }
         if (qrKey == "GatedCommunity") {
             value = value ? "Single Entry" : "No";
         }
@@ -186,9 +198,6 @@ const ExportAsJSON = (lead)=> {
                 value='1'
             }else{
             value='0'}
-        }
-        if(qrKey=="CentralHeatAndAir"){
-            value = value ? "Yes" : "No";
         }
         console.log(qrKey, value);
         neoLead[qrKey]= value;
@@ -218,12 +227,12 @@ const Export = (lead)=> {
         if (value === undefined) {
             value = item.default;
         }
-        yesNoList.forEach(element => {
+        alarmList.forEach(element => {
             if(element==qrKey){
                 value = value ? "Rep to Central Station" : "None";
             }
         });
-        alarmList.forEach(element => {
+        yesNoList.forEach(element => {
             if(element==qrKey){
                 value = value ? "Yes" : "No";
             }
@@ -239,7 +248,9 @@ const Export = (lead)=> {
         if(qrKey=="Bathroom1Count"){
             value=bathsSplit[0]
         }
-
+        if(qrKey=="FoundationShape"){
+            console.log(value)
+        }
         console.log(qrKey, value);
         return value;
     }

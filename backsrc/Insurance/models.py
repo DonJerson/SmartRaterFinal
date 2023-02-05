@@ -596,9 +596,18 @@ class Prospect(models.Model):
     county=models.CharField(max_length=50,blank=True,null=True)
     address2=models.CharField(max_length=50,blank=True,null=True)
     
+    lapses=models.BooleanField(default=False)
     prior=models.BooleanField(default=False)
     new=models.BooleanField(default=False)
     married=models.BooleanField(default=False)
+    
+    roofShape=models.CharField(max_length=50,blank=True,null=True)
+    wallMaterial = models.CharField(max_length=50,blank=True,null=True)
+    wallType=models.CharField(max_length=50,blank=True,null=True)
+    usage=models.CharField(max_length=50,blank=True,null=True)
+    risk = models.CharField(max_length=50,blank=True,null=True)
+    centralHeat=models.BooleanField(default=False)
+    additionalOwner=models.BooleanField(default=False)
     mortgage=models.BooleanField(default=False)
     inspections=models.BooleanField(default=False)
     primary=models.BooleanField(default=False)
@@ -612,7 +621,13 @@ class Prospect(models.Model):
     baths=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
     middle_name=models.CharField(max_length=50,blank=True,null=True)
     dob=models.DateField(blank=True,null=True)
-   
+    
+    floor=models.CharField(max_length=50,blank=True,null=True)
+    plumbingType=models.CharField(max_length=50,blank=True,null=True)
+    foundationShape=models.CharField(max_length=50,blank=True,null=True)
+    wallFrame=models.CharField(max_length=50,blank=True,null=True)
+    wallMasonry=models.CharField(max_length=50,blank=True,null=True)
+    wallConstruction=models.CharField(max_length=50,blank=True,null=True)
     area=models.CharField(max_length=50,blank=True,null=True)
     roofYear=models.CharField(max_length=50,blank=True,null=True)
     roofType=models.CharField(max_length=50,blank=True,null=True)
@@ -644,11 +659,33 @@ class Prospect(models.Model):
     burglarAlarm=models.BooleanField(default=False)
     gatedCommunity=models.BooleanField(default=False)
     centralAir=models.BooleanField(default=False)
+    #inspections
     
+    swr=models.CharField(max_length=50,blank=True,null=True)
+    structureType=models.CharField(max_length=50,blank=True,null=True)
+    
+    coverageB=models.CharField(max_length=50,blank=True,null=True)
+    coverageC=models.CharField(max_length=50,blank=True,null=True)
+
+    coverageD=models.CharField(max_length=50,blank=True,null=True)
+
+    coverageE=models.CharField(max_length=50,blank=True,null=True)
+
+    coverageF=models.CharField(max_length=50,blank=True,null=True)
+    medical = models.CharField(max_length=50,blank=True,null=True)
+    aop=models.CharField(max_length=50,blank=True,null=True)
+    hurricane=models.CharField(max_length=50,blank=True,null=True)
+    roofCovering=models.CharField(max_length=50,blank=True,null=True)
+    inspectionDate=models.DateField(blank=True,null=True)
+    inspectorPhone = models.CharField(max_length=50,blank=True,null=True)
+    inspectionCompany = models.CharField(max_length=50,blank=True,null=True)
+    inspectorName = models.CharField(max_length=50,blank=True,null=True)
+    roofWall= models.CharField(max_length=50,blank=True,null=True)
     
     purchaseDate=models.DateField(blank=True,null=True)
     purchasePrice=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
-    
+    lossAssessment=models.CharField(max_length=50,blank=True,null=True)
+    comments=models.TextField(blank=True,null=True)
     def __str__(self):
         return self.first_name + " " + self.last_name
     pass

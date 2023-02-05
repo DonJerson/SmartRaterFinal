@@ -105,16 +105,16 @@ const brandss=
 
 const getUrl = window.location;
 
-let baseUrl = getUrl.protocol +"//44.205.27.144/";
+let baseUrl = getUrl.protocol +"//54.146.87.78/";
 
-let neoUrl =getUrl.protocol +"//44.205.27.144/";
+let neoUrl =getUrl.protocol +"//54.146.87.78/";
 
 let baseWss = "18.216.39.52";
 if(getUrl.host.includes(":8080") ||
 getUrl.host.includes(":8082") ||
 getUrl.host.includes("localhost") ||
 getUrl.host.includes("127.0.0.1") ||
-getUrl.host.includes("10.0.0.229")
+getUrl.host.includes("127.0.0.1")
 ){
   neoUrl=getUrl.hostname
   baseUrl = getUrl.protocol+ "//" + getUrl.hostname +":8081/";
