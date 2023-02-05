@@ -934,6 +934,8 @@ getUser=()=>{
       <Router>
       <NewLeadForm path='freequotenew' userPack={userPack}/>
       <NewLeadForm path='freequotenew/:prospectId' userPack={userPack}/>
+      <NewLeadForm path='prospect' userPack={userPack}/>
+      <NewLeadForm path='prospect/:prospectId' userPack={userPack}/>
       <Lead path='dashboard/leads/:leadId' clients={clients} userPack={userPack}/>
       <NewClient path='dashboard/leads/new' clients={clients} userPack={userPack}/>
       <EditLimits path="/savedquotes/:quoteId/edit/limit"  userPack={userPack} />

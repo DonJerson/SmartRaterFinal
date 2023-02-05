@@ -219,6 +219,9 @@ export default function LeadForm(props) {
             .then(res=>{
                   console.log(res)
                   setLoading(false)
+                  //redirect to href prospect page id
+                  window.location.href = "/prospect/"+res.data.id
+
 
             })
             .catch(err=>{

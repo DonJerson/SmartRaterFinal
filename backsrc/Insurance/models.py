@@ -663,7 +663,7 @@ class Prospect(models.Model):
     
     swr=models.CharField(max_length=50,blank=True,null=True)
     structureType=models.CharField(max_length=50,blank=True,null=True)
-    
+    coverageA=models.CharField(max_length=50,blank=True,null=True)
     coverageB=models.CharField(max_length=50,blank=True,null=True)
     coverageC=models.CharField(max_length=50,blank=True,null=True)
 
