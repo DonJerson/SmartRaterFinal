@@ -60,6 +60,7 @@ export default function Teteo(props) {
         gender:'Male',
         usage:"Primary",
         wallType:"Masonry",
+        state:"FL",
         wallMaterial:"Concrete Block - Stucco",
             roofType:"Composite Shingle",
             roofShape:"Gable",
@@ -85,6 +86,13 @@ export default function Teteo(props) {
             hurricane:"2%",
             lossAssessment:"$0",
       })
+
+      const [loading, setLoading] = React.useState(false)
+      const [error, setError] = React.useState(false)
+      const [success, setSuccess] = React.useState(false)
+      const [message, setMessage] = React.useState("")
+      const [form,setForm]=React.useState(document.getElementById("leadForm"))
+
       const textChange=(e)=>{
         let neoLead = {...lead}
         neoLead[e.target.name] = e.target.value
@@ -177,16 +185,27 @@ export default function Teteo(props) {
         setClient({ ...lead, [event.target.name]: event.target.value })
       }
     
-      const save=()=>{
+      const save=(e)=>{
+            console.log("yielding")
             let neolead={...lead}
             delete neolead.json
             //http://127.0.0.1:8081/newProspect/
-            axios.post('http://127.0.0.1:8081/api/prospect/',
+            const token =  window.localStorage.getItem('token')
+            const axios =props.userPack.methods.axios
+            setLoading(true)
+            axios.defaults.headers.post['Authorization'] = "JWT "+token
+            axios.post(props.userPack.methods.baseUrl+'api/prospect/',
             neolead)
             .then(res=>{
                   console.log(res)
+                  setLoading(false)
 
             })
+            .catch(err=>{
+                  console.log(err)
+                  setLoading(false)
+            }
+            )
 }
 const getCounty=()=>{
       axios.get('http://uscounties.com/zipcodes/search.pl?query='+lead.zipcode+'&stpos=0&stype=AND')
@@ -300,12 +319,18 @@ const inject=()=>{
 
   return (
 <>
-<form style={{padding:"20px",}}>
+{loading?
+<p></p>
+:
+<>
+
+<form id='leadForm' onSubmit={save}
+style={{padding:"20px",}}>
 <div className="myRow center" style={{gap:16,marginBottom:"20px"}}>
     <p className='link' >Get A Free Quote</p>   
     </div>
     <div className="myRow" style={{gap:8}}>
-    <MaterialInput value={lead.first_name} onChange={onChange} name='first_name'
+    <MaterialInput required={true} value={lead.first_name} onChange={onChange} name='first_name'
     label="First Name" type="text"/>
 
     <MaterialInput label="Middle" onChange={onChange}  value={lead.middle_name} 
@@ -313,7 +338,7 @@ const inject=()=>{
    
     </div>
     <div className="myRow" style={{gap:8,marginTop:"10px"}}>
-     <MaterialInput value={lead.last_name} onChange={onChange}
+     <MaterialInput required={true} value={lead.last_name} onChange={onChange}
      label="Last Name" type="text" name='last_name'/>
      <div style={{}} className="myRow center">
      <MaterialInput value={lead.dob} onChange={onChange}
@@ -326,29 +351,29 @@ const inject=()=>{
 
     <div className="myRow" style={{gap:8,marginTop:"10px"}}>
     
-    <MaterialInput label="Phone" type="text" name='phone' value={lead.phone} 
+    <MaterialInput label="Phone" type="text" name='phone' value={lead.phone} required={true}
      onChange={onChange}/>
-         <MaterialInput label="Email" type="text" name='email' value={lead.email} 
+         <MaterialInput label="Email" type="text" name='email' value={lead.email} required={true}
      onChange={onChange}/>
     </div>
     <div className="myRow" style={{gap:8,marginTop:"10px"}}>
-    <MaterialInput value={lead.address} onChange={onChange} name='address'
+    <MaterialInput value={lead.address} onChange={onChange} name='address' required={true}
     label="Address" type="text"/>
 
     </div>
     <div className="myRow" style={{gap:8,marginTop:"10px"}}>
-    <MaterialInput label="Address2" onChange={onChange}  value={lead.address2} 
+    <MaterialInput label="Address2" onChange={onChange}  value={lead.address2}  
     type="text" name='address2'/>
        </div>
        <div className="myRow" style={{gap:8,marginTop:"10px"}}>
-    <MaterialInput label="City" onChange={onChange}  value={lead.city} 
+    <MaterialInput label="City" onChange={onChange}  value={lead.city}  required={true}
     type="text" name='city'/>
         <MaterialInput label="State" onChange={onChange}  value={lead.state} 
     type="text" name='state'/>
        
        </div>
        <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
-       <MaterialInput label="Zipcode" onChange={onChange}  value={lead.zipcode} 
+       <MaterialInput label="Zipcode" onChange={onChange}  value={lead.zipcode}  required={true}
     type="text" name='zipcode'/>
          <MaterialInput label="County" onChange={onChange}  value={lead.county} 
     type="text" name='county'/>
@@ -444,9 +469,9 @@ lead.wallType==='Mobile Home'?framesiding
       ])} value={lead.roofMaterial} type='select' name='roofMaterial'/>
 </div>
 <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
-      <MaterialInput label="Year Built" onChange={onChange}  value={lead.year} 
+      <MaterialInput label="Year Built" onChange={onChange}  value={lead.year} required={true}
     type="text" name='year'/>
-            <MaterialInput label="Living area (Sq Ft)" onChange={onChange}  value={lead.area} 
+            <MaterialInput label="Living area (Sq Ft)" onChange={onChange}  value={lead.area} required={true}
     type="text" name='area'/>
 <MaterialInput label="Plumbing Type" onChange={onChange} options={labelize(['PVC','Galvanized','Copper','Polybutylene','PEX'
       ])} value={lead.plumbingType} type='select' name='plumbingType'/>
@@ -489,7 +514,7 @@ lead.wallType==='Mobile Home'?framesiding
 <p onClick={setCoverageA} style={{color:"blue"}} className='link'>Custom</p>
 </div>
     <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
-        <MaterialInput label="Coverage A" onChange={onChange}  value={lead.coverageA} 
+        <MaterialInput label="Coverage A" onChange={onChange}  value={lead.coverageA}  required={true}
     type="text" name='coverageA'/> 
     {/*
     replace %
@@ -790,15 +815,11 @@ onChange={textChange} name='json' value={lead.json}
         <p className="Cancel" style={{fontSize: 16, fontWeight: '700', lineHeight: '100%', textAlign: 'center', color: 'white',}}>Cancel</p>
     </div>
     <div style={{width: 48,}}/>
-    <div className="CallButton link" onClick={save} style={{height: 24, paddingLeft: 11, paddingRight: 11, paddingTop: 8, paddingBottom: 8, backgroundColor: 'rgba(15, 188, 157, 1)', boxShadow: '0px 2px 2px rgba(54, 157, 139, 1)', borderRadius: 4, display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',}}>
-        <p className="Save" style={{fontSize: 16, fontWeight: '700', lineHeight: '100%', textAlign: 'center', color: 'white',}}>Save</p>
+    <input className="CallButton link" type="submit" value="Submit" onChange={save} style={{height: 24, paddingLeft: 11, paddingRight: 11, paddingTop: 8, paddingBottom: 8, backgroundColor: 'rgba(15, 188, 157, 1)', boxShadow: '0px 2px 2px rgba(54, 157, 139, 1)', borderRadius: 4, display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',}}/>
+    
 
     </div>
 
-
-        
-
-</div>
 </div>
 <div className="myRow center" style={{paddingTop:"15px"}}>
 <div className="quoteLine" style={{display: 'inline-flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',}}>
@@ -813,7 +834,7 @@ onChange={textChange} name='json' value={lead.json}
     </div>
     <div style={{width: 48,}}/>
 
-    <div className="CallButton link link" onClick={inject} style={{height: 24, paddingLeft: 11, paddingRight: 11, paddingTop: 8, paddingBottom: 8, backgroundColor: 'rgba(15, 188, 157, 1)', boxShadow: '0px 2px 2px rgba(54, 157, 139, 1)', borderRadius: 4, display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',}}>
+    <div className="CallButton link" onClick={inject} style={{height: 24, paddingLeft: 11, paddingRight: 11, paddingTop: 8, paddingBottom: 8, backgroundColor: 'rgba(15, 188, 157, 1)', boxShadow: '0px 2px 2px rgba(54, 157, 139, 1)', borderRadius: 4, display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',}}>
         <p className="Save" style={{fontSize: 16, fontWeight: '700', lineHeight: '100%', textAlign: 'center', color: 'white',}}>Inject</p>
         
     </div>
@@ -821,6 +842,9 @@ onChange={textChange} name='json' value={lead.json}
 </div>
 </div>
  </form>
+</>
+}
+
 
 
 </>

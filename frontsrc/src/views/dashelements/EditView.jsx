@@ -18,6 +18,7 @@ export default (props)=> {
     const saveUser = ()=>{
         const token =  window.localStorage.getItem('token')
         const axios =props.userPack.methods.axios
+       
         let updateUser={}
         const user = props.userPack.user
         updateUser.first_name = lead.first_name

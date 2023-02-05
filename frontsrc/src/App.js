@@ -105,9 +105,9 @@ const brandss=
 
 const getUrl = window.location;
 
-let baseUrl = getUrl.protocol +"//54.146.87.78/";
+let baseUrl = getUrl.protocol +"//backend.smartrater.us/";
 
-let neoUrl =getUrl.protocol +"//54.146.87.78/";
+let neoUrl =getUrl.protocol +"//backend.smartrater.us/";
 
 let baseWss = "18.216.39.52";
 if(getUrl.host.includes(":8080") ||

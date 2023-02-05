@@ -43,10 +43,22 @@ export default function(props){
 </>)}
     return(
         <>
-        <div className="material-textfield">
-        <input type={props.type} placeholder={props.placeholder?props.placeholder:" "}
-         name={props.name} onChange={props.onChange} value={props.value}/>
-        <label className="" id='inputLabel'>{props.label}</label>
+             <div className="material-textfield">
+        {props.required?
+        <>
+               <input required type={props.type} placeholder={props.placeholder?props.placeholder:" "}
+               name={props.name} onChange={props.onChange} value={props.value}/>
+              <label className="" id='inputLabel'>{props.label}</label>
+              </>
+      :
+      <>
+      <input  type={props.type} placeholder={props.placeholder?props.placeholder:" "}
+      name={props.name} onChange={props.onChange} value={props.value}/>
+     <label className="" id='inputLabel'>{props.label}</label>
+     </>
+      }
+   
+      
         </div>
         </>
     )

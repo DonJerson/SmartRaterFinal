@@ -353,7 +353,7 @@ class AgencyAppointmentSerializer(serializers.ModelSerializer):
         fields='__all__'
 
 class ProspectSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True,allow_null=True)
+    id = serializers.IntegerField(required=False,allow_null=True)
     owner = BasicOwnerSerializer(read_only=True,many=False)
    
     class Meta:
