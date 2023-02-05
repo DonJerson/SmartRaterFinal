@@ -31,61 +31,81 @@ let homePolicyTypes = ['HO3','HO4','HO5','HO6','HO8','DP1','DP2','DP3','MOH','MO
 let primaryPolicyTypes=['HO3','HO6','HO8','MOH']
 let secondaryPolicyTypes=['DP1','DP2','DP3','MOD']
 
-export default function Teteo(props) {
-    const [lead, setClient] = React.useState({
-        first_name: "",
-        last_name: "",
-        email: "",
-        phone: "",
-        policyType:"HO3",
-        address: "",
-        city: "",
-        state: "",
-        zipcode: "",
-        address2: "",
-        prior:true,
-        new:false,
-        additionalOwner:false,
-        mortgage:true,
-        lapses:false,
-        inspections:false,
-        primary:true,
-        claims:false,
-        damage:false,
-        centralHeat:true,
-        risk:'Home',
-        roofMaterial:"Composite Shingle",
-        beds:2,
-        baths:2,
-        gender:'Male',
-        usage:"Primary",
-        wallType:"Masonry",
-        state:"FL",
-        wallMaterial:"Concrete Block - Stucco",
-            roofType:"Composite Shingle",
-            roofShape:"Gable",
-            wallFrame:"Frame - Stucco",
-            wallMasonry:"Concrete Block - Stucco",
-            wallConstruction:"Masonry",
-        foundationShape:"4-5 Corners - Square/Rectangle",
-        plumbingType:"PVC",
-        floor:1,
-        swr:"No",
-        stories:1,
-            families:1,
-            foundationType:"Slab",
-        pool:"None",
-        structureType:"Single Family",
-        occupancy:"9 months or more",
-        coverageB:'2%',
-        coverageC:'25%',
-            coverageD:'10%',
-            coverageE:"$100,000",
-            medical:'$5,000',
-            aop:"$2500",
-            hurricane:"2%",
-            lossAssessment:"$0",
-      })
+let defaultLead={
+      first_name: "",
+      last_name: "",
+      email: "",
+      phone: "",
+      policyType:"HO3",
+      address: "",
+      city: "",
+      state: "",
+      zipcode: "",
+      address2: "",
+      prior:true,
+      new:false,
+      additionalOwner:false,
+      mortgage:true,
+      lapses:false,
+      inspections:false,
+      primary:true,
+      claims:false,
+      damage:false,
+      centralHeat:true,
+      risk:'Home',
+      roofMaterial:"Composite Shingle",
+      beds:2,
+      baths:2,
+      gender:'Male',
+      usage:"Primary",
+      wallType:"Masonry",
+      state:"FL",
+      wallMaterial:"Concrete Block - Stucco",
+          roofType:"Composite Shingle",
+          roofShape:"Gable",
+          wallFrame:"Frame - Stucco",
+          wallMasonry:"Concrete Block - Stucco",
+          wallConstruction:"Masonry",
+      foundationShape:"4-5 Corners - Square/Rectangle",
+      plumbingType:"PVC",
+      floor:1,
+      swr:"No",
+      stories:1,
+          families:1,
+          foundationType:"Slab",
+      pool:"None",
+      structureType:"Single Family",
+      occupancy:"9 months or more",
+      coverageB:'2%',
+      coverageC:'25%',
+          coverageD:'10%',
+          coverageE:"$100,000",
+          medical:'$5,000',
+          aop:"$2500",
+          hurricane:"2%",
+          lossAssessment:"$0",
+    }
+export default function LeadForm(props) {
+      
+      let myLead = {...defaultLead}
+      const [lead, setClient] = React.useState(myLead)
+      if(props.prospectId && lead.id==undefined){
+            console.log("prospectId",props.prospectId)
+            let token =window.localStorage.getItem('token')
+            axios.defaults.headers.get['Authorization'] = 'JWT '+token
+            axios.get(props.userPack.methods.baseUrl+`api/prospect/${props.prospectId}/`)
+            .then((res)=>{
+                  console.log("res",res)
+                  myLead = {...res.data}
+                  setClient(myLead)
+            })
+            .catch((err)=>{
+                  console.log("err",err)
+            })
+
+
+      }
+
 
       const [loading, setLoading] = React.useState(false)
       const [error, setError] = React.useState(false)
