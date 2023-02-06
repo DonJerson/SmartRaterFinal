@@ -286,7 +286,7 @@ async function download2(){
       for(let i=0;i<json.length;i++){
             neoLead={...json[i]}
     
-      if(neoLead.structureType=='Primary'){
+      if(neoLead.usage=='Primary'){
             neoLead.mailingAddress = neoLead.address
             neoLead.mailingCity = neoLead.city
             neoLead.mailingState = neoLead.state
@@ -319,7 +319,7 @@ async function download(){
     
       //let csv = Export(lead)
       //if lead primary, set mailing address to address
-      if(lead.structureType=='Primary'){
+      if(lead.usage=='Primary'){
             lead.mailingAddress = lead.address
             lead.mailingCity = lead.city
             lead.mailingState = lead.state
@@ -339,10 +339,17 @@ async function download(){
 }
 const print=()=>{
       let neoLead = {...lead}
-      delete neoLead['json']
+      
       delete neoLead['owner']
-      console.log("printing",neoLead.foundationShape)
+      delete neoLead['json']
+      if(neoLead.usage=='Primary'){
+            neoLead.mailingAddress = neoLead.address
+            neoLead.mailingCity = neoLead.city
+            neoLead.mailingState = neoLead.state
+            neoLead.mailingZipcode= neoLead.zipcode
+      }
       neoLead['json'] = JSON.stringify(neoLead)+'\n\n'
+      
       setClient(neoLead)
 }
 const inject=()=>{

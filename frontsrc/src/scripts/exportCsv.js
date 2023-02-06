@@ -210,60 +210,8 @@ const ExportAsJSON = (lead)=> {
     }
     )
     return neoLead;
-}
-const Export = (lead)=> {
-    lead.priorexp=convertDate(lead.priorexp)
-    lead.effective=convertDate(lead.effective)
-    lead.purchaseDate=convertDate(lead.purchaseDate)
-    lead.dob=convertDate(lead.dob)
-    lead.codob=convertDate(lead.codob)
-    lead.inspectionDate=convertDate(lead.inspectionDate)
 
-    //create a csv format string for the lead
-    const firstRow = keysMatch.map(item => item.QR).join(',');
-    let bathsSplit=(lead.baths).toString().split(".")
-    const secondRow = keysMatch.map(item => {
-        const leadKey = item.local;
-        const qrKey = item.QR;
-        let value = lead[leadKey];
-        //if value undefined, get default value
-        if (value === true) {
-            value = item.default;
-        }
-        if (value === undefined) {
-            value = item.default;
-        }
-        alarmList.forEach(element => {
-            if(element==qrKey){
-                value = value ? "Rep to Central Station" : "None";
-            }
-        });
-        yesNoList.forEach(element => {
-            if(element==qrKey){
-                value = value ? "Yes" : "No";
-            }
-        });
-        if (qrKey == "GatedCommunity") {
-            value = value ? "Single Entry" : "No";
-        }
-        if (qrKey == "MaritalStatus") {
-            value = value ? "Married" : "Single";
-        }
-        //split baths if dot
 
-        if(qrKey=="Bathroom1Count"){
-            value=bathsSplit[0]
-        }
-        if(qrKey=="FoundationShape"){
-            console.log(value)
-        }
-        console.log(qrKey, value);
-        return value;
-    }
-    ).join(',');
-    const csv = firstRow + '\n' + secondRow;
-
-    return csv;
 }
 
 export default ExportAsJSON;

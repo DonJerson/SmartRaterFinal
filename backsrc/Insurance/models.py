@@ -582,19 +582,25 @@ class Prospect(models.Model):
     phone=models.CharField(max_length=50,blank=True,null=True)
     gender=models.CharField(max_length=50,blank=True,null=True)
     address=models.CharField(max_length=50,blank=True,null=True)
-    
-    mailing_address=models.CharField(max_length=50,blank=True,null=True)
-    mailing_address2=models.CharField(max_length=50,blank=True,null=True)
-    mailing_city=models.CharField(max_length=50,blank=True,null=True)
-    mailing_state=models.CharField(max_length=50,blank=True,null=True)
-    mailing_zipcode=models.CharField(max_length=50,blank=True,null=True)
-    mailing_county=models.CharField(max_length=50,blank=True,null=True)
-    
+    address2=models.CharField(max_length=50,blank=True,null=True)
     city=models.CharField(max_length=50,blank=True,null=True)
     state=models.CharField(max_length=50,blank=True,null=True)
     zipcode=models.CharField(max_length=50,blank=True,null=True)
     county=models.CharField(max_length=50,blank=True,null=True)
-    address2=models.CharField(max_length=50,blank=True,null=True)
+    
+    mailingAddress=models.CharField(max_length=50,blank=True,null=True)
+    mailingAddress2=models.CharField(max_length=50,blank=True,null=True)
+    mailingCity=models.CharField(max_length=50,blank=True,null=True)
+    mailingState=models.CharField(max_length=50,blank=True,null=True)
+    mailingZipcode=models.CharField(max_length=50,blank=True,null=True)
+    mailingCounty=models.CharField(max_length=50,blank=True,null=True)
+    
+    priorAddress=models.CharField(max_length=50,blank=True,null=True)
+    priorAddress2=models.CharField(max_length=50,blank=True,null=True)
+    priorCity=models.CharField(max_length=50,blank=True,null=True)
+    priorState=models.CharField(max_length=50,blank=True,null=True)
+    priorZipcode=models.CharField(max_length=50,blank=True,null=True)
+    priorCounty=models.CharField(max_length=50,blank=True,null=True)
     
     lapses=models.BooleanField(default=False,blank=True,null=True)
     prior=models.BooleanField(default=False,blank=True,null=True)
@@ -683,7 +689,7 @@ class Prospect(models.Model):
     roofWall= models.CharField(max_length=50,blank=True,null=True)
     
     purchaseDate=models.DateField(blank=True,null=True)
-    purchasePrice=models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+    purchasePrice=models.CharField(max_length=50,blank=True,null=True)
     lossAssessment=models.CharField(max_length=50,blank=True,null=True)
     comments=models.TextField(blank=True,null=True)
     def __str__(self):
