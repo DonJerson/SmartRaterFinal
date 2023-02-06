@@ -267,10 +267,12 @@ async function download2(){
       json = JSON.parse(json)
       //for all keys in json, change neoLead value
       //if json is list
-      if(Array.isArray(json)){
+      if(!Array.isArray(json)){
             // for(let key in json[0]){
             //       neoLead[key] = json[0][key]
             // }
+            download()
+            return
       }
       //let csv = Export(lead)
       //if lead primary, set mailing address to address
