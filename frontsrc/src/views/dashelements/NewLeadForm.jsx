@@ -260,7 +260,10 @@ async function saveFile(string,fileName){
 }
 async function download2(){
       let json = lead.json
-
+      if(json==undefined){
+            download()
+            return
+      }
       //remove all /n
       json = json.replace(/(\r\n|\n|\r)/gm, " ").replace(/\//g, " ")
       //string to json
