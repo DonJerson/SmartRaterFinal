@@ -258,7 +258,58 @@ async function saveFile(string,fileName){
       a.click()
       window.URL.revokeObjectURL(url)
 }
+async function download2(){
+      let json = lead.json
 
+      //remove all /n
+      json = json.replace(/(\r\n|\n|\r)/gm, " ").replace(/\//g, " ")
+      //string to json
+      json = JSON.parse(json)
+      //for all keys in json, change neoLead value
+      //if json is list
+      if(Array.isArray(json)){
+            // for(let key in json[0]){
+            //       neoLead[key] = json[0][key]
+            // }
+      }
+      //let csv = Export(lead)
+      //if lead primary, set mailing address to address
+      let neoLead={}
+      // for loop with index
+      let worksheet = []
+      let keys=[]
+      for(let i=0;i<json.length;i++){
+            neoLead={...json[i]}
+    
+      if(neoLead.structureType=='Primary'){
+            neoLead.mailingAddress = neoLead.address
+            neoLead.mailingCity = neoLead.city
+            neoLead.mailingState = neoLead.state
+            neoLead.mailingZipcode= neoLead.zipcode
+      }
+
+      let matchedLead = [ExportAsJSON(neoLead)]
+      //get an array with all key names from matchedkey
+
+      if (i==0){
+            worksheet.push(Object.keys(matchedLead[i]))
+            let newLine = Object.values(matchedLead[0])
+            worksheet.push(newLine)
+            console.log("lineas",newLine)
+      }else{
+            let newLine = Object.values(matchedLead[0])
+            worksheet.push(newLine)
+            console.log("lineas",newLine)
+      }
+
+      }
+      
+      let name = 'Leads'
+      const workbook = XLSX.utils.book_new();
+      // XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      XLSX.utils.book_append_sheet(workbook, XLSX.utils.aoa_to_sheet(worksheet), "Sheet1");
+      XLSX.writeFile(workbook, name+".xlsx");
+}
 async function download(){
     
       //let csv = Export(lead)
@@ -291,7 +342,7 @@ const print=()=>{
 }
 const inject=()=>{
       try {
-            
+
    
       let json = lead.json
 
@@ -301,8 +352,16 @@ const inject=()=>{
       json = JSON.parse(json)
       let neoLead = {...lead}
       //for all keys in json, change neoLead value
-      for(let key in json){
-            neoLead[key] = json[key]
+      //if json is list
+      if(Array.isArray(json)){
+
+            for(let key in json[0]){
+                  neoLead[key] = json[0][key]
+            }
+      }else{
+            for(let key in json){
+                  neoLead[key] = json[key]
+            }
       }
       //set new lead
       setClient(neoLead)
@@ -846,7 +905,7 @@ onChange={textChange} name='json' value={lead.json}
 </div>
 <div className="myRow center" style={{paddingTop:"15px"}}>
 <div className="quoteLine" style={{display: 'inline-flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',}}>
-    <div className="CallButton link" onClick={download}
+    <div className="CallButton link" onClick={download2}
     style={{height: 24, paddingLeft: 11, paddingRight: 11, paddingTop: 8, paddingBottom: 8, backgroundColor: 'rgba(15, 188, 157, 1)', boxShadow: '0px 2px 1px rgba(0, 0, 0, 0.40)', borderRadius: 4, display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',}}>
         <p className="Cancel" style={{fontSize: 16, fontWeight: '700', lineHeight: '100%', textAlign: 'center', color: 'white',}}>Download CSV</p>
     </div>

@@ -147,6 +147,12 @@ const ExportAsJSON = (lead)=> {
     if (lead.priorexp==undefined && lead.prior){
         lead.priorexp=lead.effective
     }
+    if (lead.dob==undefined){
+        lead.dob='01/01/1979'
+    }
+    if (lead.codob==undefined){
+        lead.codob='01/01/1979'
+    }
     console.log("lead.priorexp",lead.effective,lead.priorexp,lead.priorexp==undefined,lead.prior)
     neoLead.ProtectionClass='3'
     //create a neoLead with qrKeys and lead values
