@@ -389,16 +389,16 @@ const inject=()=>{
       let text = e.target.innerText
       let coverageA
       if(text=="Economy"){
-            coverageA=neoLead.area*125   
+            coverageA=neoLead.livingArea*125   
       }
       if(text=="Standard"){
-            coverageA=neoLead.area*145}
+            coverageA=neoLead.livingArea*145}
       if(text=="Above average"){
-            coverageA=neoLead.area*165}
+            coverageA=neoLead.livingArea*165}
       if(text=="Premium"){
-            coverageA=neoLead.area*175}
+            coverageA=neoLead.livingArea*175}
             if(text=="Custom"){
-            coverageA=neoLead.area*195}
+            coverageA=neoLead.livingArea*195}
 
       neoLead['coverageA'] =coverageA.toString()
       setClient(neoLead)
@@ -563,10 +563,10 @@ lead.wallType==='Mobile Home'?framesiding
       ])} value={lead.roofMaterial} type='select' name='roofMaterial'/>
 </div>
 <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
-      <MaterialInput label="Year Built" onChange={onChange}  value={lead.year} required={true}
-    type="text" name='year'/>
-            <MaterialInput label="Living area (Sq Ft)" onChange={onChange}  value={lead.area} required={true}
-    type="text" name='area'/>
+      <MaterialInput label="Year Built" onChange={onChange}  value={lead.yearBuilt} required={true}
+    type="text" name='yearBuilt'/>
+            <MaterialInput label="Living Area (Sq Ft)" onChange={onChange}  value={lead.livingArea} required={true}
+    type="text" name='living Area'/>
 <MaterialInput label="Plumbing Type" onChange={onChange} options={labelize(['PVC','Galvanized','Copper','Polybutylene','PEX'
       ])} value={lead.plumbingType} type='select' name='plumbingType'/>
         </div>

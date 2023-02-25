@@ -51,7 +51,7 @@ let keysMatch = [
     {"QR":"RoofYear","local":"roofYear","default":"2017"},
     {"QR":"Stories","local":"stories"},
     {"QR":"Families","local":"families"},
-    {"QR":"SquareFeet","local":"area"},
+    {"QR":"SquareFeet","local":"livingArea"},
     {"QR":"Bathroom1Type","local":"bathroom1_type","default":"Full Builders Grade"},
     {"QR":"Bathroom1Count","local":"bathroom1_count"},
 
