@@ -204,11 +204,23 @@ export default function LeadForm(props) {
         }
         setClient({ ...lead, [event.target.name]: event.target.value })
       }
-    
+      const ifNull=(value)=>{
+            if(value==null || value==undefined || value==""){
+                  return true}
+            }
       const save=(e)=>{
             
             let neolead={...lead}
             delete neolead.json
+            const datesList=['codob','dob','purchaseDate','priorexp','purchaseDate','effetive']
+            for (let index = 0; index < datesList.length; index++) {
+                  const date = datesList[index];
+                  if(!ifNull(neolead[date])){
+                        //neolead[date]=neolead[date].split('-').reverse().join('-')
+                  }
+            }
+            
+   
             console.log("yielding",neolead)
             //http://127.0.0.1:8081/newProspect/
             const token =  window.localStorage.getItem('token')
@@ -565,9 +577,9 @@ lead.wallType==='Mobile Home'?framesiding
 </div>
 <div className="myRow center" style={{gap:8,marginTop:"10px"}}>
       <MaterialInput label="Year Built" onChange={onChange}  value={lead.yearBuilt} required={true}
-    type="text" name='yearBuilt'/>
+    type="text" name='yearBuilt' />
             <MaterialInput label="Living Area (Sq Ft)" onChange={onChange}  value={lead.livingArea} required={true}
-    type="text" name='living Area'/>
+    type="text" name='livingArea'/>
 <MaterialInput label="Plumbing Type" onChange={onChange} options={labelize(['PVC','Galvanized','Copper','Polybutylene','PEX'
       ])} value={lead.plumbingType} type='select' name='plumbingType'/>
         </div>

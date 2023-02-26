@@ -165,7 +165,8 @@ const ExportAsJSON = (lead)=> {
         if (value === true) {
             value = item.default;
         }
-        if (value === undefined) {
+        if (value === undefined || value === null || value === "") {
+            console.log("valor agregado",leadKey,item.default)
             value = item.default;
         }
         alarmList.forEach(element => {
