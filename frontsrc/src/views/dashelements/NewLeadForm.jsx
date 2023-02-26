@@ -206,9 +206,10 @@ export default function LeadForm(props) {
       }
     
       const save=(e)=>{
-            console.log("yielding")
+            
             let neolead={...lead}
             delete neolead.json
+            console.log("yielding",neolead)
             //http://127.0.0.1:8081/newProspect/
             const token =  window.localStorage.getItem('token')
             const axios =props.userPack.methods.axios
